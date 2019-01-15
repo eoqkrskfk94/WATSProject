@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/vi_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+
+    <LinearLayout
+
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:padding="5dp">
+
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="200dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="10dp"
+            android:layout_weight="2.5"
+            android:background="@drawable/list_box"
+            android:gravity="center_vertical"
+            android:orientation="vertical">
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_weight="4"
+                android:orientation="horizontal"
+                android:paddingLeft="5dp"
+                android:paddingTop="10dp">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/vi_name"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:ellipsize="end"
+                        android:lines="1"
+                        android:text="타이틀을 표시합니다."
+                        android:textColor="@android:color/background_dark"
+                        android:textColorLink="@android:color/black"
+                        android:textSize="20sp"
+                        android:textStyle="bold" />
+
+                    <TextView
+                        android:id="@+id/vi_date"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="2018.11.05"
+                        android:textSize="10sp" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/vi_blogger"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dp"
+                    android:layout_weight="1"
+                    android:gravity="right"
+                    android:text="블로거" />
+
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/vi_address"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="12dp"
+                android:layout_weight="4"
+                android:ellipsize="end"
+                android:lines="3"
+                android:paddingBottom="1dp"
+                android:paddingLeft="5dp"
+                android:paddingTop="1dp"
+                android:text="이 화면은 블로그 검색 결과 테스트 화면입니다. 이 화면은 블로그 검색 결과 테스트입니다. 이 화면은 블로그 검색 결과 화면입니다."
+                android:textColor="#4e4e4e"
+                android:textSize="13sp"
+                android:typeface="monospace" />
+
+            <Button
+                android:id="@+id/see_more_button"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_gravity="right"
+                android:layout_marginBottom="10dp"
+                android:background="@android:color/transparent"
+                android:text="더보기"
+                android:textColor="@color/colorAccent" />
+
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>

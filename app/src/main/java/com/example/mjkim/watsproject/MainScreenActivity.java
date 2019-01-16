@@ -35,6 +35,8 @@ public class MainScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_screen);
 
+        backPressCloseHandler = new BackPressCloseHandler(this);
+
         Button searchButton = (Button)findViewById(R.id.search_button);
 
         //검색하기 버튼을 눌렀을때

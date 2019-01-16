@@ -103,7 +103,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/insert_box"
                 android:ems="10"
-                android:hint="특수 문자 포함 8자리 이상"
+                android:hint="xxxx@naver.com"
                 android:inputType="textPersonName"
                 android:paddingLeft="15dp"
                 android:selectAllOnFocus="false"
@@ -132,7 +132,7 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/insert_box"
                 android:ems="10"
-                android:hint="대문자 포함한 8~20자리"
+                android:hint="6자리 이상의 숫자와 영어"
                 android:inputType="textPassword"
                 android:paddingLeft="15dp"
                 android:selectAllOnFocus="false"
@@ -163,6 +163,7 @@
                 android:ems="10"
                 android:inputType="textPassword"
                 android:paddingLeft="15dp"
+                android:hint="6자리 이상의 숫자와 영어"
                 android:selectAllOnFocus="false"
                 android:singleLine="false" />
         </LinearLayout>
@@ -224,6 +225,7 @@
                 android:ems="10"
                 android:inputType="textPersonName"
                 android:paddingLeft="15dp"
+                android:hint="홍길동"
                 android:selectAllOnFocus="false"
                 android:singleLine="false" />
         </LinearLayout>
@@ -294,20 +296,20 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textphone"
+                android:id="@+id/text_nickname"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:text="휴대전화"
+                android:text="별명"
                 android:textSize="15sp"
                 android:textStyle="normal" />
 
             <EditText
-                android:id="@+id/edit_phone_num"
+                android:id="@+id/edit_nickname"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="@drawable/insert_box"
                 android:ems="10"
-                android:hint="01012345678"
+                android:hint="멋쟁이홍길동"
                 android:inputType="textPersonName|phone"
                 android:paddingLeft="15dp"
                 android:selectAllOnFocus="false"

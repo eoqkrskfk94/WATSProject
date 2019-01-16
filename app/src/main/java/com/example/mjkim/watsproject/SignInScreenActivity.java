@@ -50,7 +50,7 @@ public class SignInScreenActivity extends AppCompatActivity {
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(SignInScreenActivity.this,FirstScreenActivity.class);
+                Intent intent=new Intent(SignInScreenActivity.this,MainScreenActivity.class);
                 startActivity(intent);
             }
         });

@@ -27,7 +27,7 @@
         </activity>
         <activity android:name=".LoginScreenActivity" />
         <activity android:name=".SignInScreenActivity" />
-        <activity android:name=".FirstScreenActivity" />
+        <activity android:name=".MainScreenActivity" />
         <activity android:name=".SearchScreenActivity" />
         <activity android:name=".SearchDetailScreenActivity" />
         <activity android:name=".LocationDetailScreen" />

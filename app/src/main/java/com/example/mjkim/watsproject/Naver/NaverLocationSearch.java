@@ -39,6 +39,7 @@ public class NaverLocationSearch extends AsyncTask<String, Void, ArrayList<Naver
 
         String name;
         String link;
+        String category;
         String description;
         String telephone;
         String address;
@@ -74,6 +75,7 @@ public class NaverLocationSearch extends AsyncTask<String, Void, ArrayList<Naver
                 //firebaseJson.getJson(name,num);
 
                 link = obj.getString("link");
+                category = obj.getString("category");
                 description = obj.getString("description");
                 telephone = obj.getString("telephone");
                 address = obj.getString("address");
@@ -82,7 +84,7 @@ public class NaverLocationSearch extends AsyncTask<String, Void, ArrayList<Naver
                 mapy = obj.getInt("mapy");
 
 
-                naverLocationList.add(num++, new NaverLocationList(name, link, description, telephone, address, road_address, mapx, mapy, 0));
+                naverLocationList.add(num++, new NaverLocationList(name, category, link, description, telephone, address, road_address, mapx, mapy, 0));
 
             }
 
@@ -97,7 +99,13 @@ public class NaverLocationSearch extends AsyncTask<String, Void, ArrayList<Naver
 
     }
 
+    @Override
+    protected void onProgressUpdate(Void...params){ }
 
+    @Override
+    protected void onPostExecute(ArrayList<NaverLocationList> result){
+        super.onPostExecute(result);
+    }
 
 
 

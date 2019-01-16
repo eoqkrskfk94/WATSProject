@@ -51,10 +51,12 @@
                     android:textStyle="bold" />
 
                 <TextView
-                    android:id="@+id/vi_type"
+                    android:id="@+id/vi_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginRight="13dp"
                     android:layout_weight="1"
+                    android:gravity="right"
                     android:text="시설정보"
                     android:textSize="15sp" />
             </LinearLayout>

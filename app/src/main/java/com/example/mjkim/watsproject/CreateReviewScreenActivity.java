@@ -46,7 +46,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(CreateReviewScreenActivity.this,FirstScreenActivity.class);
+                Intent intent=new Intent(CreateReviewScreenActivity.this,MainScreenActivity.class);
                 startActivity(intent);
             }
         });

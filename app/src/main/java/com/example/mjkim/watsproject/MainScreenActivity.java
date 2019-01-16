@@ -1,6 +1,5 @@
 package com.example.mjkim.watsproject;
 
-import android.app.Dialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
@@ -18,7 +17,7 @@ import com.example.mjkim.watsproject.FirstSreenFraments.MapFragment;
 import com.example.mjkim.watsproject.FirstSreenFraments.MypageFragment;
 import com.example.mjkim.watsproject.OtherClasses.BackPressCloseHandler;
 
-public class FirstScreenActivity extends AppCompatActivity {
+public class MainScreenActivity extends AppCompatActivity {
 
     private BackPressCloseHandler backPressCloseHandler;
 
@@ -34,7 +33,7 @@ public class FirstScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {     
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.first_screen);
+        setContentView(R.layout.main_screen);
 
         Button searchButton = (Button)findViewById(R.id.search_button);
 
@@ -42,7 +41,7 @@ public class FirstScreenActivity extends AppCompatActivity {
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(FirstScreenActivity.this,SearchScreenActivity.class);
+                Intent intent=new Intent(MainScreenActivity.this,SearchScreenActivity.class);
                 startActivity(intent);
             }
         });

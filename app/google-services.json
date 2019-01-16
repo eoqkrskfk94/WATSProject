@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "139076516902",
+    "firebase_url": "https://watsproject-dfb3c.firebaseio.com",
+    "project_id": "watsproject-dfb3c",
+    "storage_bucket": "watsproject-dfb3c.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:139076516902:android:7e14c940057396b9",
+        "android_client_info": {
+          "package_name": "com.example.mjkim.watsproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "139076516902-sp23vobt9alnmu9mf4r4er4h6fc11cbo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC4OnxGGgOQfB6p-Y228ZNoNkY6ybitY2A"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

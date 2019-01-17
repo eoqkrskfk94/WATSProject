@@ -33,7 +33,11 @@
         <activity android:name=".LocationDetailScreen" />
         <activity android:name=".CreateReviewScreenActivity" />
         <activity android:name=".BlogScreenActivity" />
-        <activity android:name=".ChangeInfoScreenActivity"></activity>
+        <activity android:name=".ChangeInfoScreenActivity" />
+        <activity android:name=".CreateReviewScreenActivity" />
+        <meta-data
+            android:name="com.naver.maps.map.CLIENT_ID"
+            android:value="9sx658cqs0" />
     </application>
 
 </manifest>

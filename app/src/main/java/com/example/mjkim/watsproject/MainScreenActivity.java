@@ -12,12 +12,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
 
-import com.example.mjkim.watsproject.FirstSreenFraments.ListFragment;
-import com.example.mjkim.watsproject.FirstSreenFraments.MapFragment;
-import com.example.mjkim.watsproject.FirstSreenFraments.MypageFragment;
+import com.example.mjkim.watsproject.FirstSreenFragments.ListFragment;
+import com.example.mjkim.watsproject.FirstSreenFragments.MypageFragment;
 import com.example.mjkim.watsproject.OtherClasses.BackPressCloseHandler;
+import com.naver.maps.map.MapFragment;
+import com.naver.maps.map.NaverMap;
+import com.naver.maps.map.OnMapReadyCallback;
 
-public class MainScreenActivity extends AppCompatActivity {
+
+public class MainScreenActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private BackPressCloseHandler backPressCloseHandler;
 
@@ -25,8 +28,8 @@ public class MainScreenActivity extends AppCompatActivity {
     private BottomNavigationView mMainNav; //하단 메뉴 아이콘
     private FrameLayout mMainFrame;
 
-    //화면에서의 frament들 선언
-    private MapFragment mapFragment;
+    //화면에서의 fragment들 선언
+    private MapFragment mapFragment; //NaverMapFragment안쓰고 따로 네이버에서 제공하는 클래스 사용하는 것임
     private ListFragment listFragment;
     private MypageFragment mypageFragment;
 
@@ -48,18 +51,19 @@ public class MainScreenActivity extends AppCompatActivity {
             }
         });
 
+        MapFragment mapFragment = (MapFragment)getSupportFragmentManager().findFragmentById(R.id.main_frame);
+
 
 
         mMainFrame = (FrameLayout) findViewById(R.id.main_frame);
         mMainNav = (BottomNavigationView) findViewById(R.id.main_nav);
 
 
-
         mapFragment = new MapFragment();
         listFragment = new ListFragment();
         mypageFragment = new MypageFragment();
 
-        setFragment(mapFragment);
+        setMapFragment();
 
         mMainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -68,7 +72,7 @@ public class MainScreenActivity extends AppCompatActivity {
                 switch (item.getItemId()) {
 
                     case R.id.nav_map:
-                        setFragment(mapFragment);
+                        setMapFragment();
                         return true;
 
                     case R.id.nav_list:
@@ -96,10 +100,38 @@ public class MainScreenActivity extends AppCompatActivity {
         fragmentTransaction.commit();
     }
 
+    // 지도 띄우는 프래그먼트 설정
+    private void setMapFragment() {
+
+
+        if (mapFragment == null) {
+            System.out.println("절레절레");
+            mapFragment = MapFragment.newInstance();
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, mapFragment).commit();
+
+        }
+        else {
+            System.out.println("도리도리");
+            mapFragment = MapFragment.newInstance();
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, mapFragment).commit();
+
+        }
+
+        mapFragment.getMapAsync(this);
+
+
+
+    }
+
 
     //뒤로가기 버튼 두번눌렀을때
     @Override
     public void onBackPressed() { backPressCloseHandler.onBackPressed(); }
 
 
+    // 지도 관련 정보 사용할 때
+    @Override
+    public void onMapReady(@NonNull NaverMap naverMap) {
+        System.out.println("면담언제해");
+    }
 }

@@ -93,7 +93,7 @@
                 android:id="@+id/textid"
                 android:layout_width="120dp"
                 android:layout_height="wrap_content"
-                android:text="아이디"
+                android:text="아이디(이메일)"
                 android:textSize="15sp"
                 android:textStyle="normal" />
 
@@ -108,7 +108,9 @@
                 android:paddingLeft="15dp"
                 android:selectAllOnFocus="false"
                 android:singleLine="false" />
+
         </LinearLayout>
+
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -161,9 +163,9 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/insert_box"
                 android:ems="10"
+                android:hint="6자리 이상의 숫자와 영어"
                 android:inputType="textPassword"
                 android:paddingLeft="15dp"
-                android:hint="6자리 이상의 숫자와 영어"
                 android:selectAllOnFocus="false"
                 android:singleLine="false" />
         </LinearLayout>
@@ -223,9 +225,9 @@
                 android:layout_height="match_parent"
                 android:background="@drawable/insert_box"
                 android:ems="10"
+                android:hint="홍길동"
                 android:inputType="textPersonName"
                 android:paddingLeft="15dp"
-                android:hint="홍길동"
                 android:selectAllOnFocus="false"
                 android:singleLine="false" />
         </LinearLayout>
@@ -310,7 +312,7 @@
                 android:background="@drawable/insert_box"
                 android:ems="10"
                 android:hint="멋쟁이홍길동"
-                android:inputType="textPersonName|phone"
+                android:inputType="textPersonName"
                 android:paddingLeft="15dp"
                 android:selectAllOnFocus="false"
                 android:singleLine="false" />

@@ -37,8 +37,6 @@ public class LoginScreenActivity extends AppCompatActivity {
         final EditText idEdit=(EditText)findViewById(R.id.id_text); //입력 Id
         final EditText passEdit=(EditText)findViewById(R.id.pass_text); // 입력 pass
 
-
-
         //회원가입 버튼을 눌렀을때
         createUserButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -71,9 +69,9 @@ public class LoginScreenActivity extends AppCompatActivity {
                 loginStart(email,password); // 성공했을때 메인페이지로 보냄.
             }
         });
-
-
     }
+
+    //로그인 버튼을 눌렀을때 일어나는 함수.
     public void loginStart(String email, String password) {
         mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
             @Override
@@ -90,8 +88,6 @@ public class LoginScreenActivity extends AppCompatActivity {
                     } catch (Exception e) {
                         Toast.makeText(LoginScreenActivity.this, "Exception", Toast.LENGTH_SHORT).show();
                     }
-
-
                 } else {
 
                     save = 1;
@@ -101,7 +97,6 @@ public class LoginScreenActivity extends AppCompatActivity {
                     startActivity(new Intent(LoginScreenActivity.this, MainScreenActivity.class));
                     finish();
                 }
-
             }
         });
     }

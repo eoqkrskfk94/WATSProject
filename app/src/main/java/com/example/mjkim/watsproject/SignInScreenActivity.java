@@ -12,6 +12,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.example.mjkim.watsproject.User.UserInformation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -20,6 +21,9 @@ import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
 import com.google.firebase.auth.FirebaseAuthUserCollisionException;
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 //이메일 회원가입하는 액티비티.(로그인화면에서 회원가입 눌렀을때 나오는 화면)
 public class SignInScreenActivity extends AppCompatActivity {
 
@@ -32,6 +36,11 @@ public class SignInScreenActivity extends AppCompatActivity {
     private EditText month;
     private EditText day;
     private EditText nickname;
+    private Button check_email;
+    public UserInformation userInformation=new UserInformation();
+    private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+    private DatabaseReference databaseReference = firebaseDatabase.getReference();
+
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
     @Override
@@ -61,8 +70,6 @@ public class SignInScreenActivity extends AppCompatActivity {
                 finish();
             }
         });
-
-
 
     }
 
@@ -101,6 +108,17 @@ public class SignInScreenActivity extends AppCompatActivity {
         String str_day=day.getText().toString();
         String str_nickname=nickname.getText().toString();
 
+        //파이어베이스에 유저정보 올리기.
+        userInformation.setUserEmail(str_email);
+        userInformation.setUserName(str_name);
+        userInformation.setUserYear(str_year);
+        userInformation.setUserMonth(str_month);
+        userInformation.setUserDay(str_day);
+        userInformation.setUserNickname(str_nickname);
+        userInformation=new UserInformation(str_email,str_name,str_year,str_month,str_day,str_nickname);
+        DatabaseReference userRef=databaseReference.child("user lists");
+        userRef.child(str_name).push().setValue(userInformation); // email 에는 @가 들어가서 파이어베이스에 저장이 안됨.
+
         //비밀번호와 비밀번호 확인이 다를경우 재시작.
         if (!str_password.equals(str_password_check)) {
             Toast.makeText(SignInScreenActivity.this, "비밀번호가 서로 다릅니다. 다시 입력해주세요.", Toast.LENGTH_SHORT).show();
@@ -124,8 +142,22 @@ public class SignInScreenActivity extends AppCompatActivity {
                                 }
                             } else {
                                 currentUser = mAuth.getCurrentUser(); // 정보를 currentUser에 저장.
-                                myDialog.show(); //회원가입 팝업창.
+                                mAuth.setLanguageCode("ko"); //한국어
 
+                                //이메일 인증메일 보내기.
+                                mAuth.getCurrentUser().sendEmailVerification()
+                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+                                            @Override
+                                            public void onComplete(@NonNull Task<Void> task) {
+                                                if(task.isSuccessful()){
+                                                //    Toast.makeText(SignInScreenActivity.this,"이메일에 인증메일을 보냈습니다.",Toast.LENGTH_SHORT).show();
+                                                }
+                                                else {
+                                                    //메일 전송 실패
+                                                }
+                                            }
+                                        });
+                                myDialog.show(); //회원가입 팝업창.
                             }
                         }
                     });

@@ -24,12 +24,12 @@
             android:src="@drawable/sample_pic" />
 
         <TextView
-            android:id="@+id/textView8"
+            android:id="@+id/textView_id"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:gravity="center"
-            android:text="홍길동 회원님"
+            android:text=" "
             android:textColor="@android:color/background_light" />
 
         <Button

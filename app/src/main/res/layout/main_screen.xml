@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".FirstScreenActivity">
+    tools:context=".MainScreenActivity">
 
     <LinearLayout
         android:id="@+id/menu"

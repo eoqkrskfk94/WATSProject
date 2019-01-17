@@ -27,4 +27,18 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
+
+    //준영 파이어베이스 설정
+    implementation 'com.google.firebase:firebase-core:16.0.6' //파이어베이스 코어모듈 인증.
+    implementation 'com.google.firebase:firebase-auth:16.1.0' //이메일 인증에 필요함.
+
+    implementation 'com.google.android.gms:play-services-auth:16.0.1' //구글 플레이 서비스 모듈
+    implementation 'com.google.firebase:firebase-database:16.0.5'  //파이어베이스 실시간 db
+    implementation 'com.google.firebase:firebase-storage:16.0.5' //파이어 베이스 저장소.
+    implementation 'com.google.code.gson:gson:2.8.5'
+    implementation 'com.squareup.picasso:picasso:2.71828'
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
+    implementation 'com.firebaseui:firebase-ui-storage:3.2.1'
 }
+apply plugin: 'com.google.gms.google-services'

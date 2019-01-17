@@ -56,12 +56,12 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="550dp"
+                android:layout_height="620dp"
                 android:background="@drawable/location_box"
                 android:orientation="vertical">
 
                 <TextView
-                    android:id="@+id/location_type"
+                    android:id="@+id/location_category"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
@@ -75,7 +75,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
                     android:layout_marginRight="40dp"
-                    android:layout_marginTop="5dp"
+                    android:layout_marginTop="10dp"
                     android:lines="1"
                     android:text="한동대학교"
                     android:textColor="@color/colorPrimary"
@@ -87,7 +87,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
                     android:layout_marginRight="40dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -125,7 +125,8 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_weight="1"
-                        android:text="054-260-1644" />
+                        android:text="054-260-1644"
+                        android:textColor="@android:color/holo_blue_light" />
                 </LinearLayout>
 
                 <ImageView
@@ -134,7 +135,7 @@
                     android:layout_height="10dp"
                     android:layout_marginLeft="40dp"
                     android:layout_marginRight="40dp"
-                    android:layout_marginTop="10dp"
+                    android:layout_marginTop="15dp"
                     app:srcCompat="@drawable/long_horz_line" />
 
                 <TextView
@@ -239,48 +240,48 @@
 
                         <ImageView
                             android:id="@+id/sample_pic1"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
                             app:srcCompat="@drawable/sample_pic" />
 
                         <ImageView
                             android:id="@+id/sample_pic2"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
                             app:srcCompat="@drawable/sample_pic" />
 
                         <ImageView
                             android:id="@+id/sample_pic3"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
                             app:srcCompat="@drawable/sample_pic" />
 
                         <ImageView
                             android:id="@+id/sample_pic4"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
                             app:srcCompat="@drawable/sample_pic" />
 
                         <ImageView
                             android:id="@+id/sample_pic5"
-                            android:layout_width="70dp"
-                            android:layout_height="70dp"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             android:layout_marginRight="10dp"
                             android:layout_weight="1"
                             app:srcCompat="@drawable/sample_pic" />
 
                         <ImageView
                             android:id="@+id/sample_pic6"
-                            android:layout_width="50dp"
-                            android:layout_height="70dp"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
                             android:layout_marginLeft="10dp"
                             android:layout_weight="1"
                             app:srcCompat="@drawable/sample_pic" />
@@ -392,6 +393,7 @@
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
+                android:id="@+id/blog_list"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:orientation="horizontal" />

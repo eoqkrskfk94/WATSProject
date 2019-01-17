@@ -41,10 +41,11 @@ public class NaverLocationList {
 
     public NaverLocationList(){}
 
-    public NaverLocationList(String name, String link, String description, String telephone, String address, String road_address, int mapx, int mapy, int review_num){
+    public NaverLocationList(String name, String category, String link, String description, String telephone, String address, String road_address, int mapx, int mapy, int review_num){
 
         this.name = name;
         this.link = link;
+        this.category = category;
         this.description = description;
         this.telephone = telephone;
         this.address = address;

@@ -41,6 +41,8 @@ public class SignInScreenActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
 
+
+    
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
     @Override

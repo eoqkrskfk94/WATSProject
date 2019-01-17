@@ -41,6 +41,8 @@ public class SignInScreenActivity extends AppCompatActivity {
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
 
+
+
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
     @Override
@@ -84,8 +86,11 @@ public class SignInScreenActivity extends AppCompatActivity {
         String str_password=password.getText().toString();
          // 사용자에게 입력받은 값을 변수로 저장
 
-        createUser(str_email,str_password); // 회원가입 함수로 이동.
-
+        if(!str_email.equals(""))
+            createUser(str_email,str_password); // 회원가입 함수로 이동.
+        else{
+            Toast.makeText(SignInScreenActivity.this,"모든 항목을 입력해주세요.",Toast.LENGTH_LONG).show();
+        }
 
         //닫기 버튼을 눌렀을때
         closeButton.setOnClickListener(new View.OnClickListener() {

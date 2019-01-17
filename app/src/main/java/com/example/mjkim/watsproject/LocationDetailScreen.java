@@ -7,14 +7,29 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.DividerItemDecoration;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import com.example.mjkim.watsproject.Naver.NaverBlogAdapter;
+import com.example.mjkim.watsproject.Naver.NaverBlogList;
+import com.example.mjkim.watsproject.Naver.NaverBlogSearch;
+
+import java.util.ArrayList;
 
 public class LocationDetailScreen extends AppCompatActivity {
 
     Dialog myDialog;
+    public static ArrayList<NaverBlogList> blogList;
+    private NaverBlogSearch naverBlogSearch;
+    //private NaverBlogAdapter naverBlogAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +37,9 @@ public class LocationDetailScreen extends AppCompatActivity {
         setContentView(R.layout.location_detail_screen);
 
         myDialog = new Dialog(this); //회원가입 팝업 변수 선언
+        Intent intent = getIntent();
+        blogList = new ArrayList<NaverBlogList>();
+        naverBlogSearch = new NaverBlogSearch();
 
         TextView locationName = (TextView)findViewById(R.id.location_name); //장소 이름
         TextView locationCategory = (TextView)findViewById(R.id.location_category); //장소 분류
@@ -45,9 +63,7 @@ public class LocationDetailScreen extends AppCompatActivity {
                 //닫기 버튼을 눌렀을때
                 closeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View view) {
-                        Intent intent=new Intent(LocationDetailScreen.this,MainScreenActivity.class);
-                        startActivity(intent); }});
+                    public void onClick(View view) { myDialog.dismiss(); }});
 
                 myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
                 myDialog.show();
@@ -64,9 +80,7 @@ public class LocationDetailScreen extends AppCompatActivity {
                 //닫기 버튼을 눌렀을때
                 closeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View view) {
-                        Intent intent=new Intent(LocationDetailScreen.this,MainScreenActivity.class);
-                        startActivity(intent); }});
+                    public void onClick(View view) { myDialog.dismiss(); }});
 
                 myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
                 myDialog.show();
@@ -83,9 +97,7 @@ public class LocationDetailScreen extends AppCompatActivity {
                 //닫기 버튼을 눌렀을때
                 closeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View view) {
-                        Intent intent=new Intent(LocationDetailScreen.this,MainScreenActivity.class);
-                        startActivity(intent); }});
+                    public void onClick(View view) { myDialog.dismiss(); }});
 
                 myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
                 myDialog.show();
@@ -102,9 +114,7 @@ public class LocationDetailScreen extends AppCompatActivity {
                 //닫기 버튼을 눌렀을때
                 closeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View view) {
-                        Intent intent=new Intent(LocationDetailScreen.this,MainScreenActivity.class);
-                        startActivity(intent); }});
+                    public void onClick(View view) { myDialog.dismiss(); }});
 
                 myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
                 myDialog.show();
@@ -121,9 +131,7 @@ public class LocationDetailScreen extends AppCompatActivity {
                 //닫기 버튼을 눌렀을때
                 closeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View view) {
-                        Intent intent=new Intent(LocationDetailScreen.this,MainScreenActivity.class);
-                        startActivity(intent); }});
+                    public void onClick(View view) { myDialog.dismiss(); }});
 
                 myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
                 myDialog.show();
@@ -140,20 +148,12 @@ public class LocationDetailScreen extends AppCompatActivity {
                 //닫기 버튼을 눌렀을때
                 closeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View view) {
-                        Intent intent=new Intent(LocationDetailScreen.this,MainScreenActivity.class);
-                        startActivity(intent); }});
+                    public void onClick(View view) { myDialog.dismiss(); }});
 
                 myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
                 myDialog.show();
             }
         });
-
-
-
-
-
-
 
 
 
@@ -196,5 +196,30 @@ public class LocationDetailScreen extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
+        //블로그 리스트 출력
+        RecyclerView.LayoutManager layoutManager;
+
+        try {
+            blogList = naverBlogSearch.execute(intent.getExtras().getString("NAME")).get();
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+
+        NaverBlogAdapter.select = 2;
+
+        RecyclerView blogListView = (RecyclerView) findViewById(R.id.blog_list);
+        layoutManager = new LinearLayoutManager(this);
+        blogListView.setLayoutManager(layoutManager);
+
+        //NaverBlogAdapter naverBlogAdapter = new NaverBlogAdapter(blogList);
+
+        //blogListView.setAdapter(naverBlogAdapter);
+
+
+
+
     }
 }

@@ -45,7 +45,7 @@
                     android:orientation="vertical">
 
                     <TextView
-                        android:id="@+id/vi_name"
+                        android:id="@+id/blog_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -58,7 +58,7 @@
                         android:textStyle="bold" />
 
                     <TextView
-                        android:id="@+id/vi_date"
+                        android:id="@+id/blog_date"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
@@ -67,7 +67,7 @@
                 </LinearLayout>
 
                 <TextView
-                    android:id="@+id/vi_blogger"
+                    android:id="@+id/blog_blogger"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginRight="15dp"
@@ -79,7 +79,7 @@
 
 
             <TextView
-                android:id="@+id/vi_address"
+                android:id="@+id/blog_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="8dp"

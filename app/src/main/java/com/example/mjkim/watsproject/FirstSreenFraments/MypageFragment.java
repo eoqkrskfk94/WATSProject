@@ -35,8 +35,6 @@ public class MypageFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_mypage, container,false);
 
         Button logout=(Button) v.findViewById(R.id.log_out_button);
-        Toast.makeText(getActivity(),"들어왔어",Toast.LENGTH_SHORT).show();
-
 
 
         logout.setOnClickListener(new View.OnClickListener() {

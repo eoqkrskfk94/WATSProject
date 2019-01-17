@@ -31,7 +31,9 @@
         <activity android:name=".SearchScreenActivity" />
         <activity android:name=".SearchDetailScreenActivity" />
         <activity android:name=".LocationDetailScreen" />
-        <activity android:name=".CreateReviewScreenActivity"></activity>
+        <activity android:name=".CreateReviewScreenActivity" />
+        <activity android:name=".BlogScreenActivity" />
+        <activity android:name=".ChangeInfoScreenActivity"></activity>
     </application>
 
 </manifest>

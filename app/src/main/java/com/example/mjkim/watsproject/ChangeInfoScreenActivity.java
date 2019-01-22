@@ -18,32 +18,36 @@ public class ChangeInfoScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.change_info_screen);
 
-        myDialog = new Dialog(this); //회원가입 팝업 변수 선언
-        Button changeButton = (Button)findViewById(R.id.change_button);
+        myDialog = new Dialog(this); //수정하기 팝업 변수 선언
 
-        //수정하기 버튼을 눌렀을때
-        changeButton.setOnClickListener(new View.OnClickListener() {
+
+
+    }
+
+
+    public void ChangeButton (View view){ //수정하기 버튼 눌렀을때
+
+        myDialog.setContentView(R.layout.change_popup);
+        myDialog.setCancelable(false);
+
+        Button closeButton = (Button) myDialog.findViewById(R.id.ok_button);
+
+        //닫기 버튼을 눌렀을때
+        closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                myDialog.setContentView(R.layout.change_popup);
-                myDialog.setCancelable(false);
-
-                Button closeButton = (Button) myDialog.findViewById(R.id.ok_button);
-
-                //닫기 버튼을 눌렀을때
-                closeButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Intent intent=new Intent(ChangeInfoScreenActivity.this,MainScreenActivity.class);
-                        startActivity(intent);
-                    }
-                });
-
-
-                myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+                Intent intent=new Intent(ChangeInfoScreenActivity.this,MainScreenActivity.class);
+                startActivity(intent);
             }
         });
 
 
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+        myDialog.show(); //수정하기 팝업창.
+
+
+
     }
+
+
 }

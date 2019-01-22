@@ -171,6 +171,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
 
         reviewList = new ReviewList(location_name, location_addess, location_number, location_category, review_description, location_mapx, location_mapy, tag1, tag2, tag3, tag4, tag5, tag6, mTime, userName);
 
+        String nameAndAdress = ""; //이름이랑 주소 같이 나오는 스트링
         reviewData.saveData(location_name, reviewList);
 
 

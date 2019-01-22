@@ -7,9 +7,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.support.v7.widget.DividerItemDecoration;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
@@ -23,12 +20,14 @@ import com.example.mjkim.watsproject.Naver.NaverBlogSearch;
 
 import java.util.ArrayList;
 
-public class LocationDetailScreen extends AppCompatActivity {
+public class LocationDetailScreenActivity extends AppCompatActivity {
 
     Dialog myDialog;
+    private String blogName;
     public static ArrayList<NaverBlogList> blogList;
     private NaverBlogSearch naverBlogSearch;
-    //private NaverBlogAdapter naverBlogAdapter;
+    private NaverBlogAdapter naverBlogAdapter;
+
 
 
     @Override
@@ -160,10 +159,20 @@ public class LocationDetailScreen extends AppCompatActivity {
 
 
         //장소 정보 화면 출력
-        locationName.setText(getIntent().getExtras().getString("NAME"));
-        locationCategory.setText(getIntent().getExtras().getString("CATEGORY"));
-        locationAddress.setText(getIntent().getExtras().getString("ADDRESS"));
-        locationNumber.setText(getIntent().getExtras().getString("TELEPHONE"));
+        final String location_name, location_category, location_addess, location_number;
+        final Integer location_x, location_y;
+
+        location_name = getIntent().getExtras().getString("NAME");
+        location_category = getIntent().getExtras().getString("CATEGORY");
+        location_addess = getIntent().getExtras().getString("ADDRESS");
+        location_number = getIntent().getExtras().getString("TELEPHONE");
+        location_x = getIntent().getExtras().getInt("MAPX");
+        location_y = getIntent().getExtras().getInt("MAPY");
+
+        locationName.setText(location_name);
+        locationCategory.setText(location_category);
+        locationAddress.setText(location_addess);
+        locationNumber.setText(location_number);
 
         //전화번호 눌렀을때 통화 기능
         locationNumber.setOnClickListener(new View.OnClickListener() {
@@ -192,34 +201,60 @@ public class LocationDetailScreen extends AppCompatActivity {
         createReviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(LocationDetailScreen.this,CreateReviewScreenActivity.class);
+                Intent intent=new Intent(LocationDetailScreenActivity.this,CreateReviewScreenActivity.class);
+                intent.putExtra("NAME", location_name);
+                intent.putExtra("CATEGORY", location_category);
+                intent.putExtra("ADDRESS", location_addess);
+                intent.putExtra("TELEPHONE", location_number);
+                intent.putExtra("MAPX", location_x);
+                intent.putExtra("MAPY", location_y);
                 startActivity(intent);
             }
         });
 
 
         //블로그 리스트 출력
-        RecyclerView.LayoutManager layoutManager;
-
         try {
             blogList = naverBlogSearch.execute(intent.getExtras().getString("NAME")).get();
         }catch (Exception e){
             e.printStackTrace();
         }
 
+        NaverBlogAdapter.select = 1;
 
-        NaverBlogAdapter.select = 2;
-
-        RecyclerView blogListView = (RecyclerView) findViewById(R.id.blog_list);
-        layoutManager = new LinearLayoutManager(this);
-        blogListView.setLayoutManager(layoutManager);
-
-        //NaverBlogAdapter naverBlogAdapter = new NaverBlogAdapter(blogList);
-
-        //blogListView.setAdapter(naverBlogAdapter);
+        ListView blogListView = (ListView) findViewById(R.id.blog_list);
 
 
+        // 동적으로 리스트뷰 높이 할당
+        if(blogList.size() == 0) {
+            blogListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 50));
+        }
+        else if(blogList.size() == 1) {
+            blogListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 250));
+        }
+        else if(blogList.size() == 2) {
+            blogListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 500));
+        }
+
+        naverBlogAdapter = new NaverBlogAdapter(LocationDetailScreenActivity.this, blogList);
+        blogListView.setAdapter(naverBlogAdapter);
 
 
+        //블로그 전체보기 버튼
+        Button more_blog = (Button)findViewById(R.id.see_more_blog);
+        more_blog.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) { openBlogTab();}
+
+        });
+
+
+    }
+
+
+    //블로 전체보기 버튼 기능
+    public void openBlogTab(){
+        Intent intent = new Intent(this, MoreBlogScreenActivity.class);
+        startActivity(intent);
     }
 }

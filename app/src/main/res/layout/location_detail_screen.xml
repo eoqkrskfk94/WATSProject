@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#fef5e9"
     android:orientation="vertical"
-    tools:context=".LocationDetailScreen">
+    tools:context=".LocationDetailScreenActivity">
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -380,23 +380,29 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="블로그"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp" />
 
                 <Button
-                    android:id="@+id/see_more_button4"
-                    android:layout_width="60dp"
+                    android:id="@+id/see_more_blog"
+                    android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_gravity="right"
                     android:background="@android:color/transparent"
                     android:text="전체보기"
-                    android:textColor="@android:color/darker_gray" />
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="18sp" />
             </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <ListView
                 android:id="@+id/blog_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" />
+                android:layout_height="700dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="3dp"
+                android:foregroundGravity="center"
+                android:orientation="horizontal"
+                android:scrollbars="none" />
 
         </LinearLayout>
     </ScrollView>

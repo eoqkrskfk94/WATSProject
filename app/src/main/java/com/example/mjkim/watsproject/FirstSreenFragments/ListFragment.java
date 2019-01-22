@@ -1,4 +1,4 @@
-package com.example.mjkim.watsproject.FirstSreenFraments;
+package com.example.mjkim.watsproject.FirstSreenFragments;
 
 
 import android.os.Bundle;

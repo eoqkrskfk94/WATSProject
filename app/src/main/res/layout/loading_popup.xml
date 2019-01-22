@@ -10,7 +10,7 @@
     android:padding="5dp">
 
     <ImageView
-        android:id="@+id/imageView5"
+        android:id="@+id/loading_icon"
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:layout_gravity="center"

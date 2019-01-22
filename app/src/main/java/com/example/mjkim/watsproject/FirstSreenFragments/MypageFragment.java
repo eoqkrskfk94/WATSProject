@@ -15,9 +15,11 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mjkim.watsproject.ChangeInfoScreenActivity;
 import com.example.mjkim.watsproject.LoginScreenActivity;
 import com.example.mjkim.watsproject.MainScreenActivity;
 import com.example.mjkim.watsproject.R;
+import com.example.mjkim.watsproject.SearchScreenActivity;
 import com.example.mjkim.watsproject.User.UserInformation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -132,7 +134,8 @@ public class MypageFragment extends Fragment {
         changeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),"준비중입니다.",Toast.LENGTH_LONG).show();
+                Intent intent=new Intent(getActivity(),ChangeInfoScreenActivity.class);
+                startActivity(intent);
             }
         });
 

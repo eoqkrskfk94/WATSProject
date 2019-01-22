@@ -1,11 +1,13 @@
 package com.example.mjkim.watsproject.FirstSreenFragments;
 
 
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -51,14 +53,20 @@ public class MypageFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_mypage, container,false);
 
         Button logout=(Button) v.findViewById(R.id.log_out_button);
+        Button informationButton=(Button)v.findViewById(R.id.see_information_button);
+        Button myreviewButton=(Button)v.findViewById(R.id.see_review_button);
+        Button changeButton=(Button)v.findViewById(R.id.change_info_button);
+
+
+
         final TextView textId=(TextView)v.findViewById(R.id.textView_id);
 
-
+        //닉네입을 보여줌.
         mDatabase.child("user lists").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                 // 데이타베이스에 저장되어있는 이름값(ex: 남준영)의 userEmail값이 사용자와 같을때 아래구문 실행.
-                myreview.child("user lists").child(dataSnapshot.getKey()).orderByChild("userEmail").equalTo(userEmail).addChildEventListener(new ChildEventListener() {
+                mDatabase.child("user lists").child(dataSnapshot.getKey()).orderByChild("userEmail").equalTo(userEmail).addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
@@ -108,6 +116,7 @@ public class MypageFragment extends Fragment {
             }
         });
 
+
         //로그아웃 눌렀을때
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,7 +128,44 @@ public class MypageFragment extends Fragment {
             }
         });
 
+        //회원정보 수정 버튼 눌럿을때
+        changeButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(),"준비중입니다.",Toast.LENGTH_LONG).show();
+            }
+        });
+
+        //내가 작성한 후기 버튼 눌렀을때
+        myreviewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(),"준비중입니다.",Toast.LENGTH_LONG).show();
+            }
+        });
+
+
+        //어플정보를 눌렀을때
+        informationButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+                builder.setTitle("1.01버전");
+                builder.setMessage("개발자: 김명진 남준영 정희석");
+                builder.setPositiveButton("확인",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+
+                            }
+                        });
+                builder.show();
+            }
+        });
+
         return v;
     }
+
+
+
 
 }

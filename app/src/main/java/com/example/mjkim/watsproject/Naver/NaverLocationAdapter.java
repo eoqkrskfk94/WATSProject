@@ -10,7 +10,7 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.mjkim.watsproject.LocationDetailScreen;
+import com.example.mjkim.watsproject.LocationDetailScreenActivity;
 import com.example.mjkim.watsproject.R;
 
 import java.util.ArrayList;
@@ -90,8 +90,8 @@ public class NaverLocationAdapter extends BaseAdapter{
 
         // 이름으로 검색에서 리스트 뷰를 누르면 장소 정보를 자세히본다.
         // 리뷰 작성하기에서 리스트 뷰를 누르면 리뷰 작성으로 간다.
-        if(save == 1) intent = new Intent(m_activity, LocationDetailScreen.class);
-        else intent = new Intent(m_activity, LocationDetailScreen.class);
+        if(save == 1) intent = new Intent(m_activity, LocationDetailScreenActivity.class);
+        else intent = new Intent(m_activity, LocationDetailScreenActivity.class);
 
 //putExtra 로 선택한 아이템의 정보를 인텐트로 넘겨 줄 수 있다.
 

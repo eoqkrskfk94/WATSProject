@@ -13,8 +13,8 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
+        android:icon="@drawable/logo"
+        android:label="WeMap"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
@@ -30,14 +30,17 @@
         <activity android:name=".MainScreenActivity" />
         <activity android:name=".SearchScreenActivity" />
         <activity android:name=".SearchDetailScreenActivity" />
-        <activity android:name=".LocationDetailScreen" />
+        <activity android:name=".LocationDetailScreenActivity" />
         <activity android:name=".CreateReviewScreenActivity" />
         <activity android:name=".BlogScreenActivity" />
         <activity android:name=".ChangeInfoScreenActivity" />
         <activity android:name=".CreateReviewScreenActivity" />
+
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="9sx658cqs0" />
+
+        <activity android:name=".MoreBlogScreenActivity"></activity>
     </application>
 
 </manifest>

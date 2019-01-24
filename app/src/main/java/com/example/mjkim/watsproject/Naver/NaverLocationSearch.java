@@ -2,10 +2,9 @@ package com.example.mjkim.watsproject.Naver;
 
 import android.os.AsyncTask;
 import android.text.Html;
-
+import com.example.mjkim.watsproject.Review.ReviewFirebaseJson;
 import org.json.JSONArray;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
@@ -21,6 +20,7 @@ public class NaverLocationSearch extends AsyncTask<String, Void, ArrayList<Naver
     public static int total_num = 0;
 
 
+    private ReviewFirebaseJson reviewFirebaseJson = new ReviewFirebaseJson();
     private ArrayList<String> location_result;
 
 
@@ -72,13 +72,13 @@ public class NaverLocationSearch extends AsyncTask<String, Void, ArrayList<Naver
                 JSONObject obj = items.getJSONObject(i);
                 name = obj.getString("title");
                 name = Html.fromHtml(name).toString();
-                //firebaseJson.getJson(name,num);
-
+                address = obj.getString("address");
+                String nameAndAddress = name + " , " + address;
+                reviewFirebaseJson.getJson(nameAndAddress,num);
                 link = obj.getString("link");
                 category = obj.getString("category");
                 description = obj.getString("description");
                 telephone = obj.getString("telephone");
-                address = obj.getString("address");
                 road_address = obj.getString("roadAddress");
                 mapx = obj.getInt("mapx");
                 mapy = obj.getInt("mapy");
@@ -143,7 +143,7 @@ public class NaverLocationSearch extends AsyncTask<String, Void, ArrayList<Naver
         } catch (Exception e) {
         }
 
-        System.out.println(response);
+        //System.out.println(response); //검색결과 출력
         return response;
     }
 }

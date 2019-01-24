@@ -46,6 +46,7 @@
     </LinearLayout>
 
     <ScrollView
+        android:id="@+id/scroll_view"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
@@ -302,7 +303,7 @@
                 <ImageView
                     android:id="@+id/imageView15"
                     android:layout_width="match_parent"
-                    android:layout_height="10dp"
+                    android:layout_height="15dp"
                     android:layout_marginLeft="40dp"
                     android:layout_marginRight="40dp"
                     android:layout_marginTop="15dp"
@@ -338,6 +339,12 @@
 
             </LinearLayout>
 
+            <ImageView
+                android:id="@+id/imageView18"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/boundary" />
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
@@ -351,22 +358,33 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="작성된 후기"
-                    android:textColor="@color/colorPrimary" />
+                    android:textColor="@color/colorPrimary"
+                    android:textSize="20sp" />
 
                 <Button
-                    android:id="@+id/see_more_button3"
-                    android:layout_width="60dp"
+                    android:id="@+id/see_more_review"
+                    android:layout_width="wrap_content"
                     android:layout_height="20dp"
                     android:layout_gravity="right"
                     android:background="@android:color/transparent"
                     android:text="전체보기"
-                    android:textColor="@android:color/darker_gray" />
+                    android:textColor="@android:color/darker_gray"
+                    android:textSize="18sp" />
             </LinearLayout>
 
-            <android.support.v7.widget.RecyclerView
+            <ListView
+                android:id="@+id/review_list"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="horizontal" />
+                android:layout_height="700dp"
+                android:layout_marginLeft="3dp"
+                android:orientation="horizontal"
+                android:scrollbars="none" />
+
+            <ImageView
+                android:id="@+id/imageView18"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/boundary" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -399,7 +417,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="700dp"
                 android:layout_gravity="center"
-                android:layout_marginLeft="3dp"
                 android:foregroundGravity="center"
                 android:orientation="horizontal"
                 android:scrollbars="none" />

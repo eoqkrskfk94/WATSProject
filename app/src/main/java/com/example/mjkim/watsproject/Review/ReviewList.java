@@ -15,7 +15,7 @@ public class ReviewList {
     private String phone_number;
     private String review_description;
     private String name;
-    private String email;
+    private String userEmail;
     private double mapx;
     private double mapy;
     private String date;
@@ -141,12 +141,12 @@ public class ReviewList {
         this.name = name;
     }
 
-    public String getEmail() {
-        return email;
+    public String getUserEmail() {
+        return userEmail;
     }
 
-    public void setEmail(String email) {
-        this.email = email;
+    public void setUserEmail(String userEmail) {
+        this.userEmail = userEmail;
     }
 
     public double getMapx() {
@@ -167,7 +167,8 @@ public class ReviewList {
 
     public ReviewList(){};
 
-    public ReviewList (String location_name, String location_address, String phone_number, String location_category, String review_description, double mapx, double mapy, Boolean tag1, Boolean tag2, Boolean tag3, Boolean tag4, Boolean tag5, Boolean tag6, String date, String userName){
+    public ReviewList (String location_name, String location_address, String phone_number, String location_category, String review_description,
+                       double mapx, double mapy, Boolean tag1, Boolean tag2, Boolean tag3, Boolean tag4, Boolean tag5, Boolean tag6, String date, String userName, String key){
 
         this.location_name = location_name;
         this.location_address = location_address;
@@ -184,6 +185,7 @@ public class ReviewList {
         this.tag6 = tag6;
         this.date = date;
         this.userName = userName;
+        this.key = key;
     }
 
 }

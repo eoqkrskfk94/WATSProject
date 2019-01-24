@@ -13,6 +13,7 @@ import android.widget.Toast;
 import com.example.mjkim.watsproject.Naver.NaverLocationAdapter;
 import com.example.mjkim.watsproject.Naver.NaverLocationList;
 import com.example.mjkim.watsproject.Naver.NaverLocationSearch;
+import com.example.mjkim.watsproject.Review.ReviewFirebaseJson;
 
 import java.util.ArrayList;
 
@@ -21,6 +22,7 @@ public class SearchDetailScreenActivity extends AppCompatActivity {
     private NaverLocationSearch naverLocationSearch;
     private NaverLocationAdapter naverLocationAdapter;
     ArrayList<NaverLocationList> naverLocationLists;
+    private ReviewFirebaseJson reviewFirebaseJson = new ReviewFirebaseJson();
 
     int i, save = 0;
 
@@ -48,8 +50,9 @@ public class SearchDetailScreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                ReviewFirebaseJson.reviewJson.clear(); //검색할때 파이어베이서에 있는 리스트 초기화
+
                 naverLocationSearch = new NaverLocationSearch();
-                naverLocationLists = new ArrayList<NaverLocationList>();
                 naverLocationLists = new ArrayList<NaverLocationList>();
 
                 EditText searchBar = (EditText) findViewById(R.id.editSearch);

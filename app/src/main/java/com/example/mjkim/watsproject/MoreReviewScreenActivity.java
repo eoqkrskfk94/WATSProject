@@ -1,6 +1,5 @@
 package com.example.mjkim.watsproject;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -8,15 +7,15 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.mjkim.watsproject.Naver.NaverBlogAdapter;
+import com.example.mjkim.watsproject.Review.ReviewAdapter;
 
-public class MoreBlogScreenActivity extends AppCompatActivity {
+public class MoreReviewScreenActivity extends AppCompatActivity {
 
-    private NaverBlogAdapter naverBlogAdapter;
-
+    private ReviewAdapter reviewAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.more_blog_screen);
+        setContentView(R.layout.more_review_screen);
 
         Button cancelButton = (Button)findViewById(R.id.cancel_button);
 
@@ -30,11 +29,10 @@ public class MoreBlogScreenActivity extends AppCompatActivity {
 
         NaverBlogAdapter.select = 0;
 
-        ListView lv = (ListView) findViewById(R.id.more_blog_list);
+        ListView lv = (ListView) findViewById(R.id.more_review_list);
 
 
-        naverBlogAdapter = new NaverBlogAdapter(MoreBlogScreenActivity.this, LocationDetailScreenActivity.blogList);
-        lv.setAdapter(naverBlogAdapter);
-
+        reviewAdapter = new ReviewAdapter(MoreReviewScreenActivity.this, LocationDetailScreenActivity.reviewLists);
+        lv.setAdapter(reviewAdapter);
     }
 }

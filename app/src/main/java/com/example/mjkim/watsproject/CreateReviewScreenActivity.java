@@ -37,6 +37,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
     Dialog myDialog;
     CheckBox chk[] = new CheckBox[6]; //태그 체크박스
     String userName = ""; //유저 별명
+    String key = ""; //키값
     EditText review_text; //후기 적성부분
     Boolean tag1,tag2,tag3,tag4,tag5,tag6; //태그
     private FirebaseStorage storage;
@@ -153,6 +154,8 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
         Intent review_intent = getIntent();
 
         String location_name = review_intent.getExtras().getString("NAME");
+ //       int index = location_name.indexOf(" , ");
+  //      location_name = location_name.substring(0, index);
         String location_category = review_intent.getExtras().getString("CATEGORY");
         String location_addess = review_intent.getExtras().getString("ADDRESS");
         String location_number = review_intent.getExtras().getString("TELEPHONE");
@@ -169,7 +172,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
         if(chk[4].isChecked() == true) tag5 = true; else tag5 = false;
         if(chk[5].isChecked() == true) tag6 = true; else tag6 = false;
 
-        reviewList = new ReviewList(location_name, location_addess, location_number, location_category, review_description, location_mapx, location_mapy, tag1, tag2, tag3, tag4, tag5, tag6, mTime, userName);
+        reviewList = new ReviewList(location_name, location_addess, location_number, location_category, review_description, location_mapx, location_mapy, tag1, tag2, tag3, tag4, tag5, tag6, mTime, userName, key);
 
         String nameAndAdress = ""; //이름이랑 주소 같이 나오는 스트
 

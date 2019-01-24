@@ -7,11 +7,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.mjkim.watsproject.LocationDetailScreenActivity;
 import com.example.mjkim.watsproject.R;
+import com.example.mjkim.watsproject.Review.ReviewFirebaseJson;
+import com.example.mjkim.watsproject.Review.ReviewList;
+
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -21,6 +27,12 @@ public class NaverLocationAdapter extends BaseAdapter{
     private Activity m_activity;
     private ArrayList<NaverLocationList> arr;
     private int save;
+    ImageView tagShow1,tagShow2,tagShow3,tagShow4,tagShow5,tagShow6;
+    private Boolean tag1, tag2, tag3, tag4, tag5, tag6;
+    private Boolean[][] tag_double_array = new Boolean[6][];
+
+    public static ArrayList<ReviewList> reviewLists;
+    private int length;
 
 
     public NaverLocationAdapter(Activity act, ArrayList<NaverLocationList> arr_item, int save) {
@@ -51,6 +63,87 @@ public class NaverLocationAdapter extends BaseAdapter{
             convertView = mInflater.inflate(res, parent, false);
 
         }
+
+        int[] tag_array = {0,0,0,0,0,0};
+
+        if(ReviewFirebaseJson.reviewJson.size() > position){
+
+            reviewLists = new ArrayList<ReviewList>();
+            int num = 0;
+
+
+            String json = ReviewFirebaseJson.reviewJson.get(position).getReview_json_string();
+            System.out.println(json);
+            length = ReviewFirebaseJson.reviewJson.get(position).getReview_count();
+            System.out.println("길이: " + length);
+            JSONArray IDs = ReviewFirebaseJson.reviewJson.get(position).getReview_json_userID();
+            System.out.println("아이디: " + IDs);
+            String location_name = ReviewFirebaseJson.reviewJson.get(position).getLocation_name();
+            System.out.println("장소: " + location_name);
+
+            try{
+                JSONObject obj = new JSONObject(json);
+
+
+
+                for (int i = 0; i < length; i++) {
+                    JSONObject jsonObj = obj.getJSONObject(IDs.getString(i));
+                    tag1 = jsonObj.getBoolean("tag1");
+                    if(tag1 == true) tag_array[0]  = tag_array[0] +  1;
+                    tag2 = jsonObj.getBoolean("tag2");
+                    if(tag2 == true) tag_array[1]  = tag_array[1] +  1;
+                    tag3 = jsonObj.getBoolean("tag3");
+                    if(tag3 == true) tag_array[2]  = tag_array[2] +  1;
+                    tag4 = jsonObj.getBoolean("tag4");
+                    if(tag4 == true) tag_array[3]  = tag_array[3] +  1;
+                    tag5 = jsonObj.getBoolean("tag5");
+                    if(tag5 == true) tag_array[4]  = tag_array[4] +  1;
+                    tag6 = jsonObj.getBoolean("tag6");
+                    if(tag6 == true) tag_array[5]  = tag_array[5] +  1;
+
+
+                }
+
+
+            }catch (Exception e) {
+                e.printStackTrace();
+
+            }
+
+        }
+
+        //태그 기준 설정 및 출력
+
+        tagShow1 = (ImageView) convertView.findViewById(R.id.tag_done_1);
+        tagShow2 = (ImageView) convertView.findViewById(R.id.tag_done_2);
+        tagShow3 = (ImageView) convertView.findViewById(R.id.tag_done_3);
+        tagShow4 = (ImageView) convertView.findViewById(R.id.tag_done_4);
+        tagShow5 = (ImageView) convertView.findViewById(R.id.tag_done_5);
+        tagShow6 = (ImageView) convertView.findViewById(R.id.tag_done_6);
+
+        if(tag_array[0] > length/2 &&  tag_array[0] != 0) tagShow1.setImageResource(R.drawable.restroom);
+        else tagShow1.setImageResource(R.drawable.restroom_dimmed);
+
+        if(tag_array[1] > length/2 &&  tag_array[1] != 0) tagShow2.setImageResource(R.drawable.parking);
+        else tagShow2.setImageResource(R.drawable.parking_dimmed);
+
+        if(tag_array[2] > length/2 &&  tag_array[2] != 0) tagShow3.setImageResource(R.drawable.elevator);
+        else tagShow3.setImageResource(R.drawable.elevator_dimmed);
+
+        if(tag_array[3] > length/2 &&  tag_array[3] != 0) tagShow4.setImageResource(R.drawable.slope);
+        else tagShow4.setImageResource(R.drawable.slope_dimmed);
+
+        if(tag_array[4] > length/2 &&  tag_array[4] != 0) tagShow5.setImageResource(R.drawable.table);
+        else tagShow5.setImageResource(R.drawable.table_dimmed);
+
+        if(tag_array[5] > length/2 &&  tag_array[5] != 0) tagShow6.setImageResource(R.drawable.assistant);
+        else tagShow6.setImageResource(R.drawable.assistant_dimmed);
+
+        //태그 기준 설정 및 출력 끝
+
+
+
+
 
 
         TextView title = (TextView)convertView.findViewById(R.id.vi_name); //장소 이름
@@ -93,7 +186,7 @@ public class NaverLocationAdapter extends BaseAdapter{
         if(save == 1) intent = new Intent(m_activity, LocationDetailScreenActivity.class);
         else intent = new Intent(m_activity, LocationDetailScreenActivity.class);
 
-//putExtra 로 선택한 아이템의 정보를 인텐트로 넘겨 줄 수 있다.
+        //putExtra 로 선택한 아이템의 정보를 인텐트로 넘겨 줄 수 있다.
 
         intent.putExtra("NAME", arr.get(a).getName());
         intent.putExtra("CATEGORY", arr.get(a).getCategory());
@@ -105,6 +198,8 @@ public class NaverLocationAdapter extends BaseAdapter{
         intent.putExtra("MAPX", arr.get(a).getMapx());
         intent.putExtra("MAPY", arr.get(a).getMapy());
         intent.putExtra("NUMBER", a);
+
+
 
 
         m_activity.startActivity(intent);

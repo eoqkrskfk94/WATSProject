@@ -173,14 +173,16 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
 
 
         if (mapFragment == null) {
-            System.out.println("절레절레");
+
             mapFragment = MapFragment.newInstance();
+            System.out.println("첫번째 : " + mapFragment.toString());
             getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, mapFragment).addToBackStack("parent").commit();
 
         }
         else {
-            System.out.println("도리도리");
-            mapFragment = MapFragment.newInstance();
+            System.out.println("두번째 : " + mapFragment.toString());
+            // 원래 꺼를 지워줘야 지도가 다시 실행되도 안 튕김
+            getSupportFragmentManager().beginTransaction().remove(mapFragment);
             getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, mapFragment).addToBackStack("parent").commit();
 
         }
@@ -210,7 +212,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         naverMap.setLayerGroupEnabled(NaverMap.LAYER_GROUP_TRANSIT, true);
         naverMap.setIndoorEnabled(true);
 
-
+        System.out.println("세번째 : " + mapFragment.toString());
         // 마커 객체 생성, 설정
         markers = new ArrayList<Marker>();
         markers.add(0, new Marker(new LatLng(36.102905, 129.388745)));

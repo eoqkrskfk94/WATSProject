@@ -48,10 +48,35 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_above="@id/main_nav"
-        android:layout_below="@id/menu"
-        >
+        android:layout_below="@id/menu">
 
     </FrameLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="25dp"
+        android:layout_marginRight="25dp"
+        android:layout_marginTop="300dp"
+        android:layout_marginBottom="25dp">
+        <FrameLayout
+            android:id="@+id/stats_frame_layout"
+            android:layout_width="match_parent"
+            android:layout_height="265dp"
+            android:layout_gravity="bottom"
+            android:visibility="invisible"
+            android:background="@android:color/background_light">
+
+            <fragment
+                android:id="@+id/stats_fragment"
+                android:layout_marginTop="100dp"
+                android:name="com.example.mjkim.watsproject.StatsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                android:background="@android:color/background_light" />
+        </FrameLayout>
+    </LinearLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/main_nav"

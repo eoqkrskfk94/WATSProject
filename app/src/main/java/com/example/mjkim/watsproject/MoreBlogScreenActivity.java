@@ -11,7 +11,7 @@ import com.example.mjkim.watsproject.Naver.NaverBlogAdapter;
 
 public class MoreBlogScreenActivity extends AppCompatActivity {
 
-    private NaverBlogAdapter adapter;
+    private NaverBlogAdapter naverBlogAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +33,8 @@ public class MoreBlogScreenActivity extends AppCompatActivity {
         ListView lv = (ListView) findViewById(R.id.more_blog_list);
 
 
-        adapter = new NaverBlogAdapter(MoreBlogScreenActivity.this, LocationDetailScreenActivity.blogList);
-        lv.setAdapter(adapter);
+        naverBlogAdapter = new NaverBlogAdapter(MoreBlogScreenActivity.this, LocationDetailScreenActivity.blogList);
+        lv.setAdapter(naverBlogAdapter);
 
     }
 }

@@ -40,7 +40,10 @@
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="9sx658cqs0" />
 
-        <activity android:name=".MoreBlogScreenActivity"></activity>
+        <activity android:name=".MoreBlogScreenActivity" />
+        <activity android:name=".CertainReviewScreenActivity" />
+        <activity android:name=".MoreReviewScreenActivity" />
+        <activity android:name=".MyReviewScreenActivity"></activity>
     </application>
 
 </manifest>

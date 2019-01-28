@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.support.v4.view.ViewPager;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,6 +38,10 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
     public static ArrayList<ReviewList> reviewLists;
     private NaverBlogSearch naverBlogSearch;
     private NaverBlogAdapter naverBlogAdapter;
+    ViewPager viewPager;
+    LinearLayout sliderDots;
+    public int dotCounts;
+    public ImageView[] dots;
     private ReviewAdapter reviewAdapter;
     public static int length; //리뷰 갯수
 
@@ -52,6 +57,8 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.location_detail_screen);
+
+
 
         // 제일 위부터 보기
         scrollView = new ScrollView(this);
@@ -401,6 +408,9 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
     public void openBlogTab(){
         Intent intent = new Intent(this, MoreBlogScreenActivity.class);
         startActivity(intent);
+    }
+
+    private class ActivityMainBinding {
     }
 
     //리뷰 전체보기 버튼 기능

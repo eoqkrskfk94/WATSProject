@@ -78,4 +78,23 @@
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
         android:src="@drawable/orange_line" />
+
+    <Button
+        android:id="@+id/see_information_button"
+        android:layout_width="match_parent"
+        android:layout_height="30dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="35dp"
+        android:background="@android:color/transparent"
+        android:gravity="left|center"
+        android:text="어플 정보" />
+
+    <ImageView
+        android:id="@+id/imageView22"
+        android:layout_width="match_parent"
+        android:layout_height="10dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:src="@drawable/orange_line" />
+
 </LinearLayout>

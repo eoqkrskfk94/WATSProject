@@ -42,7 +42,8 @@
 
         <activity android:name=".MoreBlogScreenActivity" />
         <activity android:name=".CertainReviewScreenActivity" />
-        <activity android:name=".MoreReviewScreenActivity"></activity>
+        <activity android:name=".MoreReviewScreenActivity" />
+        <activity android:name=".MyReviewScreenActivity"></activity>
     </application>
 
 </manifest>

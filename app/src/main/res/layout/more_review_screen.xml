@@ -21,10 +21,11 @@
         android:id="@+id/imageView7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="5dp"
-        app:srcCompat="@drawable/long_horz_line" />
+        android:layout_marginTop="10dp"
+        app:srcCompat="@drawable/new_horz_line" />
 
     <ListView
         android:id="@+id/more_review_list"

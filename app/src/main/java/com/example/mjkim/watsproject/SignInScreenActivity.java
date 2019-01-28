@@ -45,7 +45,7 @@ public class SignInScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.sign_in_screen);
+        setContentView(R.layout.activity_sign_in_screen);
         myDialog = new Dialog(this); //회원가입 팝업 변수 선언
         mAuth = FirebaseAuth.getInstance();
         email=(EditText)findViewById(R.id.edit_id); //이메일 선언

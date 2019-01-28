@@ -12,7 +12,7 @@ public class CertainReviewScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.certain_review_screen);
+        setContentView(R.layout.activity_certain_review_screen);
 
 
         Button backButton = (Button)findViewById(R.id.back_button); //돌아가기 버튼 선언

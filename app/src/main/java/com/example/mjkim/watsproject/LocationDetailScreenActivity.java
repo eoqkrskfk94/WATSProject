@@ -51,7 +51,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.location_detail_screen);
+        setContentView(R.layout.activity_location_detail_screen);
 
         // 제일 위부터 보기
         scrollView = new ScrollView(this);

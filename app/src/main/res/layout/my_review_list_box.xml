@@ -180,7 +180,7 @@
                 android:orientation="horizontal">
 
                 <Button
-                    android:id="@+id/review_button"
+                    android:id="@+id/revise_button"
                     android:layout_width="60dp"
                     android:layout_height="50dp"
                     android:layout_marginLeft="15dp"

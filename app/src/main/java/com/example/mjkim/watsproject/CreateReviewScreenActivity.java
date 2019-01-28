@@ -12,7 +12,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.mjkim.watsproject.Review.ReviewData;
@@ -52,7 +51,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.create_review_screen);
+        setContentView(R.layout.activity_create_review_screen);
         myDialog = new Dialog(this); //등록하기 팝업 변수 선언
 
         //파이어베이스 유저 관련 변수 선언

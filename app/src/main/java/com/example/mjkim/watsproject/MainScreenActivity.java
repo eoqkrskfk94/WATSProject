@@ -2,7 +2,6 @@ package com.example.mjkim.watsproject;
 
 import android.Manifest;
 import android.app.Dialog;
-import android.app.FragmentManager;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
@@ -72,7 +71,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     @Override
     protected void onCreate(Bundle savedInstanceState) {     
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_screen);
+        setContentView(R.layout.activity_main_screen);
 
         backPressCloseHandler = new BackPressCloseHandler(this);
 
@@ -122,7 +121,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         }
 
         // 기본 화면 지도 뜨게 함
-        setMapFragment();
+        setFragment(listFragment);
 
 
 
@@ -182,7 +181,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         else {
             System.out.println("두번째 : " + mapFragment.toString());
             // 원래 꺼를 지워줘야 지도가 다시 실행되도 안 튕김
-            getSupportFragmentManager().beginTransaction().remove(mapFragment);
+            //getSupportFragmentManager().beginTransaction().remove(mapFragment);
             getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, mapFragment).addToBackStack("parent").commit();
 
         }

@@ -36,13 +36,10 @@ public class SignInScreenActivity extends AppCompatActivity {
     private EditText month;
     private EditText day;
     private EditText nickname;
-    private Button check_email;
     public UserInformation userInformation=new UserInformation();
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
-
-
-
+    
     FirebaseAuth mAuth;
     FirebaseUser currentUser;
     @Override
@@ -61,9 +58,6 @@ public class SignInScreenActivity extends AppCompatActivity {
         nickname=(EditText)findViewById(R.id.edit_nickname); // 별명 선언
 
         Button backButton = (Button)findViewById(R.id.back_button); //돌아가기 버튼 선언
-
-
-
 
         //돌아가기 버튼 눌렀을때 전 화면을 돌아간다
         backButton.setOnClickListener(new View.OnClickListener() {
@@ -107,7 +101,7 @@ public class SignInScreenActivity extends AppCompatActivity {
     //회원가입 하는 메소드
     private void createUser(String str_email, String str_password) {
         String str_password_check=password_check.getText().toString();
-        String str_name=name.getText().toString();
+        final String str_name=name.getText().toString();
         String str_year=year.getText().toString();
         String str_month=month.getText().toString();
         String str_day=day.getText().toString();
@@ -121,8 +115,8 @@ public class SignInScreenActivity extends AppCompatActivity {
         userInformation.setUserDay(str_day);
         userInformation.setUserNickname(str_nickname);
         userInformation=new UserInformation(str_email,str_name,str_year,str_month,str_day,str_nickname);
-        DatabaseReference userRef=databaseReference.child("user lists");
-        userRef.child(str_name).push().setValue(userInformation); // email 에는 @가 들어가서 파이어베이스에 저장이 안됨.
+        final DatabaseReference userRef=databaseReference.child("user lists");
+         // email 에는 @가 들어가서 파이어베이스에 저장이 안됨.
 
         //비밀번호와 비밀번호 확인이 다를경우 재시작.
         if (!str_password.equals(str_password_check)) {
@@ -146,9 +140,10 @@ public class SignInScreenActivity extends AppCompatActivity {
                                     Toast.makeText(SignInScreenActivity.this, "다시 확인해주세요", Toast.LENGTH_SHORT).show();
                                 }
                             } else {
+                                //가입이 성공적일때.,
                                 currentUser = mAuth.getCurrentUser(); // 정보를 currentUser에 저장.
                                 mAuth.setLanguageCode("ko"); //한국어
-
+                                userRef.child(str_name).push().setValue(userInformation);
                                 //이메일 인증메일 보내기.
                                 mAuth.getCurrentUser().sendEmailVerification()
                                         .addOnCompleteListener(new OnCompleteListener<Void>() {
@@ -168,6 +163,4 @@ public class SignInScreenActivity extends AppCompatActivity {
                     });
         }
     }
-
-
 }

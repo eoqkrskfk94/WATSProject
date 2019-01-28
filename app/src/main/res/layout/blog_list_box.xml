@@ -6,6 +6,7 @@
     android:id="@+id/vi_view"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:layout_gravity="center_horizontal"
     android:orientation="vertical">
 
 
@@ -13,7 +14,7 @@
 
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:padding="5dp">
 
 
@@ -48,6 +49,7 @@
                         android:id="@+id/blog_name"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
+                        android:layout_marginRight="20dp"
                         android:layout_weight="1"
                         android:ellipsize="end"
                         android:lines="1"
@@ -66,14 +68,6 @@
                         android:textSize="10sp" />
                 </LinearLayout>
 
-                <TextView
-                    android:id="@+id/blog_blogger"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="15dp"
-                    android:layout_weight="1"
-                    android:gravity="right"
-                    android:text="블로거" />
 
             </LinearLayout>
 
@@ -95,15 +89,16 @@
                 android:textSize="13sp"
                 android:typeface="monospace" />
 
-            <Button
-                android:id="@+id/see_more_button"
+            <TextView
+                android:id="@+id/blog_blogger"
                 android:layout_width="wrap_content"
-                android:layout_height="30dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="right"
                 android:layout_marginBottom="10dp"
-                android:background="@android:color/transparent"
-                android:text="더보기"
-                android:textColor="@color/colorAccent" />
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:gravity="right"
+                android:text="블로거" />
 
 
         </LinearLayout>

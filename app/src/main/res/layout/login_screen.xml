@@ -114,6 +114,14 @@
                 android:textColor="@color/colorAccent" />
         </LinearLayout>
 
+        <Button
+            android:id="@+id/nonmember_button"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:background="@android:color/transparent"
+            android:text="비회원으로 이용하기"
+            android:textColor="@color/colorAccent" />
+
 
     </LinearLayout>
 

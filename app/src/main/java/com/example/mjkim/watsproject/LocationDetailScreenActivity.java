@@ -284,13 +284,9 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
 
             String json = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getReview_json_string();
-            System.out.println(json);
             length = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getReview_count();
-            System.out.println("안쪽 길이: " + length);
             JSONArray IDs = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getReview_json_userID();
-            System.out.println("안쪽 아이디: " + IDs);
             String Fire_locationName = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getLocation_name();
-            System.out.println("안쪽 이름: " + Fire_locationName);
 
             try{
                 JSONObject obj = new JSONObject(json);
@@ -339,9 +335,6 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
                         reviewLists.add(num++, new ReviewList(intent.getExtras().getString("NAME"), locationAddress, locationNumber, locationCategory, reviewDescription, locationMapx, locationMapx,
                                 tag1, tag2, tag3, tag4, tag5, tag6, reviewDate, userName, key));
-                        System.out.println("여기 되면 우선 오케이");
-
-
 
                     }
                 }
@@ -355,7 +348,6 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
         ReviewAdapter.select = 1;
 
         ListView reviewListView = (ListView) findViewById(R.id.review_list);
-        System.out.println("사이즈 크기: " + reviewLists.size());
         if(reviewLists.size() == 0) {
 
             reviewListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 50));

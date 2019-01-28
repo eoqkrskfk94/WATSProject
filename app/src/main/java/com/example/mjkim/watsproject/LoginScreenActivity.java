@@ -56,6 +56,7 @@ public class LoginScreenActivity extends AppCompatActivity {
         Button findIDButton = (Button)findViewById(R.id.find_id); //아이디 찾기 선언
         Button findPasswButton = (Button)findViewById(R.id.find_passw); //비밀번호 찾기 버튼 선언
         Button createUserButton = (Button)findViewById(R.id.create_acc); //회원가입 버튼 선언
+        Button nonMemberButton = (Button)findViewById(R.id.nonmember_button); //비회원 이용하기 버튼 선언
         final EditText idEdit=(EditText)findViewById(R.id.id_text); //입력 Id
         final EditText passEdit=(EditText)findViewById(R.id.pass_text); // 입력 pass
 
@@ -64,6 +65,15 @@ public class LoginScreenActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(LoginScreenActivity.this,SignInScreenActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        //비회원 이용하기 버튼을 눌렀을때
+        createUserButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent=new Intent(LoginScreenActivity.this,MainScreenActivity.class);
                 startActivity(intent);
             }
         });
@@ -95,17 +105,17 @@ public class LoginScreenActivity extends AppCompatActivity {
     }
 
 
-    ////
+
     /// 아이디 찾는 메소드
     public  void FindId(){
         Context context=getApplicationContext();
         LayoutInflater inflater=(LayoutInflater)context.getSystemService(LAYOUT_INFLATER_SERVICE);
-        View layout=inflater.inflate(R.layout.id_find_dialog,null);
+        View layout=inflater.inflate(R.layout.find_id_popup,null);
 
         AlertDialog.Builder aDialog=new AlertDialog.Builder(this);
         aDialog.setView(layout);
 
-        final EditText name=(EditText)layout.findViewById(R.id.edittextname);
+        final EditText name=(EditText)layout.findViewById(R.id.edit_id);
         final EditText year=(EditText)layout.findViewById(R.id.edit_year);
         final EditText month=(EditText)layout.findViewById(R.id.edit_month);
         final EditText day=(EditText)layout.findViewById(R.id.edit_day);

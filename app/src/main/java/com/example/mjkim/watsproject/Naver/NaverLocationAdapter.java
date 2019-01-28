@@ -29,7 +29,6 @@ public class NaverLocationAdapter extends BaseAdapter{
     private int save;
     ImageView tagShow1,tagShow2,tagShow3,tagShow4,tagShow5,tagShow6;
     private Boolean tag1, tag2, tag3, tag4, tag5, tag6;
-    private Boolean[][] tag_double_array = new Boolean[6][];
 
     public static ArrayList<ReviewList> reviewLists;
     private int length;
@@ -73,13 +72,9 @@ public class NaverLocationAdapter extends BaseAdapter{
 
 
             String json = ReviewFirebaseJson.reviewJson.get(position).getReview_json_string();
-            System.out.println(json);
             length = ReviewFirebaseJson.reviewJson.get(position).getReview_count();
-            System.out.println("길이: " + length);
             JSONArray IDs = ReviewFirebaseJson.reviewJson.get(position).getReview_json_userID();
-            System.out.println("아이디: " + IDs);
             String location_name = ReviewFirebaseJson.reviewJson.get(position).getLocation_name();
-            System.out.println("장소: " + location_name);
 
             try{
                 JSONObject obj = new JSONObject(json);

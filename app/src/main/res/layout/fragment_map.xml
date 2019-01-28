@@ -11,9 +11,32 @@
         android:layout_height="match_parent"
         android:text="지도" />
 
-    <fragment android:layout_width="match_parent"
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <fragment android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/map"
         android:name="com.naver.maps.map.MapFragment" />
+
+        <FrameLayout
+            android:id="@+id/fragmentLayout"
+            android:layout_width="match_parent"
+            android:layout_height="265dp"
+            android:layout_gravity="bottom"
+            android:visibility="invisible"
+            android:background="@android:color/background_light">
+
+            <fragment
+                android:id="@+id/stats_fragment"
+                android:name="com.example.mjkim.watsproject.StatsFragment"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="visible"
+                android:background="@android:color/background_light" />
+
+        </FrameLayout>
+    </FrameLayout>
 
 </FrameLayout>

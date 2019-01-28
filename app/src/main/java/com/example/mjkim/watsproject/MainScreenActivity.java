@@ -179,6 +179,8 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
 
         }
         else {
+            mapFragment = MapFragment.newInstance();
+            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, mapFragment).commit();
             System.out.println("두번째 : " + mapFragment.toString());
             // 원래 꺼를 지워줘야 지도가 다시 실행되도 안 튕김
             //getSupportFragmentManager().beginTransaction().remove(mapFragment);
@@ -204,6 +206,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     // 지도 관련 정보 사용할 때
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
+
         // 현위치 버튼 o, 축척바 x 등 기타 지도 세팅
         naverMap.getUiSettings().setLocationButtonEnabled(true);
         naverMap.getUiSettings().setScaleBarEnabled(false);

@@ -2,6 +2,7 @@ package com.example.mjkim.watsproject;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
@@ -58,17 +59,6 @@ public class MyReviewScreenActivity extends AppCompatActivity {
         reviewLists = new ArrayList<ReviewList>();
         myDialog = new Dialog(this); //로딩 팝업 변수 선언
         totalLocationCount = 0;
-
-
-        Button cancelButton = (Button)findViewById(R.id.cancel_button);
-
-        //cancel 버튼 눌렀을때 전 화면을 돌아간다
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
 
 
 
@@ -228,11 +218,13 @@ public class MyReviewScreenActivity extends AppCompatActivity {
             }
         }, 2300);
 
+    }
 
-
-
-
-
-
+    // 뒤로가기 버튼 누르면 메인으로
+    public void BackButton(View view) {
+        System.out.println("cancel");
+        finish();
+        Intent intent = new Intent(this, MainScreenActivity.class);
+        startActivity(intent);
     }
 }

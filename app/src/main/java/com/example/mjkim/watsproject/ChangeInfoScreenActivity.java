@@ -10,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 
 public class ChangeInfoScreenActivity extends AppCompatActivity {
-
     Dialog myDialog;
 
     @Override
@@ -23,6 +22,8 @@ public class ChangeInfoScreenActivity extends AppCompatActivity {
 
 
     }
+
+
 
 
     public void ChangeButton (View view){ //수정하기 버튼 눌렀을때
@@ -49,5 +50,10 @@ public class ChangeInfoScreenActivity extends AppCompatActivity {
 
     }
 
-
+    // 뒤로가기 버튼 누르면 메인으로
+    public void BackButton(View view) {
+        finish();
+        Intent intent = new Intent(this, MainScreenActivity.class);
+        startActivity(intent);
+    }
 }

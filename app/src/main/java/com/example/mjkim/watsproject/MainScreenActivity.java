@@ -2,12 +2,14 @@ package com.example.mjkim.watsproject;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -22,9 +24,18 @@ import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.Toast;
 
+import com.example.mjkim.watsproject.Convert.GeoTrans;
+import com.example.mjkim.watsproject.Convert.GeoTransPoint;
 import com.example.mjkim.watsproject.FirstSreenFragments.ListFragment;
 import com.example.mjkim.watsproject.FirstSreenFragments.MypageFragment;
 import com.example.mjkim.watsproject.OtherClasses.BackPressCloseHandler;
+import com.example.mjkim.watsproject.Review.ReviewList;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.CameraUpdate;
@@ -42,20 +53,17 @@ import java.util.ArrayList;
 public class MainScreenActivity extends AppCompatActivity implements OnMapReadyCallback, NaverMap.OnLocationChangeListener {
     // 쥐피에스
     private FusedLocationSource locationSource;
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
-    private static final int REQUEST_CODE_LOCATION = 2;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000, REQUEST_CODE_LOCATION = 2;
     private BackPressCloseHandler backPressCloseHandler;
     private static double myLatitude, myLongitude;
-    private static Location location;
     private static LatLng latLng;
 
-    int check = 0;
+    static public int totalLocationCount;
+    private int check = 0, i = 0;
     private ArrayList<Marker> markers;
 
-
     private BottomNavigationView mMainNav; //하단 메뉴 아이콘
-    private FrameLayout mMainFrame;
-    private FrameLayout statsFrame;
+    private FrameLayout mMainFrame, statsFrame;
     private Dialog reviewDialog;
 
     //화면에서의 fragment들 선언
@@ -66,6 +74,18 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
 
     Marker marker;
 
+    // 리뷰 정보 담을 변수
+    private ReviewList reviewList;
+    public static ArrayList<ReviewList> reviewLists;
+    FirebaseAuth auth;
+    private DatabaseReference mDatabase;
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private String userEmail;
+    final Context context;
+    {
+        context = this;
+    }
+
 
 
     @Override
@@ -73,6 +93,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
+        totalLocationCount = 0;
         backPressCloseHandler = new BackPressCloseHandler(this);
 
         Button searchButton = (Button)findViewById(R.id.search_button);
@@ -81,6 +102,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                finish();
                 Intent intent=new Intent(MainScreenActivity.this,SearchScreenActivity.class);
                 startActivity(intent);
             }
@@ -89,6 +111,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         MapFragment mapFragment = (MapFragment)getSupportFragmentManager().findFragmentById(R.id.main_frame);
 
         reviewDialog = new Dialog(this); //회원가입 팝업 변수 선언
+        reviewLists = new ArrayList<ReviewList>(); //리뷰 리스트 선언
 
         mMainFrame = (FrameLayout) findViewById(R.id.main_frame);
         mMainNav = (BottomNavigationView) findViewById(R.id.main_nav);
@@ -97,12 +120,10 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         listFragment = new ListFragment();
         mypageFragment = new MypageFragment();
         statsFragment = new StatsFragment();
-
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
 
 
-
-        // 위치 설정 권한 없을 때 넣기
+        // 위치 설정 권한 없을 때 받기
         int permssionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
         if (permssionCheck!= PackageManager.PERMISSION_GRANTED) {
 
@@ -120,8 +141,105 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
 //            startActivity(intent);
         }
 
+
+//        // 리뷰 전부 가지고 오기
+//        auth = FirebaseAuth.getInstance();
+//        mDatabase = database.getReference();
+//        mDatabase.child("review lists").addChildEventListener(new ChildEventListener() {
+//            @Override
+//            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//                mDatabase.child("review lists").child(dataSnapshot.getKey()).addChildEventListener(new ChildEventListener() {
+//                    @Override
+//                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
+//                        reviewLists.add(totalLocationCount++, myreview);
+//                        System.out.println("reviewlists : " + reviewLists.get(0).getLocation_name());
+//                        System.out.println("aaaaa"+dataSnapshot.getValue());
+//                        System.out.println("review3 : " + myreview.getLocation_name());
+//                        System.out.println("review5 : " + myreview.getEmail() + myreview.getPhone_number() + myreview.getUserName());
+//                        System.out.println("review4 : " + myreview.toString());
+//                    }
+//
+//                    @Override
+//                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+////                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
+////                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
+//                    }
+//
+//                    @Override
+//                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+////                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
+////                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
+//                    }
+//
+//                    @Override
+//                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+////                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
+////                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
+//                    }
+//
+//                    @Override
+//                    public void onCancelled(@NonNull DatabaseError databaseError) {
+//                        System.out.println("errororororororor");
+//                    }
+//                });
+//            }
+//
+////                mDatabase.child("review lists").child(dataSnapshot.getKey()).orderByChild("email").equalTo(userEmail).addChildEventListener(new ChildEventListener() {
+////                    @Override
+////                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+////
+////                    }
+////
+////                    @Override
+////                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//////                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
+//////                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
+////                    }
+////
+////                    @Override
+////                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+//////                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
+//////                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
+////                    }
+////
+////                    @Override
+////                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//////                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
+//////                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
+////                    }
+////
+////                    @Override
+////                    public void onCancelled(@NonNull DatabaseError databaseError) {
+////                        System.out.println("errororororororor");
+////                    }
+////                });
+////            }
+//
+//            @Override
+//            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//            }
+//
+//            @Override
+//            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+//
+//            }
+//
+//            @Override
+//            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//
+//            }
+//
+//            @Override
+//            public void onCancelled(@NonNull DatabaseError databaseError) {
+//
+//            }
+//        });
+
         // 기본 화면 지도 뜨게 함
-        setFragment(listFragment);
+        setMapFragment();
 
 
 
@@ -137,6 +255,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                         return true;
 
                     case R.id.nav_list:
+//                        getSupportFragmentManager().beginTransaction().remove(mapFragment);
                         setFragment(listFragment);
                         return true;
 
@@ -182,8 +301,8 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
             mapFragment = MapFragment.newInstance();
             getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, mapFragment).commit();
             System.out.println("두번째 : " + mapFragment.toString());
-            // 원래 꺼를 지워줘야 지도가 다시 실행되도 안 튕김
-            //getSupportFragmentManager().beginTransaction().remove(mapFragment);
+//            // 원래 꺼를 지워줘야 지도가 다시 실행되도 안 튕김
+//            getSupportFragmentManager().beginTransaction().remove(mapFragment);
             getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, mapFragment).addToBackStack("parent").commit();
 
         }
@@ -206,7 +325,6 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     // 지도 관련 정보 사용할 때
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
-
         // 현위치 버튼 o, 축척바 x 등 기타 지도 세팅
         naverMap.getUiSettings().setLocationButtonEnabled(true);
         naverMap.getUiSettings().setScaleBarEnabled(false);
@@ -214,51 +332,156 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         naverMap.setLayerGroupEnabled(NaverMap.LAYER_GROUP_TRANSIT, true);
         naverMap.setIndoorEnabled(true);
 
-        System.out.println("세번째 : " + mapFragment.toString());
-        // 마커 객체 생성, 설정
         markers = new ArrayList<Marker>();
-        markers.add(0, new Marker(new LatLng(36.102905, 129.388745)));
-        markers.get(0).setHeight(110);
-        markers.get(0).setWidth(80);
-        markers.get(0).setCaptionText("한동대학교");
-        markers.get(0).setMap(naverMap);
-        markers.add(1, new Marker(new LatLng(36.086844, 129.409631)));
-        markers.get(1).setHeight(110);
-        markers.get(1).setWidth(80);
-        markers.get(1).setCaptionText("포항대학교");
-        markers.get(1).setMap(naverMap);
 
-        // 마커 누르는 이벤트
-        markers.get(1).setOnClickListener(overlay -> {
-//            //누르면 프래그먼트 뜨기, 다이얼로그로 해보려고 잠궈둠
-//            statsFrame.setVisibility(View.VISIBLE);
-//            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//            fragmentTransaction.replace(R.id.stats_frame_layout, statsFragment);
-//            fragmentTransaction.addToBackStack(null);
-//            fragmentTransaction.commit();
+        // 리뷰 전부 가지고 오기
+        auth = FirebaseAuth.getInstance();
+        mDatabase = database.getReference();
+        mDatabase.child("review lists").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-            reviewDialog.setContentView(R.layout.click_review_popup);
-            Button closeButton = (Button) reviewDialog.findViewById(R.id.category);
-
-            //닫기 버튼을 눌렀을때
-            closeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) { reviewDialog.dismiss(); }});
-
-            reviewDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
-            reviewDialog.getWindow().setGravity(Gravity.BOTTOM);
-            reviewDialog.show();
+                mDatabase.child("review lists").child(dataSnapshot.getKey()).addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
+                        reviewLists.add(totalLocationCount++, myreview);
+                        System.out.println("review3 : " + myreview.getLocation_name());
+                        System.out.println("review5 : " + myreview.getUserEmail() + myreview.getPhone_number() + myreview.getUserName());
+                        System.out.println("review4 : " + myreview.toString());
 
 
-            return false;
+                        GeoTransPoint oKA = new GeoTransPoint(myreview.getMapx(), myreview.getMapy());
+                        GeoTransPoint oGeo = GeoTrans.convert(GeoTrans.KATEC, GeoTrans.GEO, oKA);
+                        marker = new Marker(new LatLng(oGeo.getX(), oGeo.getY()));
+                        marker.setHeight(110);
+                        marker.setWidth(80);
+                        marker.setCaptionText(myreview.getLocation_name());
+                        marker.setMap(naverMap);
+                        System.out.println("working : " + marker.getPosition() + naverMap.getCameraPosition().toString());
+
+                        // 마커 누르는 이벤트
+                        marker.setOnClickListener(overlay -> {
+
+                            reviewDialog.setContentView(R.layout.click_review_popup);
+                            Button closeButton = (Button) reviewDialog.findViewById(R.id.category);
+
+                            //닫기 버튼을 눌렀을때
+                            closeButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) { reviewDialog.dismiss(); }});
+
+                            reviewDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+                            reviewDialog.getWindow().setGravity(Gravity.BOTTOM);
+                            reviewDialog.show();
+
+                            return false;
+                        });
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
+//                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+//                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
+//                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
+//                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        System.out.println("errororororororor");
+                    }
+                });
+
+
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
         });
 
 
+        System.out.println("세번째 : " + mapFragment.toString());
+//        // 마커 객체 생성, 설정
+//        markers = new ArrayList<Marker>();
+//        markers.add(0, new Marker(new LatLng(36.102905, 129.388745)));
+//        markers.get(0).setHeight(110);
+//        markers.get(0).setWidth(80);
+//        markers.get(0).setCaptionText("한동대학교");
+//        markers.get(0).setMap(naverMap);
+//        markers.add(1, new Marker(new LatLng(36.086844, 129.409631)));
+//        markers.get(1).setHeight(110);
+//        markers.get(1).setWidth(80);
+//        markers.get(1).setCaptionText("포항대학교");
+//        markers.get(1).setMap(naverMap);
 
 
-//        for(Marker marker : markers) {
-//            marker.
+//        int i = 0;
+//        System.out.println("review10 : " + reviewLists.isEmpty());
+//        for(ReviewList reviewList : reviewLists) {
+//
+//            System.out.println("review1 : " );//+ reviewLists.get(0).getLocation_name());
+//            GeoTransPoint oKA = new GeoTransPoint(reviewList.getMapx(), reviewList.getMapy());
+//            GeoTransPoint oGeo = GeoTrans.convert(GeoTrans.KATEC, GeoTrans.GEO, oKA);
+//            markers.add(i++, new Marker(new LatLng(oGeo.getX(), oGeo.getY())));
+//            marker.setHeight(110);
+//            marker.setWidth(80);
+//            marker.setCaptionText(reviewList.getLocation_name());
+//            marker.setMap(naverMap);
 //        }
+//
+//        // 마커 누르는 이벤트
+//        markers.get(1).setOnClickListener(overlay -> {
+////            //누르면 프래그먼트 뜨기, 다이얼로그로 해보려고 잠궈둠
+////            statsFrame.setVisibility(View.VISIBLE);
+////            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+////            fragmentTransaction.replace(R.id.stats_frame_layout, statsFragment);
+////            fragmentTransaction.addToBackStack(null);
+////            fragmentTransaction.commit();
+//
+//            reviewDialog.setContentView(R.layout.click_review_popup);
+//            Button closeButton = (Button) reviewDialog.findViewById(R.id.category);
+//
+//            //닫기 버튼을 눌렀을때
+//            closeButton.setOnClickListener(new View.OnClickListener() {
+//                @Override
+//                public void onClick(View view) { reviewDialog.dismiss(); }});
+//
+//            reviewDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+//            reviewDialog.getWindow().setGravity(Gravity.BOTTOM);
+//            reviewDialog.show();
+//
+//
+//            return false;
+//        });
 
 
         // gps로 내 위치 잡음
@@ -290,6 +513,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                 check ++;
             }
         });
+
     }
 
 

@@ -14,7 +14,6 @@ public class ReviewList {
     private String location_address;
     private String phone_number;
     private String review_description;
-    private String name;
     private String userEmail;
     private double mapx;
     private double mapy;
@@ -213,14 +212,6 @@ public class ReviewList {
 
     public void setReview_description(String review) {
         this.review_description = review;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
     }
 
     public String getUserEmail() {

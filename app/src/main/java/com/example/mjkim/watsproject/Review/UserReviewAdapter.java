@@ -173,7 +173,7 @@ public class UserReviewAdapter extends BaseAdapter {
         intent.putExtra("IMAGE9", arr.get(a).getImageUrl9());*/
 
         intent.putExtra("Email", arr.get(a).getUserEmail());
-        intent.putExtra("Name", arr.get(a).getName());
+        intent.putExtra("Name", arr.get(a).getUserName());
         intent.putExtra("ReviewDescription", arr.get(a).getReview_description());
         intent.putExtra("Date",arr.get(a).getDate());
         intent.putExtra("Tag1",arr.get(a).getTag1());
@@ -202,7 +202,7 @@ public class UserReviewAdapter extends BaseAdapter {
 
         intent.putExtra("Location_name", arr.get(a).getLocation_name());
         intent.putExtra("Email", arr.get(a).getUserEmail());
-        intent.putExtra("Name", arr.get(a).getName());
+        intent.putExtra("Name", arr.get(a).getUserName());
         intent.putExtra("ReviewDescription", arr.get(a).getReview_description());
         intent.putExtra("Date", arr.get(a).getDate());
         intent.putExtra("Tag1", arr.get(a).getTag1());

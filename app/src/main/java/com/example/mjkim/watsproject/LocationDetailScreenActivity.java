@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.support.v4.view.ViewPager;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -37,6 +38,10 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
     public static ArrayList<ReviewList> reviewLists;
     private NaverBlogSearch naverBlogSearch;
     private NaverBlogAdapter naverBlogAdapter;
+    ViewPager viewPager;
+    LinearLayout sliderDots;
+    public int dotCounts;
+    public ImageView[] dots;
     private ReviewAdapter reviewAdapter;
     public static int length; //리뷰 갯수
 
@@ -51,7 +56,9 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.location_detail_screen);
+        setContentView(R.layout.activity_location_detail_screen);
+
+
 
         // 제일 위부터 보기
         scrollView = new ScrollView(this);
@@ -257,7 +264,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
             blogListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 50));
         }
         else if(blogList.size() == 1) {
-            blogListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 600));
+            blogListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 700));
         }
         else if(blogList.size() == 2) {
             blogListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1500));
@@ -284,13 +291,18 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
 
             String json = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getReview_json_string();
+            System.out.println("제이슨: " + json);
             length = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getReview_count();
+            System.out.println("길이: " + length);
             JSONArray IDs = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getReview_json_userID();
+            System.out.println("제이슨2: " + IDs);
             String Fire_locationName = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getLocation_name();
+            System.out.println("제이슨: " + Fire_locationName);
 
             try{
                 JSONObject obj = new JSONObject(json);
 
+                System.out.println("진짜 안되??");
 
                 for (int i = 0; i < length; i++) {
                     JSONObject jsonObj = obj.getJSONObject(IDs.getString(i));
@@ -316,7 +328,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
                     reviewDescription = jsonObj.getString("review_description");
                     userName = jsonObj.getString("userName");
-                    userEmail = jsonObj.getString("email");
+                    userEmail = jsonObj.getString("userEmail");
                     reviewDate = jsonObj.getString("date");
 
 /*                    imageUrl1 = jsonObj.getString("imageUrl1");
@@ -332,6 +344,8 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
 
                     if(intent.getExtras().getString("NAME").equals(location_name)) {
+
+                        System.out.println("여기면 되는거야");
 
                         reviewLists.add(num++, new ReviewList(intent.getExtras().getString("NAME"), locationAddress, locationNumber, locationCategory, reviewDescription, locationMapx, locationMapx,
                                 tag1, tag2, tag3, tag4, tag5, tag6, reviewDate, userName, key));
@@ -401,6 +415,9 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
     public void openBlogTab(){
         Intent intent = new Intent(this, MoreBlogScreenActivity.class);
         startActivity(intent);
+    }
+
+    private class ActivityMainBinding {
     }
 
     //리뷰 전체보기 버튼 기능

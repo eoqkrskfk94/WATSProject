@@ -16,7 +16,7 @@ public class ChangeInfoScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.change_info_screen);
+        setContentView(R.layout.activity_change_info_screen);
 
         myDialog = new Dialog(this); //수정하기 팝업 변수 선언
 

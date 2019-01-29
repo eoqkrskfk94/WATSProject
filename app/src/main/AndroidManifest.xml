@@ -34,7 +34,16 @@
         <activity android:name=".CreateReviewScreenActivity" />
         <activity android:name=".BlogScreenActivity" />
         <activity android:name=".ChangeInfoScreenActivity" />
-        <activity android:name=".CreateReviewScreenActivity" />
+
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="com.example.mjkim.watsproject"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/filepaths" />
+        </provider>
 
         <meta-data
             android:name="com.naver.maps.map.CLIENT_ID"
@@ -42,7 +51,9 @@
 
         <activity android:name=".MoreBlogScreenActivity" />
         <activity android:name=".CertainReviewScreenActivity" />
-        <activity android:name=".MoreReviewScreenActivity"></activity>
+        <activity android:name=".MoreReviewScreenActivity" />
+        <activity android:name=".MyReviewScreenActivity" />
+        <activity android:name=".ReviseReviewScreen"></activity>
     </application>
 
 </manifest>

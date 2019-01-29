@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#fef5e9"
     android:orientation="vertical"
-    tools:context=".SearchDetailScreenActivity">
+    tools:context=".MyReviewScreenActivity">
 
     <Button
         android:id="@+id/cancel_button"
@@ -18,41 +18,42 @@
         android:background="@drawable/cancel_icon" />
 
     <LinearLayout
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginTop="10dp"
-        android:gravity="center"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="5dp"
         android:orientation="horizontal">
 
-        <EditText
-            android:id="@+id/editSearch"
-            android:layout_width="270dp"
-            android:layout_height="40dp"
-            android:background="@drawable/search_box"
-            android:ems="10"
-            android:gravity="center"
-            android:inputType="textPersonName" />
 
-        <Button
-            android:id="@+id/search_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="5dp"
-            android:background="@drawable/search_button_icon" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:paddingLeft="15dp"
+            android:paddingTop="4dp"
+            android:text="등록한 후기 갯수 : "
+            android:textSize="17dp" />
+
+        <TextView
+            android:id="@+id/review_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="17dp" />
+
+
     </LinearLayout>
 
     <ImageView
         android:id="@+id/imageView7"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="10dp"
         android:layout_marginLeft="20dp"
         android:layout_marginRight="20dp"
-        android:layout_marginTop="5dp"
-        app:srcCompat="@drawable/long_horz_line" />
+        android:layout_marginTop="10dp"
+        app:srcCompat="@drawable/new_horz_line" />
 
     <ListView
-        android:id="@+id/location_list"
+        android:id="@+id/my_review_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 

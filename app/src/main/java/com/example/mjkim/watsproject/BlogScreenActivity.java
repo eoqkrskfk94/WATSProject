@@ -13,7 +13,7 @@ public class BlogScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.blog_screen);
+        setContentView(R.layout.activity_blog_screen);
 
         Intent intent = getIntent();
         naverBlogView = (WebView) findViewById(R.id.NaverBlog);

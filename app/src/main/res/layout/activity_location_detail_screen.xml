@@ -2,11 +2,13 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#fef5e9"
     android:orientation="vertical"
-    tools:context=".LocationDetailScreenActivity">
+    tools:context=".LocationDetailScreenActivity"
+    >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -57,7 +59,7 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="500dp"
+                android:layout_height="450dp"
                 android:background="@drawable/location_box"
                 android:orientation="vertical">
 
@@ -137,7 +139,7 @@
                     android:layout_marginLeft="40dp"
                     android:layout_marginRight="40dp"
                     android:layout_marginTop="15dp"
-                    app:srcCompat="@drawable/long_horz_line" />
+                    app:srcCompat="@drawable/new_horz_line" />
 
                 <TextView
                     android:id="@+id/textView5"
@@ -217,28 +219,9 @@
                     android:layout_height="10dp"
                     android:layout_marginLeft="40dp"
                     android:layout_marginRight="40dp"
+                    android:layout_marginTop="40dp"
+                    app:srcCompat="@drawable/new_horz_line" />
                     android:layout_marginTop="10dp"
-                    app:srcCompat="@drawable/long_horz_line" />
-
-                <Button
-                    android:id="@+id/see_more_button2"
-                    android:layout_width="60dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="40dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@android:color/transparent"
-                    android:text="전체보기"
-                    android:textColor="@android:color/darker_gray" />
-
-                <ImageView
-                    android:id="@+id/imageView15"
-                    android:layout_width="match_parent"
-                    android:layout_height="15dp"
-                    android:layout_marginBottom="20dp"
-                    android:layout_marginLeft="40dp"
-                    android:layout_marginRight="40dp"
-                    android:layout_marginTop="15dp"
                     app:srcCompat="@drawable/long_horz_line" />
 
                 <LinearLayout
@@ -313,7 +296,7 @@
                 android:scrollbars="none" />
 
             <ImageView
-                android:id="@+id/imageView18"
+                android:id="@+id/imageView19"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:srcCompat="@drawable/boundary" />

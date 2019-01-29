@@ -1,5 +1,6 @@
 package com.example.mjkim.watsproject;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,6 +11,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,6 +25,8 @@ import com.example.mjkim.watsproject.Naver.NaverBlogSearch;
 import com.example.mjkim.watsproject.Review.ReviewAdapter;
 import com.example.mjkim.watsproject.Review.ReviewFirebaseJson;
 import com.example.mjkim.watsproject.Review.ReviewList;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -44,6 +48,8 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
     public ImageView[] dots;
     private ReviewAdapter reviewAdapter;
     public static int length; //리뷰 갯수
+    private FirebaseUser currentUser;
+    private FirebaseAuth mAuth;
 
     //리뷰 변수들 선언
     Boolean tag1, tag2, tag3, tag4, tag5, tag6;
@@ -58,7 +64,8 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_detail_screen);
 
-
+        mAuth = FirebaseAuth.getInstance(); // 로그인 작업의 onCreate 메소드에서 FirebaseAuth 개체의 공유 인스턴스를 가져옵니다
+        currentUser = mAuth.getCurrentUser();
 
         // 제일 위부터 보기
         scrollView = new ScrollView(this);
@@ -235,14 +242,44 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
         createReviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(LocationDetailScreenActivity.this,CreateReviewScreenActivity.class);
-                intent.putExtra("NAME", location_name);
-                intent.putExtra("CATEGORY", location_category);
-                intent.putExtra("ADDRESS", location_addess);
-                intent.putExtra("TELEPHONE", location_number);
-                intent.putExtra("MAPX", location_x);
-                intent.putExtra("MAPY", location_y);
-                startActivity(intent);
+                if(currentUser == null){
+                    myDialog.setContentView(R.layout.login_popup);
+                    myDialog.setCancelable(false);
+
+                    Button loginButton = (Button) myDialog.findViewById(R.id.login_button);
+                    Button closeButton = (Button) myDialog.findViewById(R.id.cancel_button);
+
+                    //로그인 버튼을 눌렀을때
+                    loginButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent=new Intent(LocationDetailScreenActivity.this,LoginScreenActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+
+                    //닫기 버튼을 눌렀을때
+                    closeButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            myDialog.dismiss();
+                        }
+                    });
+
+                    myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+                    myDialog.show();
+                }
+
+                else {
+                    Intent intent = new Intent(LocationDetailScreenActivity.this, CreateReviewScreenActivity.class);
+                    intent.putExtra("NAME", location_name);
+                    intent.putExtra("CATEGORY", location_category);
+                    intent.putExtra("ADDRESS", location_addess);
+                    intent.putExtra("TELEPHONE", location_number);
+                    intent.putExtra("MAPX", location_x);
+                    intent.putExtra("MAPY", location_y);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -345,8 +382,6 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
                     if(intent.getExtras().getString("NAME").equals(location_name)) {
 
-                        System.out.println("여기면 되는거야");
-
                         reviewLists.add(num++, new ReviewList(intent.getExtras().getString("NAME"), locationAddress, locationNumber, locationCategory, reviewDescription, locationMapx, locationMapx,
                                 tag1, tag2, tag3, tag4, tag5, tag6, reviewDate, userName, key));
 
@@ -368,12 +403,15 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
         }
         else if(reviewLists.size() == 1) {
 
-            reviewListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 600));
+            reviewListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         }
         else if(reviewLists.size() == 2) {
 
-            reviewListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1500));
+            View view = getLayoutInflater().inflate(R.layout.review_list_box, null);
+            View view2 = view.findViewById(R.id.list_size);
+            reviewListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, view2.getLayoutParams().height * 2 + 200));
         }
+
 
         new Handler().postDelayed(new Runnable() {
             @Override

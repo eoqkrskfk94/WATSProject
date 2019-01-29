@@ -62,7 +62,7 @@ public class LoginScreenActivity extends AppCompatActivity {
         });
 
         //비회원 이용하기 버튼을 눌렀을때
-        createUserButton.setOnClickListener(new View.OnClickListener() {
+        nonMemberButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(LoginScreenActivity.this,MainScreenActivity.class);

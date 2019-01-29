@@ -116,9 +116,11 @@
 
         <Button
             android:id="@+id/nonmember_button"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:background="@android:color/transparent"
+            android:layout_width="150dp"
+            android:layout_height="40dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/insert_box"
             android:text="비회원으로 이용하기"
             android:textColor="@color/colorAccent" />
 

@@ -29,6 +29,8 @@ import com.example.mjkim.watsproject.Convert.GeoTransPoint;
 import com.example.mjkim.watsproject.FirstSreenFragments.ListFragment;
 import com.example.mjkim.watsproject.FirstSreenFragments.MypageFragment;
 import com.example.mjkim.watsproject.OtherClasses.BackPressCloseHandler;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.example.mjkim.watsproject.Review.ReviewList;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
@@ -57,6 +59,9 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     private BackPressCloseHandler backPressCloseHandler;
     private static double myLatitude, myLongitude;
     private static LatLng latLng;
+    private FirebaseUser currentUser;
+    private FirebaseAuth mAuth;
+    Dialog myDialog;
 
     static public int totalLocationCount;
     private int check = 0, i = 0;
@@ -92,6 +97,10 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     protected void onCreate(Bundle savedInstanceState) {     
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
+
+        mAuth = FirebaseAuth.getInstance(); // 로그인 작업의 onCreate 메소드에서 FirebaseAuth 개체의 공유 인스턴스를 가져옵니다
+        currentUser = mAuth.getCurrentUser();
+        myDialog = new Dialog(this); //팝업 변수 선언
 
         totalLocationCount = 0;
         backPressCloseHandler = new BackPressCloseHandler(this);
@@ -141,103 +150,6 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
 //            startActivity(intent);
         }
 
-
-//        // 리뷰 전부 가지고 오기
-//        auth = FirebaseAuth.getInstance();
-//        mDatabase = database.getReference();
-//        mDatabase.child("review lists").addChildEventListener(new ChildEventListener() {
-//            @Override
-//            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//                mDatabase.child("review lists").child(dataSnapshot.getKey()).addChildEventListener(new ChildEventListener() {
-//                    @Override
-//                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
-//                        reviewLists.add(totalLocationCount++, myreview);
-//                        System.out.println("reviewlists : " + reviewLists.get(0).getLocation_name());
-//                        System.out.println("aaaaa"+dataSnapshot.getValue());
-//                        System.out.println("review3 : " + myreview.getLocation_name());
-//                        System.out.println("review5 : " + myreview.getEmail() + myreview.getPhone_number() + myreview.getUserName());
-//                        System.out.println("review4 : " + myreview.toString());
-//                    }
-//
-//                    @Override
-//                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-////                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
-////                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
-//                    }
-//
-//                    @Override
-//                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-////                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
-////                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
-//                    }
-//
-//                    @Override
-//                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-////                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
-////                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
-//                    }
-//
-//                    @Override
-//                    public void onCancelled(@NonNull DatabaseError databaseError) {
-//                        System.out.println("errororororororor");
-//                    }
-//                });
-//            }
-//
-////                mDatabase.child("review lists").child(dataSnapshot.getKey()).orderByChild("email").equalTo(userEmail).addChildEventListener(new ChildEventListener() {
-////                    @Override
-////                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-////
-////                    }
-////
-////                    @Override
-////                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//////                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
-//////                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
-////                    }
-////
-////                    @Override
-////                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-//////                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
-//////                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
-////                    }
-////
-////                    @Override
-////                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//////                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
-//////                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
-////                    }
-////
-////                    @Override
-////                    public void onCancelled(@NonNull DatabaseError databaseError) {
-////                        System.out.println("errororororororor");
-////                    }
-////                });
-////            }
-//
-//            @Override
-//            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//            }
-//
-//            @Override
-//            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-//
-//            }
-//
-//            @Override
-//            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//
-//            }
-//
-//            @Override
-//            public void onCancelled(@NonNull DatabaseError databaseError) {
-//
-//            }
-//        });
-
         // 기본 화면 지도 뜨게 함
         setMapFragment();
 
@@ -255,12 +167,40 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                         return true;
 
                     case R.id.nav_list:
-//                        getSupportFragmentManager().beginTransaction().remove(mapFragment);
                         setFragment(listFragment);
                         return true;
 
                     case R.id.nav_mypage:
-                        setFragment(mypageFragment);
+                        if(currentUser == null){
+                            myDialog.setContentView(R.layout.login_popup);
+                            myDialog.setCancelable(false);
+
+                            Button loginButton = (Button) myDialog.findViewById(R.id.login_button);
+                            Button closeButton = (Button) myDialog.findViewById(R.id.cancel_button);
+
+                            //로그인 버튼을 눌렀을때
+                            loginButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent=new Intent(MainScreenActivity.this,LoginScreenActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+
+                            //닫기 버튼을 눌렀을때
+                            closeButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    myDialog.dismiss();
+                                }
+                            });
+
+                            myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+                            myDialog.show();
+
+                        }
+                        else
+                            setFragment(mypageFragment);
                         return true;
 
                     default:
@@ -325,6 +265,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     // 지도 관련 정보 사용할 때
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
+
         // 현위치 버튼 o, 축척바 x 등 기타 지도 세팅
         naverMap.getUiSettings().setLocationButtonEnabled(true);
         naverMap.getUiSettings().setScaleBarEnabled(false);

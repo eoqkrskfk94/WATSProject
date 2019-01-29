@@ -291,13 +291,18 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
 
             String json = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getReview_json_string();
+            System.out.println("제이슨: " + json);
             length = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getReview_count();
+            System.out.println("길이: " + length);
             JSONArray IDs = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getReview_json_userID();
+            System.out.println("제이슨2: " + IDs);
             String Fire_locationName = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getLocation_name();
+            System.out.println("제이슨: " + Fire_locationName);
 
             try{
                 JSONObject obj = new JSONObject(json);
 
+                System.out.println("진짜 안되??");
 
                 for (int i = 0; i < length; i++) {
                     JSONObject jsonObj = obj.getJSONObject(IDs.getString(i));
@@ -323,7 +328,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
                     reviewDescription = jsonObj.getString("review_description");
                     userName = jsonObj.getString("userName");
-                    userEmail = jsonObj.getString("email");
+                    userEmail = jsonObj.getString("userEmail");
                     reviewDate = jsonObj.getString("date");
 
 /*                    imageUrl1 = jsonObj.getString("imageUrl1");
@@ -339,6 +344,8 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
 
                     if(intent.getExtras().getString("NAME").equals(location_name)) {
+
+                        System.out.println("여기면 되는거야");
 
                         reviewLists.add(num++, new ReviewList(intent.getExtras().getString("NAME"), locationAddress, locationNumber, locationCategory, reviewDescription, locationMapx, locationMapx,
                                 tag1, tag2, tag3, tag4, tag5, tag6, reviewDate, userName, key));

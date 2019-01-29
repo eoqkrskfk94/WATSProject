@@ -1,9 +1,12 @@
 package com.example.mjkim.watsproject.Review;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,9 +17,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 import com.example.mjkim.watsproject.CertainReviewScreenActivity;
+import com.example.mjkim.watsproject.MainScreenActivity;
 import com.example.mjkim.watsproject.MyReviewScreenActivity;
 import com.example.mjkim.watsproject.R;
 import com.example.mjkim.watsproject.ReviseReviewScreen;
+import com.example.mjkim.watsproject.SignInScreenActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
@@ -31,6 +36,8 @@ public class UserReviewAdapter extends BaseAdapter {
     private int my_review_index;
     Context context;
     Activity activity;
+    Dialog myDialog;
+
 
 
     public UserReviewAdapter(Activity act, ArrayList<ReviewList> arr_item,Context context, Activity activity,int my_review_index) {
@@ -66,28 +73,39 @@ public class UserReviewAdapter extends BaseAdapter {
 
         Button reviseButton = (Button) convertView.findViewById(R.id.revise_button);
         Button deleteButton = (Button) convertView.findViewById(R.id.delete_button);
+
         deleteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                DialogInterface.OnClickListener confirm = new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        System.out.println("삭제테스트");
+                myDialog = new Dialog(activity); //팝업 변수 선언
+                myDialog.setContentView(R.layout.delete_popup);
+                myDialog.setCancelable(false);
 
+                Button deleteButton = (Button) myDialog.findViewById(R.id.delete_button);
+                Button closeButton = (Button) myDialog.findViewById(R.id.cancel_button);
+
+
+
+                //닫기 버튼을 눌렀을때
+                deleteButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
                         delete(position);
                     }
-                };
-                DialogInterface.OnClickListener cancle = new DialogInterface.OnClickListener() {
+                });
+
+                //닫기 버튼을 눌렀을때
+                closeButton.setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        //취소되었을때
+                    public void onClick(View view) {
+                        myDialog.dismiss();
                     }
-                };
-                new AlertDialog.Builder(activity) // Adapter에서 쓰려면 사용하려는 activity에서 받아와야한다.
-                        .setTitle("삭제하시겠습니까?")
-                        .setPositiveButton("삭제", confirm)
-                        .setNegativeButton("취소", cancle)
-                        .show();
+                });
+
+                myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+                myDialog.show(); //삭제 팝업창.
+
+
             }
         });
 

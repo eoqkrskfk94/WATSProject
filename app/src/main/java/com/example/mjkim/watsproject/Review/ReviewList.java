@@ -270,4 +270,37 @@ public class ReviewList {
         this.key = key;
     }
 
+
+    public ReviewList (String location_name, String location_address, String phone_number, String location_category, String review_description,
+                       double mapx, double mapy, Boolean tag1, Boolean tag2, Boolean tag3, Boolean tag4, Boolean tag5, Boolean tag6, String date, String userName, String key,
+                       String imageUrl1, String imageUrl2,String imageUrl3,String imageUrl4,String imageUrl5,String imageUrl6,String imageUrl7,String imageUrl8,String imageUrl9){
+
+        this.location_name = location_name;
+        this.location_address = location_address;
+        this.phone_number = phone_number;
+        this.location_category = location_category;
+        this.review_description = review_description;
+        this.mapx = mapx;
+        this.mapy = mapy;
+        this.tag1 = tag1;
+        this.tag2 = tag2;
+        this.tag3 = tag3;
+        this.tag4 = tag4;
+        this.tag5 = tag5;
+        this.tag6 = tag6;
+        this.date = date;
+        this.userName = userName;
+        this.key = key;
+        this.imageUrl1=imageUrl1;
+        this.imageUrl2=imageUrl2;
+        this.imageUrl3=imageUrl3;
+        this.imageUrl4=imageUrl4;
+        this.imageUrl5=imageUrl5;
+        this.imageUrl6=imageUrl6;
+        this.imageUrl7=imageUrl7;
+        this.imageUrl8=imageUrl8;
+        this.imageUrl9=imageUrl9;
+
+    }
+
 }

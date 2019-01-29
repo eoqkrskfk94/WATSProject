@@ -99,6 +99,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
     String imagePath7="";
     String imagePath8="";
     String imagePath9="";
+    String nameAndAdress = ""; //이름이랑 주소 같이 나오는 스트
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     int pic1=0;
@@ -655,7 +656,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                 else if(pic7!=0) upload7(uri7,uri8,uri9);
                 else if(pic8!=0) upload8(uri8,uri9);
                 else if(pic9!=0) upload9(uri9);
-                else{ reviewData.saveData(location_name, reviewList); }
+                else{ reviewData.saveData(nameAndAdress, reviewList); }
             }
         });
     }
@@ -685,7 +686,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                 else if(pic7!=0) upload7(uri7,uri8,uri9);
                 else if(pic8!=0) upload8(uri8,uri9);
                 else if(pic9!=0) upload9(uri9);
-                else{ reviewData.saveData(location_name, reviewList); }
+                else{ reviewData.saveData(nameAndAdress, reviewList); }
             }
         });
     }
@@ -713,7 +714,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                 else if(pic7!=0) upload7(uri7,uri8,uri9);
                 else if(pic8!=0) upload8(uri8,uri9);
                 else if(pic9!=0) upload9(uri9);
-                else{ reviewData.saveData(location_name, reviewList); }
+                else{ reviewData.saveData(nameAndAdress, reviewList); }
             }
         });
     }
@@ -741,7 +742,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                 else if(pic7!=0) upload7(uri7,uri8,uri9);
                 else if(pic8!=0) upload8(uri8,uri9);
                 else if(pic9!=0) upload9(uri9);
-                else{ reviewData.saveData(location_name, reviewList); }
+                else{ reviewData.saveData(nameAndAdress, reviewList); }
             }
         });
     }
@@ -767,7 +768,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                 else if(pic7!=0) upload7(uri7,uri8,uri9);
                 else if(pic8!=0) upload8(uri8,uri9);
                 else if(pic9!=0) upload9(uri9);
-                else{ reviewData.saveData(location_name, reviewList); }
+                else{ reviewData.saveData(nameAndAdress, reviewList); }
             }
         });
     }
@@ -792,7 +793,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                 if(pic7!=0) upload7(uri7,uri8,uri9);
                 else if(pic8!=0) upload8(uri8,uri9);
                 else if(pic9!=0) upload9(uri9);
-                else reviewData.saveData(location_name,reviewList);
+                else reviewData.saveData(nameAndAdress,reviewList);
             }
         });
     }
@@ -816,7 +817,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                 reviewList.setImageUrl7(finalFile.getLastPathSegment());
                 if(pic8!=0) upload8(uri8,uri9);
                 else if(pic9!=0) upload9(uri9);
-                else reviewData.saveData(location_name,reviewList);
+                else reviewData.saveData(nameAndAdress,reviewList);
             }
         });
     }
@@ -839,7 +840,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 reviewList.setImageUrl8(finalFile.getLastPathSegment());
                 if(pic9!=0) upload9(uri9);
-                else reviewData.saveData(location_name,reviewList);
+                else reviewData.saveData(nameAndAdress,reviewList);
             }
         });
     }
@@ -861,7 +862,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
             @Override
             public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
                 reviewList.setImageUrl9(finalFile.getLastPathSegment());
-                reviewData.saveData(location_name,reviewList);
+                reviewData.saveData(nameAndAdress,reviewList);
             }
         });
     }
@@ -877,7 +878,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
 
         Intent review_intent = getIntent();
 
-        String location_name = review_intent.getExtras().getString("NAME");
+        location_name = review_intent.getExtras().getString("NAME");
  //       int index = location_name.indexOf(" , ");
   //      location_name = location_name.substring(0, index);
         String location_category = review_intent.getExtras().getString("CATEGORY");
@@ -896,20 +897,18 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
         if(chk[4].isChecked() == true) tag5 = true; else tag5 = false;
         if(chk[5].isChecked() == true) tag6 = true; else tag6 = false;
 
-        reviewList = new ReviewList(location_name, location_addess, location_number, location_category, review_description, location_mapx, location_mapy, tag1, tag2, tag3, tag4, tag5, tag6, mTime, userName, key);
 
-        String nameAndAdress = ""; //이름이랑 주소 같이 나오는 스트
+        reviewList = new ReviewList(location_name, location_addess, location_number, location_category, review_description, location_mapx, location_mapy, tag1, tag2, tag3, tag4, tag5, tag6, mTime, userName, key
+                ,imagePath1,imagePath2,imagePath3,imagePath4,imagePath5,imagePath6,imagePath7,imagePath8,imagePath9);
+
+        nameAndAdress = location_name + " , " + location_addess;
 
         if(pic1 !=0 || pic2 !=0 || pic3 !=0 || pic4 !=0 || pic5 !=0 || pic6 !=0 || pic7 !=0 || pic8!=0 || pic9!=0 ) {  // 사진이 하나라도 있으면.
             upload(imagePath1, imagePath2, imagePath3,imagePath4,imagePath5,imagePath6,imagePath7,imagePath8,imagePath9);
         }
         else{
-            reviewData.saveData(location_name, reviewList);  //사진 없을때
+            reviewData.saveData(nameAndAdress, reviewList);  //사진 없을때
         }
-        nameAndAdress = location_name + " , " + location_addess;
-
-        reviewData.saveData(nameAndAdress, reviewList);
-
 
         myDialog.setContentView(R.layout.review_popup);
         myDialog.setCancelable(false);

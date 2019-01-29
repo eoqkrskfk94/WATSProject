@@ -9,6 +9,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -55,6 +57,20 @@ public class MyReviewScreenActivity extends AppCompatActivity {
 
         reviewLists = new ArrayList<ReviewList>();
         myDialog = new Dialog(this); //로딩 팝업 변수 선언
+        totalLocationCount = 0;
+
+
+        Button cancelButton = (Button)findViewById(R.id.cancel_button);
+
+        //cancel 버튼 눌렀을때 전 화면을 돌아간다
+        cancelButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
+
 
         // 내 리뷰 띄우기
         auth = FirebaseAuth.getInstance();
@@ -76,7 +92,8 @@ public class MyReviewScreenActivity extends AppCompatActivity {
                 myDialog.dismiss();
                 timer2.cancel(); //this will cancel the timer of the system
             }
-        }, 2000); // the timer will count 5 seconds....
+        }, 2400); // the timer will count 2.4 seconds....
+
 
 
 
@@ -84,10 +101,11 @@ public class MyReviewScreenActivity extends AppCompatActivity {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                System.out.println("이메일2 : " + mymyreview.child("review lists").child(dataSnapshot.getKey()).orderByChild("email"));
+                System.out.println("이메일2 : " + mymyreview.child("review lists").child(dataSnapshot.getKey()).orderByChild("email").toString());
+                System.out.println("키값: " + dataSnapshot.getKey());
 
 
-                mymyreview.child("review lists").child(dataSnapshot.getKey()).orderByChild("email").equalTo(user_email).addChildEventListener(new ChildEventListener() {
+                mymyreview.child("review lists").child(dataSnapshot.getKey()).orderByChild("userEmail").equalTo(user_email).addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         ReviewList myreview = dataSnapshot.getValue(ReviewList.class);

@@ -62,6 +62,8 @@ public class LoginScreenActivity extends AppCompatActivity {
         });
 
         //비회원 이용하기 버튼을 눌렀을때
+
+        //비회원 이용하기 버튼을 눌렀을때 (비회원시 내정보 팅김-> 수정해야함)
         nonMemberButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

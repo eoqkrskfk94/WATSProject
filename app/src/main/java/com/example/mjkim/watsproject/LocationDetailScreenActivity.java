@@ -42,10 +42,6 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
     public static ArrayList<ReviewList> reviewLists;
     private NaverBlogSearch naverBlogSearch;
     private NaverBlogAdapter naverBlogAdapter;
-    ViewPager viewPager;
-    LinearLayout sliderDots;
-    public int dotCounts;
-    public ImageView[] dots;
     private ReviewAdapter reviewAdapter;
     public static int length; //리뷰 갯수
     private FirebaseUser currentUser;
@@ -58,6 +54,8 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
     String location_name, location_category, location_addess, location_number;
     double location_x, location_y;
+    String imageUrl1,imageUrl2,imageUrl3,imageUrl4,imageUrl5,imageUrl6,imageUrl7,imageUrl8,imageUrl9;
+
 
 
     @Override
@@ -380,7 +378,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
                     userEmail = jsonObj.getString("userEmail");
                     reviewDate = jsonObj.getString("date");
 
-/*                    imageUrl1 = jsonObj.getString("imageUrl1");
+                    imageUrl1 = jsonObj.getString("imageUrl1");
                     imageUrl2 = jsonObj.getString("imageUrl2");
                     imageUrl3 = jsonObj.getString("imageUrl3");
                     imageUrl4 = jsonObj.getString("imageUrl4");
@@ -388,14 +386,15 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
                     imageUrl6 = jsonObj.getString("imageUrl6");
                     imageUrl7 = jsonObj.getString("imageUrl7");
                     imageUrl8 = jsonObj.getString("imageUrl8");
-                    imageUrl9 = jsonObj.getString("imageUrl9");*/
+                    imageUrl9 = jsonObj.getString("imageUrl9");
 
 
 
                     if(intent.getExtras().getString("NAME").equals(location_name)) {
 
                         reviewLists.add(num++, new ReviewList(intent.getExtras().getString("NAME"), locationAddress, locationNumber, locationCategory, reviewDescription, location_x, location_y,
-                                tag1, tag2, tag3, tag4, tag5, tag6, reviewDate, userName, key));
+                                tag1, tag2, tag3, tag4, tag5, tag6, reviewDate, userName, key,imageUrl1,imageUrl2,imageUrl3,imageUrl4,imageUrl5,imageUrl6,
+                                imageUrl7,imageUrl8,imageUrl9));
 
                     }
                 }

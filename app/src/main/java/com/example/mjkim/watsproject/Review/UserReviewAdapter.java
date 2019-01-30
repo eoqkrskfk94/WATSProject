@@ -193,6 +193,8 @@ public class UserReviewAdapter extends BaseAdapter {
 
 
         m_activity.startActivity(intent);
+
+
     }
 
     public void GoCorrectionScreen(int a) {

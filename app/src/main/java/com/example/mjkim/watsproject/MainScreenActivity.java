@@ -112,7 +112,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
             @Override
             public void onClick(View view) {
                 finish();
-                Intent intent=new Intent(MainScreenActivity.this,SearchScreenActivity.class);
+                Intent intent=new Intent(MainScreenActivity.this,SearchDetailScreenActivity.class);
                 startActivity(intent);
             }
         });

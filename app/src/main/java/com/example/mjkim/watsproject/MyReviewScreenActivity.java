@@ -220,6 +220,14 @@ public class MyReviewScreenActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainScreenActivity.class);
+        startActivity(intent);
+        super.onBackPressed();
+    }
+
+
     // 뒤로가기 버튼 누르면 메인으로
     public void BackButton(View view) {
         System.out.println("cancel");

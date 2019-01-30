@@ -460,12 +460,19 @@
                 </LinearLayout>
             </HorizontalScrollView>
 
+            <ImageView
+                android:id="@+id/imageView20"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/boundary" />
+
 
             <Button
                 android:layout_width="260dp"
                 android:layout_height="50dp"
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
                 android:background="@drawable/register_long_button"
                 android:onClick="RegisterButton" />
         </LinearLayout>

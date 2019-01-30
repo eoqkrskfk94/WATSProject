@@ -261,22 +261,35 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                 || view.getId() == R.id.Imagebutton4 || view.getId() == R.id.Imagebutton5 || view.getId() == R.id.Imagebutton6
                 || view.getId() == R.id.Imagebutton7 || view.getId() == R.id.Imagebutton8 || view.getId() == R.id.Imagebutton9 ) {
 
-            DialogInterface.OnClickListener cameraListener = new DialogInterface.OnClickListener() {
+
+            myDialog = new Dialog(this); //팝업 변수 선언
+            myDialog.setContentView(R.layout.image_popup);
+            myDialog.setCancelable(false);
+
+            Button cameraButton = (Button) myDialog.findViewById(R.id.camera_button);
+            Button galleryButton = (Button) myDialog.findViewById(R.id.gallery_button);
+            Button closeButton = (Button) myDialog.findViewById(R.id.cancel_button);
+
+            //카메라 버튼을 눌렀을때
+            cameraButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
+                public void onClick(View view) {
                     doTakePhotoAction(); //카메라에서 사진 가져오기 메소드
                 }
-            };
+            });
 
-            DialogInterface.OnClickListener albumListener = new DialogInterface.OnClickListener() {
+            //갤러리 버튼을 눌렀을때
+            galleryButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
+                public void onClick(View view) {
                     doTakeAlbumAction(); //앨범에서 사진 가져오기 메소드
                 }
-            };
-            DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
+            });
+
+            //닫기 버튼을 눌렀을때
+            closeButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
+                public void onClick(View view) {
                     // 취소버튼을 누르면 사진삭제
 
                     if(view.getId()==R.id.Imagebutton1) picture1.setImageResource(R.drawable.sample_pic);
@@ -288,16 +301,13 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                     if(view.getId()==R.id.Imagebutton7) picture7.setImageResource(R.drawable.sample_pic);
                     if(view.getId()==R.id.Imagebutton8) picture8.setImageResource(R.drawable.sample_pic);
                     if(view.getId()==R.id.Imagebutton9) picture9.setImageResource(R.drawable.sample_pic);
-                    dialogInterface.dismiss();
+                    myDialog.dismiss();
                 }
-            };
+            });
 
-            new AlertDialog.Builder(this)
-                    .setTitle("업로드할 이미지 선택")
-                    .setPositiveButton("앨범선택", albumListener)
-                    .setNeutralButton("취소/사진삭제", cancelListener)
-                    .setNegativeButton("사진촬영", cameraListener)
-                    .show();
+            myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+            myDialog.show(); //팝업창.
+
 
         }
     }

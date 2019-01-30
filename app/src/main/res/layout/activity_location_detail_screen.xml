@@ -117,7 +117,7 @@
                     android:orientation="horizontal">
 
                     <ImageView
-                        android:id="@+id/imageView10"
+                        android:id="@+id/imageView11"
                         android:layout_width="20dp"
                         android:layout_height="15dp"
                         app:srcCompat="@drawable/phone_icon" />
@@ -133,7 +133,7 @@
                 </LinearLayout>
 
                 <ImageView
-                    android:id="@+id/imageView11"
+                    android:id="@+id/imageView14"
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
                     android:layout_marginLeft="40dp"

@@ -73,7 +73,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
         scrollView.scrollTo(0,600);
 
 
-        myDialog = new Dialog(this); //회원가입 팝업 변수 선언
+        myDialog = new Dialog(this); //팝업 변수 선언
         Intent intent = getIntent();
         blogList = new ArrayList<NaverBlogList>(); //블로그 리스트 선언
         naverBlogSearch = new NaverBlogSearch();

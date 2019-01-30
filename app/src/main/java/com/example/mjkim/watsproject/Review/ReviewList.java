@@ -19,6 +19,7 @@ public class ReviewList {
     private double mapy;
     private String date;
     private String userName;
+//    private String userNickName;
     private String imageUrl1;
     private String imageUrl2;
     private String imageUrl3;
@@ -110,13 +111,17 @@ public class ReviewList {
         this.date = date;
     }
 
-    public String getUserName() {
-        return userName;
-    }
+//    public String getUserNickName() {
+//        return userNickName;
+//    }
+//
+//    public void setUserNickName(String userNickName) {
+//        this.userNickName = userNickName;
+//    }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+    public String getUserName() { return userName; }
+
+    public void setUserName(String userName) { this.userName = userName; }
 
     public String getKey() {
         return key;
@@ -257,6 +262,7 @@ public class ReviewList {
         this.tag5 = tag5;
         this.tag6 = tag6;
         this.date = date;
+//        this.userNickName = userNickName;
         this.userName = userName;
         this.key = key;
     }
@@ -281,6 +287,7 @@ public class ReviewList {
         this.tag6 = tag6;
         this.date = date;
         this.userName = userName;
+//        this.userNickName = userNickName;
         this.key = key;
         this.imageUrl1=imageUrl1;
         this.imageUrl2=imageUrl2;

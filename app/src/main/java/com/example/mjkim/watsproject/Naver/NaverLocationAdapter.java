@@ -184,7 +184,7 @@ public class NaverLocationAdapter extends BaseAdapter{
         else intent = new Intent(m_activity, LocationDetailScreenActivity.class);
 
         //putExtra 로 선택한 아이템의 정보를 인텐트로 넘겨 줄 수 있다.
-
+        System.out.println("newmap4 : " + arr.get(a).getMapx() + "  " + arr.get(a).getMapy() + "  " + arr.get(a).getAddress());
         intent.putExtra("NAME", arr.get(a).getName());
         intent.putExtra("CATEGORY", arr.get(a).getCategory());
         intent.putExtra("LINK", arr.get(a).getLink());

@@ -121,7 +121,7 @@ public class UserReviewAdapter extends BaseAdapter {
             public void onClick(View view){ GoCorrectionScreen(position); }});
 
 
-
+//        userName.setText(arr.get(position).getUserNickName());
         userName.setText(arr.get(position).getUserName());
         reviewDescription.setText(arr.get(position).getReview_description());
         postDate.setText(arr.get(position).getDate());
@@ -174,6 +174,7 @@ public class UserReviewAdapter extends BaseAdapter {
 
         intent.putExtra("Email", arr.get(a).getUserEmail());
         intent.putExtra("Name", arr.get(a).getUserName());
+//        intent.putExtra("NickName", arr.get(a).getUserNickName());
         intent.putExtra("Review", arr.get(a).getReview_description());
         intent.putExtra("LocationAddress", arr.get(a).getLocation_address());
         intent.putExtra("LocationCategory", arr.get(a).getLocation_category());
@@ -210,6 +211,7 @@ public class UserReviewAdapter extends BaseAdapter {
         intent.putExtra("LOCATIONNAME", arr.get(a).getLocation_name());
         intent.putExtra("EMAIL", arr.get(a).getUserEmail());
         intent.putExtra("NAME", arr.get(a).getUserName());
+        //        intent.putExtra("NickName", arr.get(a).getUserNickName());
         intent.putExtra("REVIEW", arr.get(a).getReview_description());
         intent.putExtra("ADDRESS", arr.get(a).getLocation_address());
         intent.putExtra("CATEGORY", arr.get(a).getLocation_category());

@@ -22,6 +22,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.mjkim.watsproject.Convert.GeoTrans;
@@ -32,7 +33,6 @@ import com.example.mjkim.watsproject.OtherClasses.BackPressCloseHandler;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.example.mjkim.watsproject.Review.ReviewList;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -61,15 +61,15 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     private static LatLng latLng;
     private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
-    Dialog myDialog;
 
     static public int totalLocationCount;
     private int check = 0, i = 0;
-    private ArrayList<Marker> markers;
 
     private BottomNavigationView mMainNav; //하단 메뉴 아이콘
     private FrameLayout mMainFrame, statsFrame;
-    private Dialog reviewDialog;
+    private Dialog reviewDialog, myDialog;
+    private TextView location_categoryTextView, location_nameTextView, location_phoneTextView, location_addressTextView;
+
 
     //화면에서의 fragment들 선언
     private MapFragment mapFragment; //NaverMapFragment안쓰고 따로 네이버에서 제공하는 클래스 사용하는 것임
@@ -77,11 +77,9 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     private MypageFragment mypageFragment;
     private StatsFragment statsFragment;
 
-    Marker marker;
+    private Marker marker;
 
     // 리뷰 정보 담을 변수
-    private ReviewList reviewList;
-    public static ArrayList<ReviewList> reviewLists;
     FirebaseAuth auth;
     private DatabaseReference mDatabase;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -120,7 +118,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         MapFragment mapFragment = (MapFragment)getSupportFragmentManager().findFragmentById(R.id.main_frame);
 
         reviewDialog = new Dialog(this); //회원가입 팝업 변수 선언
-        reviewLists = new ArrayList<ReviewList>(); //리뷰 리스트 선언
+
 
         mMainFrame = (FrameLayout) findViewById(R.id.main_frame);
         mMainNav = (BottomNavigationView) findViewById(R.id.main_nav);
@@ -145,9 +143,6 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         REQUEST_CODE_LOCATION);
             }
-//                        finish();
-//            Intent intent=new Intent(this,LoadingScreenActivity.class);
-//            startActivity(intent);
         }
 
         // 기본 화면 지도 뜨게 함
@@ -241,8 +236,6 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
             mapFragment = MapFragment.newInstance();
             getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, mapFragment).commit();
             System.out.println("두번째 : " + mapFragment.toString());
-//            // 원래 꺼를 지워줘야 지도가 다시 실행되도 안 튕김
-//            getSupportFragmentManager().beginTransaction().remove(mapFragment);
             getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, mapFragment).addToBackStack("parent").commit();
 
         }
@@ -265,15 +258,12 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     // 지도 관련 정보 사용할 때
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
-
         // 현위치 버튼 o, 축척바 x 등 기타 지도 세팅
         naverMap.getUiSettings().setLocationButtonEnabled(true);
         naverMap.getUiSettings().setScaleBarEnabled(false);
         naverMap.getUiSettings().setZoomControlEnabled(true);
         naverMap.setLayerGroupEnabled(NaverMap.LAYER_GROUP_TRANSIT, true);
         naverMap.setIndoorEnabled(true);
-
-        markers = new ArrayList<Marker>();
 
         // 리뷰 전부 가지고 오기
         auth = FirebaseAuth.getInstance();
@@ -286,35 +276,36 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
-                        reviewLists.add(totalLocationCount++, myreview);
                         System.out.println("review3 : " + myreview.getLocation_name());
-                        System.out.println("review5 : " + myreview.getUserEmail() + myreview.getPhone_number() + myreview.getUserName());
-                        System.out.println("review4 : " + myreview.toString());
+                        System.out.println("review5 : " + myreview.getUserEmail() + myreview.getPhone_number());
+                        System.out.println("review4 : " + myreview.toString() + myreview.getUserName());
 
-
+                        // 좌표 계산해서 좌표 만듬
                         GeoTransPoint oKA = new GeoTransPoint(myreview.getMapx(), myreview.getMapy());
                         GeoTransPoint oGeo = GeoTrans.convert(GeoTrans.KATEC, GeoTrans.GEO, oKA);
-                        marker = new Marker(new LatLng(oGeo.getX(), oGeo.getY()));
+                        marker = new Marker(new LatLng(oGeo.getY(), oGeo.getX()));
                         marker.setHeight(110);
                         marker.setWidth(80);
                         marker.setCaptionText(myreview.getLocation_name());
                         marker.setMap(naverMap);
-                        System.out.println("working : " + marker.getPosition() + naverMap.getCameraPosition().toString());
+                        System.out.println("working : " + marker.getCaptionText() + marker.getPosition().toString());
 
                         // 마커 누르는 이벤트
                         marker.setOnClickListener(overlay -> {
-
-                            reviewDialog.setContentView(R.layout.click_review_popup);
-                            Button closeButton = (Button) reviewDialog.findViewById(R.id.category);
-
-                            //닫기 버튼을 눌렀을때
-                            closeButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) { reviewDialog.dismiss(); }});
-
+                            reviewDialog.setContentView(R.layout.click_location_popup);
                             reviewDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
                             reviewDialog.getWindow().setGravity(Gravity.BOTTOM);
                             reviewDialog.show();
+
+                            location_categoryTextView = (TextView)reviewDialog.findViewById(R.id.location_categoryTextView);
+                            location_addressTextView = (TextView)reviewDialog.findViewById(R.id.location_addressTextView);
+                            location_nameTextView = (TextView)reviewDialog.findViewById(R.id.location_nameTextView);
+                            location_phoneTextView = (TextView)reviewDialog.findViewById(R.id.location_phoneTextView);
+                            location_categoryTextView.setText(myreview.getLocation_category());
+                            location_nameTextView.setText(myreview.getLocation_name());
+                            location_phoneTextView.setText(myreview.getPhone_number());
+                            location_addressTextView.setText(myreview.getLocation_address());
+
 
                             return false;
                         });
@@ -371,58 +362,6 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
 
 
         System.out.println("세번째 : " + mapFragment.toString());
-//        // 마커 객체 생성, 설정
-//        markers = new ArrayList<Marker>();
-//        markers.add(0, new Marker(new LatLng(36.102905, 129.388745)));
-//        markers.get(0).setHeight(110);
-//        markers.get(0).setWidth(80);
-//        markers.get(0).setCaptionText("한동대학교");
-//        markers.get(0).setMap(naverMap);
-//        markers.add(1, new Marker(new LatLng(36.086844, 129.409631)));
-//        markers.get(1).setHeight(110);
-//        markers.get(1).setWidth(80);
-//        markers.get(1).setCaptionText("포항대학교");
-//        markers.get(1).setMap(naverMap);
-
-
-//        int i = 0;
-//        System.out.println("review10 : " + reviewLists.isEmpty());
-//        for(ReviewList reviewList : reviewLists) {
-//
-//            System.out.println("review1 : " );//+ reviewLists.get(0).getLocation_name());
-//            GeoTransPoint oKA = new GeoTransPoint(reviewList.getMapx(), reviewList.getMapy());
-//            GeoTransPoint oGeo = GeoTrans.convert(GeoTrans.KATEC, GeoTrans.GEO, oKA);
-//            markers.add(i++, new Marker(new LatLng(oGeo.getX(), oGeo.getY())));
-//            marker.setHeight(110);
-//            marker.setWidth(80);
-//            marker.setCaptionText(reviewList.getLocation_name());
-//            marker.setMap(naverMap);
-//        }
-//
-//        // 마커 누르는 이벤트
-//        markers.get(1).setOnClickListener(overlay -> {
-////            //누르면 프래그먼트 뜨기, 다이얼로그로 해보려고 잠궈둠
-////            statsFrame.setVisibility(View.VISIBLE);
-////            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-////            fragmentTransaction.replace(R.id.stats_frame_layout, statsFragment);
-////            fragmentTransaction.addToBackStack(null);
-////            fragmentTransaction.commit();
-//
-//            reviewDialog.setContentView(R.layout.click_review_popup);
-//            Button closeButton = (Button) reviewDialog.findViewById(R.id.category);
-//
-//            //닫기 버튼을 눌렀을때
-//            closeButton.setOnClickListener(new View.OnClickListener() {
-//                @Override
-//                public void onClick(View view) { reviewDialog.dismiss(); }});
-//
-//            reviewDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
-//            reviewDialog.getWindow().setGravity(Gravity.BOTTOM);
-//            reviewDialog.show();
-//
-//
-//            return false;
-//        });
 
 
         // gps로 내 위치 잡음
@@ -447,7 +386,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
 
             // 처음에만 내 위치로 이동함
             if(check == 0) {
-                naverMap.setCameraPosition(new CameraPosition(latLng, 13));
+                naverMap.setCameraPosition(new CameraPosition(latLng, 15));
                 CameraUpdate cameraUpdate = CameraUpdate.scrollTo(latLng);//.animate(CameraAnimation..Easing);
 //                Toast.makeText(this, "myLatitude : " + myLatitude + ",,,,myLongtitude : " + myLongitude, Toast.LENGTH_LONG).show();
                 naverMap.moveCamera(cameraUpdate);

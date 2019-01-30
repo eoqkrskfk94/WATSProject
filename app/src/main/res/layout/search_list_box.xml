@@ -116,7 +116,6 @@
                     android:paddingLeft="5dp"
                     android:paddingTop="1dp"
                     android:text="도민준은 외계인!?"
-                    android:textColor="#5566ff"
                     android:textSize="13sp"
                     android:textStyle="bold"
                     android:typeface="monospace" />

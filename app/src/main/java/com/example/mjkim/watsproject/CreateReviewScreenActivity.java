@@ -142,7 +142,34 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+
+                myDialog.setContentView(R.layout.review_stop_popup);
+                myDialog.setCancelable(false);
+
+                Button yesButton = (Button) myDialog.findViewById(R.id.yes_button);
+                Button noButton = (Button) myDialog.findViewById(R.id.no_button);
+
+                //네 버튼을 눌렀을때
+                yesButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finish();
+                        myDialog.dismiss();
+                    }
+                });
+
+                //아니요 버튼을 눌렀을때
+                noButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        myDialog.dismiss();
+                    }
+                });
+
+                myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+                myDialog.show();
+
+
             }
         });
 
@@ -268,13 +295,15 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
 
             Button cameraButton = (Button) myDialog.findViewById(R.id.camera_button);
             Button galleryButton = (Button) myDialog.findViewById(R.id.gallery_button);
-            Button closeButton = (Button) myDialog.findViewById(R.id.cancel_button);
+            Button cancelButton = (Button) myDialog.findViewById(R.id.cancel_button);
+            Button deleteButton = (Button) myDialog.findViewById(R.id.delete_image_button);
 
             //카메라 버튼을 눌렀을때
             cameraButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    doTakePhotoAction(); //카메라에서 사진 가져오기 메소드
+                    doTakePhotoAction();
+                    myDialog.dismiss();//카메라에서 사진 가져오기 메소드
                 }
             });
 
@@ -282,28 +311,39 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
             galleryButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    doTakeAlbumAction(); //앨범에서 사진 가져오기 메소드
+                    doTakeAlbumAction();
+                    myDialog.dismiss();//앨범에서 사진 가져오기 메소드
                 }
             });
 
             //닫기 버튼을 눌렀을때
-            closeButton.setOnClickListener(new View.OnClickListener() {
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // 취소버튼을 누르면 사진삭제
+                    myDialog.dismiss();
+                }
+            });
+
+            //삭제 버튼을 눌렀을때
+            deleteButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     // 취소버튼을 누르면 사진삭제
 
-                    if(view.getId()==R.id.Imagebutton1) picture1.setImageResource(R.drawable.sample_pic);
-                    if(view.getId()==R.id.Imagebutton2) picture2.setImageResource(R.drawable.sample_pic);
-                    if(view.getId()==R.id.Imagebutton3) picture3.setImageResource(R.drawable.sample_pic);
-                    if(view.getId()==R.id.Imagebutton4) picture4.setImageResource(R.drawable.sample_pic);
-                    if(view.getId()==R.id.Imagebutton5) picture5.setImageResource(R.drawable.sample_pic);
-                    if(view.getId()==R.id.Imagebutton6) picture6.setImageResource(R.drawable.sample_pic);
-                    if(view.getId()==R.id.Imagebutton7) picture7.setImageResource(R.drawable.sample_pic);
-                    if(view.getId()==R.id.Imagebutton8) picture8.setImageResource(R.drawable.sample_pic);
-                    if(view.getId()==R.id.Imagebutton9) picture9.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton1) picture1.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton2) picture2.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton3) picture3.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton4) picture4.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton5) picture5.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton6) picture6.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton7) picture7.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton8) picture8.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton9) picture9.setImageResource(R.drawable.sample_pic);
                     myDialog.dismiss();
                 }
             });
+
 
             myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
             myDialog.show(); //팝업창.
@@ -933,6 +973,38 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent=new Intent(CreateReviewScreenActivity.this,MainScreenActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+        myDialog.show();
+    }
+
+
+
+    @Override
+    public void onBackPressed() {
+
+        myDialog.setContentView(R.layout.review_stop_popup);
+        myDialog.setCancelable(false);
+
+        Button yesButton = (Button) myDialog.findViewById(R.id.yes_button);
+        Button noButton = (Button) myDialog.findViewById(R.id.no_button);
+
+        //네 버튼을 눌렀을때
+        yesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                myDialog.dismiss();
+            }
+        });
+
+        //아니요 버튼을 눌렀을때
+        noButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myDialog.dismiss();
             }
         });
 

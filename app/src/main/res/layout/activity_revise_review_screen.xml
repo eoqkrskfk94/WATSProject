@@ -31,7 +31,7 @@
             android:layout_gravity="center"
             android:layout_weight="2"
             android:gravity="center"
-            android:text="후기 작성히기"
+            android:text="후기 수정하기"
             android:textColor="@color/colorPrimary"
             android:textSize="20sp"
             android:textStyle="bold" />
@@ -473,7 +473,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/register_long_button"
+                android:background="@drawable/long_revise_button"
                 android:onClick="RegisterButton" />
         </LinearLayout>
     </ScrollView>

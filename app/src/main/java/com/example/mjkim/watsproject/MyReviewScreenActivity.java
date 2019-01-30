@@ -39,8 +39,10 @@ public class MyReviewScreenActivity extends AppCompatActivity {
     static public int totalLocationCount;
     private UserReviewAdapter reviewAdapter;
 
-    private String locationName, key, reviewerName, reviewDate, reviewDescription, locationNumber, userEmail, userName, locationCategory;
+    private String locationName, key, reviewerName, reviewDate, reviewDescription, locationNumber, userEmail, userName, locationCategory, locationAddress;
     private Boolean tag1, tag2, tag3, tag4, tag5, tag6;
+    private String imageUrl1, imageUrl2, imageUrl3, imageUrl4, imageUrl5, imageUrl6, imageUrl7, imageUrl8, imageUrl9;
+    private double mapx, mapy;
 
 
     final Context context;
@@ -112,8 +114,11 @@ public class MyReviewScreenActivity extends AppCompatActivity {
                         reviewDescription = myreview.getReview_description();
                         locationNumber = myreview.getPhone_number();
                         locationCategory = myreview.getLocation_category();
+                        locationAddress = myreview.getLocation_address();
+                        mapx = myreview.getMapx();
+                        mapy = myreview.getMapy();
                         userEmail = myreview.getUserEmail();
-/*                        imageUrl1 = myreview.getImageUrl1();
+                        imageUrl1 = myreview.getImageUrl1();
                         imageUrl2 = myreview.getImageUrl2();
                         imageUrl3 = myreview.getImageUrl3();
                         imageUrl4 = myreview.getImageUrl4();
@@ -121,33 +126,13 @@ public class MyReviewScreenActivity extends AppCompatActivity {
                         imageUrl6 = myreview.getImageUrl6();
                         imageUrl7 = myreview.getImageUrl7();
                         imageUrl8 = myreview.getImageUrl8();
-                        imageUrl9 = myreview.getImageUrl9();*/
+                        imageUrl9 = myreview.getImageUrl9();
 
-                        reviewList = new ReviewList();
+                        reviewList = new ReviewList(locationName, locationAddress, locationNumber, locationCategory, reviewDescription, mapx, mapy,
+                                tag1, tag2, tag3, tag4, tag5, tag6, reviewDate, userName, key, imageUrl1, imageUrl2, imageUrl3, imageUrl4, imageUrl5, imageUrl6, imageUrl7, imageUrl8, imageUrl9);
 
-                        reviewList.setKey(key);
-                        reviewList.setLocation_name(locationName);
-                        reviewList.setTag1(tag1);
-                        reviewList.setTag2(tag2);
-                        reviewList.setTag3(tag3);
-                        reviewList.setTag4(tag4);
-                        reviewList.setTag5(tag5);
-                        reviewList.setTag6(tag6);
-                        reviewList.setReview_description(reviewDescription);
-                        reviewList.setDate(reviewDate);
-/*                        reviewList.setImageUrl1(imageUrl1);
-                        reviewList.setImageUrl2(imageUrl2);
-                        reviewList.setImageUrl3(imageUrl3);
-                        reviewList.setImageUrl4(imageUrl4);
-                        reviewList.setImageUrl5(imageUrl5);
-                        reviewList.setImageUrl6(imageUrl6);
-                        reviewList.setImageUrl7(imageUrl7);
-                        reviewList.setImageUrl8(imageUrl8);
-                        reviewList.setImageUrl9(imageUrl9);*/
+                        reviewList.setUserName(myreview.getUserName());
 
-
-                        //System.out.println("reviewList : " + reviewList.getLocation_name());
-                        reviewList.setLocation_name(locationName);
                         reviewLists.add(totalLocationCount, reviewList);
 
                         totalLocationCount++;

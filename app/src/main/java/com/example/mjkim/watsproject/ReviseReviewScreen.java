@@ -142,11 +142,38 @@ public class ReviseReviewScreen extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+
+                myDialog.setContentView(R.layout.review_stop_popup);
+                myDialog.setCancelable(false);
+
+                Button yesButton = (Button) myDialog.findViewById(R.id.yes_button);
+                Button noButton = (Button) myDialog.findViewById(R.id.no_button);
+
+                //네 버튼을 눌렀을때
+                yesButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finish();
+                        myDialog.dismiss();
+                    }
+                });
+
+                //아니요 버튼을 눌렀을때
+                noButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        myDialog.dismiss();
+                    }
+                });
+
+                myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+                myDialog.show();
+
+
+
+
             }
         });
-
-
 
 
         //사진 변수선
@@ -167,12 +194,15 @@ public class ReviseReviewScreen extends AppCompatActivity {
         for(int i = 0; i < 6; i++){ chk[i] = (CheckBox)findViewById(numChkIDs[i]); }
 
 
-        if(getIntent().getExtras().getBoolean("Tag1") == true) chk[0].setChecked(true);
-        if(getIntent().getExtras().getBoolean("Tag2") == true) chk[1].setChecked(true);
-        if(getIntent().getExtras().getBoolean("Tag3") == true) chk[2].setChecked(true);
-        if(getIntent().getExtras().getBoolean("Tag4") == true) chk[3].setChecked(true);
-        if(getIntent().getExtras().getBoolean("Tag5") == true) chk[4].setChecked(true);
-        if(getIntent().getExtras().getBoolean("Tag6") == true) chk[5].setChecked(true);
+        if(getIntent().getExtras().getBoolean("TAG1") == true) chk[0].setChecked(true);
+        if(getIntent().getExtras().getBoolean("TAG2") == true) chk[1].setChecked(true);
+        if(getIntent().getExtras().getBoolean("TAG3") == true) chk[2].setChecked(true);
+        if(getIntent().getExtras().getBoolean("TAG4") == true) chk[3].setChecked(true);
+        if(getIntent().getExtras().getBoolean("TAG5") == true) chk[4].setChecked(true);
+        if(getIntent().getExtras().getBoolean("TAG6") == true) chk[5].setChecked(true);
+
+
+
         //갤러리 사용 권한 체크
         if (ContextCompat.checkSelfPermission(ReviseReviewScreen.this,
                 Manifest.permission.READ_CONTACTS)
@@ -259,7 +289,7 @@ public class ReviseReviewScreen extends AppCompatActivity {
         });
 
         review_text = (EditText) findViewById(R.id.review_text); //후기 작성 부분
-        review_text.setText(getIntent().getExtras().getString("Review"));
+        review_text.setText(getIntent().getExtras().getString("REVIEW"));
     }
 
 
@@ -272,43 +302,67 @@ public class ReviseReviewScreen extends AppCompatActivity {
                 || view.getId() == R.id.Imagebutton4 || view.getId() == R.id.Imagebutton5 || view.getId() == R.id.Imagebutton6
                 || view.getId() == R.id.Imagebutton7 || view.getId() == R.id.Imagebutton8 || view.getId() == R.id.Imagebutton9 ) {
 
-            DialogInterface.OnClickListener cameraListener = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    doTakePhotoAction(); //카메라에서 사진 가져오기 메소드
-                }
-            };
 
-            DialogInterface.OnClickListener albumListener = new DialogInterface.OnClickListener() {
+            myDialog = new Dialog(this); //팝업 변수 선언
+            myDialog.setContentView(R.layout.image_popup);
+            myDialog.setCancelable(false);
+
+            Button cameraButton = (Button) myDialog.findViewById(R.id.camera_button);
+            Button galleryButton = (Button) myDialog.findViewById(R.id.gallery_button);
+            Button cancelButton = (Button) myDialog.findViewById(R.id.cancel_button);
+            Button deleteImageButton = (Button) myDialog.findViewById(R.id.delete_image_button);
+
+            //카메라 버튼을 눌렀을때
+            cameraButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    doTakeAlbumAction(); //앨범에서 사진 가져오기 메소드
+                public void onClick(View view) {
+                    doTakePhotoAction();
+                    myDialog.dismiss();//카메라에서 사진 가져오기 메소드
                 }
-            };
-            DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
+            });
+
+            //갤러리 버튼을 눌렀을때
+            galleryButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
+                public void onClick(View view) {
+                    System.out.println("앨범");
+                    doTakeAlbumAction();
+                    myDialog.dismiss();//앨범에서 사진 가져오기 메소드
+                }
+            });
+
+            //닫기 버튼을 눌렀을때
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
                     // 취소버튼을 누르면 사진삭제
-
-                    if(view.getId()==R.id.Imagebutton1) picture1.setImageResource(R.drawable.sample_pic);
-                    if(view.getId()==R.id.Imagebutton2) picture2.setImageResource(R.drawable.sample_pic);
-                    if(view.getId()==R.id.Imagebutton3) picture3.setImageResource(R.drawable.sample_pic);
-                    if(view.getId()==R.id.Imagebutton4) picture4.setImageResource(R.drawable.sample_pic);
-                    if(view.getId()==R.id.Imagebutton5) picture5.setImageResource(R.drawable.sample_pic);
-                    if(view.getId()==R.id.Imagebutton6) picture6.setImageResource(R.drawable.sample_pic);
-                    if(view.getId()==R.id.Imagebutton7) picture7.setImageResource(R.drawable.sample_pic);
-                    if(view.getId()==R.id.Imagebutton8) picture8.setImageResource(R.drawable.sample_pic);
-                    if(view.getId()==R.id.Imagebutton9) picture9.setImageResource(R.drawable.sample_pic);
-                    dialogInterface.dismiss();
+                    myDialog.dismiss();
                 }
-            };
+            });
 
-            new AlertDialog.Builder(this)
-                    .setTitle("업로드할 이미지 선택")
-                    .setPositiveButton("앨범선택", albumListener)
-                    .setNeutralButton("취소/사진삭제", cancelListener)
-                    .setNegativeButton("사진촬영", cameraListener)
-                    .show();
+            //닫기 버튼을 눌렀을때
+            deleteImageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    System.out.println("사진 삭제하기");
+                    // 취소버튼을 누르면 사진삭제
+                    if(id_view==R.id.Imagebutton1) picture1.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton2) picture2.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton3) picture3.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton4) picture4.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton5) picture5.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton6) picture6.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton7) picture7.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton8) picture8.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton9) picture9.setImageResource(R.drawable.sample_pic);
+                    myDialog.dismiss();
+                }
+            });
+
+
+            myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+            myDialog.show(); //팝업창.
+
 
         }
     }
@@ -880,8 +934,12 @@ public class ReviseReviewScreen extends AppCompatActivity {
     //등록하기 버튼 눌렀을때
     public void RegisterButton (View view){
 
+        Intent review_intent = getIntent();
+        location_name = review_intent.getExtras().getString("LOCATIONNAME");
+        key = review_intent.getExtras().getString("KEY");
+
         mDatabase = database.getReference();
-        mDatabase.child("review lists").child(nameAndAdress).child(key).setValue(null);
+        mDatabase.child("review lists").child(location_name).child(key).setValue(null);
 
         //리뷰 저장 부분
         //리뷰가 작성된 날짜
@@ -890,16 +948,16 @@ public class ReviseReviewScreen extends AppCompatActivity {
         String mTime = simpleDateFormat.format(currentTime);
 
 
-        Intent review_intent = getIntent();
 
-        location_name = review_intent.getExtras().getString("NAME");
+
+
         //       int index = location_name.indexOf(" , ");
         //      location_name = location_name.substring(0, index);
-        String location_category = review_intent.getExtras().getString("LocationCategory");
-        String location_addess = review_intent.getExtras().getString("LocationAddress");
-        String location_number = review_intent.getExtras().getString("LocationNumber");
-        double location_mapx = (double)review_intent.getExtras().getInt("Mapx");
-        double location_mapy = (double)review_intent.getExtras().getInt("Mapy");
+        String location_category = review_intent.getExtras().getString("CATEGORY");
+        String location_addess = review_intent.getExtras().getString("ADDRESS");
+        String location_number = review_intent.getExtras().getString("TELEPHONE");
+        double location_mapx = review_intent.getExtras().getDouble("MAPX");
+        double location_mapy = review_intent.getExtras().getDouble("MAPY");
 
         //리뷰 문장 받아오기
         String review_description = review_text.getText().toString();
@@ -915,13 +973,12 @@ public class ReviseReviewScreen extends AppCompatActivity {
         reviewList = new ReviewList(location_name, location_addess, location_number, location_category, review_description, location_mapx, location_mapy, tag1, tag2, tag3, tag4, tag5, tag6, mTime, userName, key
                 ,imagePath1,imagePath2,imagePath3,imagePath4,imagePath5,imagePath6,imagePath7,imagePath8,imagePath9);
 
-        nameAndAdress = location_name + " , " + location_addess;
 
         if(pic1 !=0 || pic2 !=0 || pic3 !=0 || pic4 !=0 || pic5 !=0 || pic6 !=0 || pic7 !=0 || pic8!=0 || pic9!=0 ) {  // 사진이 하나라도 있으면.
             upload(imagePath1, imagePath2, imagePath3,imagePath4,imagePath5,imagePath6,imagePath7,imagePath8,imagePath9);
         }
         else{
-            reviewData.saveData(nameAndAdress, reviewList);  //사진 없을때
+            reviewData.saveData(location_name, reviewList);  //사진 없을때
         }
 
         myDialog.setContentView(R.layout.revise_popup);
@@ -943,4 +1000,39 @@ public class ReviseReviewScreen extends AppCompatActivity {
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
         myDialog.show();
     }
+
+
+    @Override
+    public void onBackPressed() {
+
+        myDialog.setContentView(R.layout.review_stop_popup);
+        myDialog.setCancelable(false);
+
+        Button yesButton = (Button) myDialog.findViewById(R.id.yes_button);
+        Button noButton = (Button) myDialog.findViewById(R.id.no_button);
+
+        //네 버튼을 눌렀을때
+        yesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                myDialog.dismiss();
+            }
+        });
+
+        //아니요 버튼을 눌렀을때
+        noButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myDialog.dismiss();
+            }
+        });
+
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+        myDialog.show();
+    }
+
+
+
+
 }

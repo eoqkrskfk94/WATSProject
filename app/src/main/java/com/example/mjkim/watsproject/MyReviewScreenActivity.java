@@ -2,6 +2,7 @@ package com.example.mjkim.watsproject;
 
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
@@ -14,6 +15,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.mjkim.watsproject.Review.CategoryAdapter;
 import com.example.mjkim.watsproject.Review.ReviewList;
 import com.example.mjkim.watsproject.Review.UserReviewAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,8 +40,10 @@ public class MyReviewScreenActivity extends AppCompatActivity {
     static public int totalLocationCount;
     private UserReviewAdapter reviewAdapter;
 
-    private String locationName, key, reviewerName, reviewDate, reviewDescription, locationNumber, userEmail, userName, locationCategory;
+    private String locationName, key, reviewerName, reviewDate, reviewDescription, locationNumber, userEmail, userName, locationCategory, locationAddress;
     private Boolean tag1, tag2, tag3, tag4, tag5, tag6;
+    private String imageUrl1, imageUrl2, imageUrl3, imageUrl4, imageUrl5, imageUrl6, imageUrl7, imageUrl8, imageUrl9;
+    private double mapx, mapy;
 
 
     final Context context;
@@ -58,17 +62,6 @@ public class MyReviewScreenActivity extends AppCompatActivity {
         reviewLists = new ArrayList<ReviewList>();
         myDialog = new Dialog(this); //로딩 팝업 변수 선언
         totalLocationCount = 0;
-
-
-        Button cancelButton = (Button)findViewById(R.id.cancel_button);
-
-        //cancel 버튼 눌렀을때 전 화면을 돌아간다
-        cancelButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
 
 
 
@@ -122,8 +115,11 @@ public class MyReviewScreenActivity extends AppCompatActivity {
                         reviewDescription = myreview.getReview_description();
                         locationNumber = myreview.getPhone_number();
                         locationCategory = myreview.getLocation_category();
+                        locationAddress = myreview.getLocation_address();
+                        mapx = myreview.getMapx();
+                        mapy = myreview.getMapy();
                         userEmail = myreview.getUserEmail();
-/*                        imageUrl1 = myreview.getImageUrl1();
+                        imageUrl1 = myreview.getImageUrl1();
                         imageUrl2 = myreview.getImageUrl2();
                         imageUrl3 = myreview.getImageUrl3();
                         imageUrl4 = myreview.getImageUrl4();
@@ -131,33 +127,13 @@ public class MyReviewScreenActivity extends AppCompatActivity {
                         imageUrl6 = myreview.getImageUrl6();
                         imageUrl7 = myreview.getImageUrl7();
                         imageUrl8 = myreview.getImageUrl8();
-                        imageUrl9 = myreview.getImageUrl9();*/
+                        imageUrl9 = myreview.getImageUrl9();
 
-                        reviewList = new ReviewList();
+                        reviewList = new ReviewList(locationName, locationAddress, locationNumber, locationCategory, reviewDescription, mapx, mapy,
+                                tag1, tag2, tag3, tag4, tag5, tag6, reviewDate, userName, key, imageUrl1, imageUrl2, imageUrl3, imageUrl4, imageUrl5, imageUrl6, imageUrl7, imageUrl8, imageUrl9);
 
-                        reviewList.setKey(key);
-                        reviewList.setLocation_name(locationName);
-                        reviewList.setTag1(tag1);
-                        reviewList.setTag2(tag2);
-                        reviewList.setTag3(tag3);
-                        reviewList.setTag4(tag4);
-                        reviewList.setTag5(tag5);
-                        reviewList.setTag6(tag6);
-                        reviewList.setReview_description(reviewDescription);
-                        reviewList.setDate(reviewDate);
-/*                        reviewList.setImageUrl1(imageUrl1);
-                        reviewList.setImageUrl2(imageUrl2);
-                        reviewList.setImageUrl3(imageUrl3);
-                        reviewList.setImageUrl4(imageUrl4);
-                        reviewList.setImageUrl5(imageUrl5);
-                        reviewList.setImageUrl6(imageUrl6);
-                        reviewList.setImageUrl7(imageUrl7);
-                        reviewList.setImageUrl8(imageUrl8);
-                        reviewList.setImageUrl9(imageUrl9);*/
+                        reviewList.setUserName(myreview.getUserName());
 
-
-                        //System.out.println("reviewList : " + reviewList.getLocation_name());
-                        reviewList.setLocation_name(locationName);
                         reviewLists.add(totalLocationCount, reviewList);
 
                         totalLocationCount++;
@@ -228,11 +204,21 @@ public class MyReviewScreenActivity extends AppCompatActivity {
             }
         }, 2300);
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainScreenActivity.class);
+        startActivity(intent);
+        super.onBackPressed();
+    }
 
 
-
-
-
-
+    // 뒤로가기 버튼 누르면 메인으로
+    public void BackButton(View view) {
+        System.out.println("cancel");
+        finish();
+        Intent intent = new Intent(this, MainScreenActivity.class);
+        startActivity(intent);
     }
 }

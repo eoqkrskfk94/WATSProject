@@ -15,16 +15,8 @@ public class SearchScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search_screen);
 
-        Button backButton = (Button)findViewById(R.id.back_button); //돌아가기 버튼 선언
         Button searchButton = (Button)findViewById(R.id.search_button);
 
-        //돌아가기 버튼 눌렀을때 전 화면을 돌아간다
-        backButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-            }
-        });
 
         //검색하기 버튼을 눌렀을때
         searchButton.setOnClickListener(new View.OnClickListener() {
@@ -36,5 +28,12 @@ public class SearchScreenActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    // 돌아가기 버튼 눌렀을때 전 화면을 돌아간다
+    public void BackButton(View view) {
+        finish();
+        Intent intent = new Intent(this, MainScreenActivity.class);
+        startActivity(intent);
     }
 }

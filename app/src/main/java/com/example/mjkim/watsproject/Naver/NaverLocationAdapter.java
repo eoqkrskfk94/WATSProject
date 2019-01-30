@@ -147,10 +147,12 @@ public class NaverLocationAdapter extends BaseAdapter{
         TextView telephone = (TextView)convertView.findViewById(R.id.vi_telephone); //장소 전화번호
         LinearLayout layout_view =  (LinearLayout)convertView.findViewById(R.id.vi_view); //형식
 
+        String shortCategory = arr.get(position).getCategory().substring(arr.get(position).getCategory().lastIndexOf(">")+1);
+
 
         title.setText(arr.get(position).getName());
-        category.setText(arr.get(position).getCategory());
-        road_address.setText(arr.get(position).getRoad_address());
+        category.setText(shortCategory);
+        road_address.setText(arr.get(position).getAddress());
         telephone.setText(arr.get(position).getTelephone());
 
 
@@ -182,7 +184,7 @@ public class NaverLocationAdapter extends BaseAdapter{
         else intent = new Intent(m_activity, LocationDetailScreenActivity.class);
 
         //putExtra 로 선택한 아이템의 정보를 인텐트로 넘겨 줄 수 있다.
-
+        System.out.println("newmap4 : " + arr.get(a).getMapx() + "  " + arr.get(a).getMapy() + "  " + arr.get(a).getAddress());
         intent.putExtra("NAME", arr.get(a).getName());
         intent.putExtra("CATEGORY", arr.get(a).getCategory());
         intent.putExtra("LINK", arr.get(a).getLink());

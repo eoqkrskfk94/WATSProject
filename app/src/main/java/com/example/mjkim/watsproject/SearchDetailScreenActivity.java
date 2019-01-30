@@ -1,6 +1,7 @@
 package com.example.mjkim.watsproject;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Handler;
@@ -43,7 +44,8 @@ public class SearchDetailScreenActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                Intent intent=new Intent(SearchDetailScreenActivity.this,MainScreenActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -112,8 +114,12 @@ public class SearchDetailScreenActivity extends AppCompatActivity {
 
             }
         });
+    }
 
-
-
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainScreenActivity.class);
+        startActivity(intent);
+        super.onBackPressed();
     }
 }

@@ -33,23 +33,23 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-            <Button
-                android:id="@+id/category"
+            <TextView
+                android:id="@+id/location_categoryTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="카테고리"/>
             <TextView
-                android:id="@+id/location_name"
+                android:id="@+id/location_nameTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="장소명"/>
             <TextView
-                android:id="@+id/location_address"
+                android:id="@+id/location_addressTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="도로 주소"/>
             <TextView
-                android:id="@+id/location_phone"
+                android:id="@+id/location_phoneTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:hint="전화번호"/>

@@ -142,7 +142,34 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+
+                myDialog.setContentView(R.layout.review_stop_popup);
+                myDialog.setCancelable(false);
+
+                Button yesButton = (Button) myDialog.findViewById(R.id.yes_button);
+                Button noButton = (Button) myDialog.findViewById(R.id.no_button);
+
+                //네 버튼을 눌렀을때
+                yesButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        finish();
+                        myDialog.dismiss();
+                    }
+                });
+
+                //아니요 버튼을 눌렀을때
+                noButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        myDialog.dismiss();
+                    }
+                });
+
+                myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+                myDialog.show();
+
+
             }
         });
 
@@ -261,43 +288,66 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                 || view.getId() == R.id.Imagebutton4 || view.getId() == R.id.Imagebutton5 || view.getId() == R.id.Imagebutton6
                 || view.getId() == R.id.Imagebutton7 || view.getId() == R.id.Imagebutton8 || view.getId() == R.id.Imagebutton9 ) {
 
-            DialogInterface.OnClickListener cameraListener = new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    doTakePhotoAction(); //카메라에서 사진 가져오기 메소드
-                }
-            };
 
-            DialogInterface.OnClickListener albumListener = new DialogInterface.OnClickListener() {
+            myDialog = new Dialog(this); //팝업 변수 선언
+            myDialog.setContentView(R.layout.image_popup);
+            myDialog.setCancelable(false);
+
+            Button cameraButton = (Button) myDialog.findViewById(R.id.camera_button);
+            Button galleryButton = (Button) myDialog.findViewById(R.id.gallery_button);
+            Button cancelButton = (Button) myDialog.findViewById(R.id.cancel_button);
+            Button deleteButton = (Button) myDialog.findViewById(R.id.delete_image_button);
+
+            //카메라 버튼을 눌렀을때
+            cameraButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
-                    doTakeAlbumAction(); //앨범에서 사진 가져오기 메소드
+                public void onClick(View view) {
+                    doTakePhotoAction();
+                    myDialog.dismiss();//카메라에서 사진 가져오기 메소드
                 }
-            };
-            DialogInterface.OnClickListener cancelListener = new DialogInterface.OnClickListener() {
+            });
+
+            //갤러리 버튼을 눌렀을때
+            galleryButton.setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(DialogInterface dialogInterface, int i) {
+                public void onClick(View view) {
+                    doTakeAlbumAction();
+                    myDialog.dismiss();//앨범에서 사진 가져오기 메소드
+                }
+            });
+
+            //닫기 버튼을 눌렀을때
+            cancelButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    // 취소버튼을 누르면 사진삭제
+                    myDialog.dismiss();
+                }
+            });
+
+            //삭제 버튼을 눌렀을때
+            deleteButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
                     // 취소버튼을 누르면 사진삭제
 
-                    if(view.getId()==R.id.Imagebutton1) picture1.setImageResource(R.drawable.sample_pic);
-                    if(view.getId()==R.id.Imagebutton2) picture2.setImageResource(R.drawable.sample_pic);
-                    if(view.getId()==R.id.Imagebutton3) picture3.setImageResource(R.drawable.sample_pic);
-                    if(view.getId()==R.id.Imagebutton4) picture4.setImageResource(R.drawable.sample_pic);
-                    if(view.getId()==R.id.Imagebutton5) picture5.setImageResource(R.drawable.sample_pic);
-                    if(view.getId()==R.id.Imagebutton6) picture6.setImageResource(R.drawable.sample_pic);
-                    if(view.getId()==R.id.Imagebutton7) picture7.setImageResource(R.drawable.sample_pic);
-                    if(view.getId()==R.id.Imagebutton8) picture8.setImageResource(R.drawable.sample_pic);
-                    if(view.getId()==R.id.Imagebutton9) picture9.setImageResource(R.drawable.sample_pic);
-                    dialogInterface.dismiss();
+                    if(id_view==R.id.Imagebutton1) picture1.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton2) picture2.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton3) picture3.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton4) picture4.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton5) picture5.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton6) picture6.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton7) picture7.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton8) picture8.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton9) picture9.setImageResource(R.drawable.sample_pic);
+                    myDialog.dismiss();
                 }
-            };
+            });
 
-            new AlertDialog.Builder(this)
-                    .setTitle("업로드할 이미지 선택")
-                    .setPositiveButton("앨범선택", albumListener)
-                    .setNeutralButton("취소/사진삭제", cancelListener)
-                    .setNegativeButton("사진촬영", cameraListener)
-                    .show();
+
+            myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+            myDialog.show(); //팝업창.
+
 
         }
     }
@@ -348,7 +398,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
                 }
-                }
+            }
             case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
                 if(grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED){
@@ -360,11 +410,11 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
 
             }
 
-                return;
-            }
+            return;
+        }
 
-            // other 'case' lines to check for other
-            // permissions this app might request
+        // other 'case' lines to check for other
+        // permissions this app might request
     }
     private int exifOrientationToDegrees(int exifOrientation) {
         if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
@@ -512,58 +562,76 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
         }
         if(requestCode==pick_from_album) {
             if (id_view == R.id.Imagebutton1) {
-                imagePath1 = getPath(data.getData());
-                File f1 = new File(imagePath1);
-                picture1.setImageURI(Uri.fromFile(f1));
-                pic1=1;
+                if(data!=null) {
+                    imagePath1 = getPath(data.getData());
+                    File f1 = new File(imagePath1);
+                    picture1.setImageURI(Uri.fromFile(f1));
+                    pic1 = 1;
+                }
             }
             if (id_view == R.id.Imagebutton2) {
-                imagePath2 = getPath(data.getData());
-                File f2 = new File(imagePath2);
-                picture2.setImageURI(Uri.fromFile(f2));
-                pic2=1;
+                if(data!=null) {
+                    imagePath2 = getPath(data.getData());
+                    File f2 = new File(imagePath2);
+                    picture2.setImageURI(Uri.fromFile(f2));
+                    pic2 = 1;
+                }
             }
             if (id_view == R.id.Imagebutton3) {
-                imagePath3 = getPath(data.getData());
-                File f3 = new File(imagePath3);
-                picture3.setImageURI(Uri.fromFile(f3));
-                pic3=1;
+                if(data!=null) {
+                    imagePath3 = getPath(data.getData());
+                    File f3 = new File(imagePath3);
+                    picture3.setImageURI(Uri.fromFile(f3));
+                    pic3 = 1;
+                }
             }
             if (id_view == R.id.Imagebutton4) {
-                imagePath4 = getPath(data.getData());
-                File f4 = new File(imagePath4);
-                picture4.setImageURI(Uri.fromFile(f4));
-                pic4=1;
+                if(data!=null) {
+                    imagePath4 = getPath(data.getData());
+                    File f4 = new File(imagePath4);
+                    picture4.setImageURI(Uri.fromFile(f4));
+                    pic4 = 1;
+                }
             }
             if (id_view == R.id.Imagebutton5) {
-                imagePath5 = getPath(data.getData());
-                File f5 = new File(imagePath5);
-                picture5.setImageURI(Uri.fromFile(f5));
-                pic5=1;
+                if(data!=null) {
+                    imagePath5 = getPath(data.getData());
+                    File f5 = new File(imagePath5);
+                    picture5.setImageURI(Uri.fromFile(f5));
+                    pic5 = 1;
+                }
             }
             if (id_view == R.id.Imagebutton6) {
-                imagePath6 = getPath(data.getData());
-                File f6 = new File(imagePath6);
-                picture6.setImageURI(Uri.fromFile(f6));
-                pic6=1;
+                if(data!=null) {
+                    imagePath6 = getPath(data.getData());
+                    File f6 = new File(imagePath6);
+                    picture6.setImageURI(Uri.fromFile(f6));
+                    pic6 = 1;
+                }
             }
             if (id_view == R.id.Imagebutton7) {
-                imagePath7 = getPath(data.getData());
-                File f7 = new File(imagePath7);
-                picture7.setImageURI(Uri.fromFile(f7));
-                pic7=1;
+                if(data!=null) {
+                    imagePath7 = getPath(data.getData());
+                    File f7 = new File(imagePath7);
+                    picture7.setImageURI(Uri.fromFile(f7));
+                    pic7 = 1;
+                }
             }
             if (id_view == R.id.Imagebutton8) {
-                imagePath8 = getPath(data.getData());
-                File f8 = new File(imagePath8);
-                picture8.setImageURI(Uri.fromFile(f8));
-                pic8=1;
+                if(data!=null) {
+                    imagePath8 = getPath(data.getData());
+                    File f8 = new File(imagePath8);
+                    picture8.setImageURI(Uri.fromFile(f8));
+                    pic8 = 1;
+                }
             }
             if (id_view == R.id.Imagebutton9) {
-                imagePath9 = getPath(data.getData());
-                File f9 = new File(imagePath9);
-                picture9.setImageURI(Uri.fromFile(f9));
-                pic9=1;
+                if(data!=null) {
+                    imagePath9 = getPath(data.getData());
+                    File f9 = new File(imagePath9);
+                    picture9.setImageURI(Uri.fromFile(f9));
+                    pic9 = 1;
+                }
             }
         }
     }
@@ -609,17 +677,6 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
             file = Uri.fromFile(new File(imagePath1));
         }
 
-        Bitmap bitmap1=null;
-        try {
-            bitmap1 = MediaStore.Images.Media.getBitmap(this.getContentResolver(), file);
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        bitmap1.compress(Bitmap.CompressFormat.JPEG,30,baos);
 
 //        Uri uriBit;
 //
@@ -923,6 +980,38 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent=new Intent(CreateReviewScreenActivity.this,MainScreenActivity.class);
                 startActivity(intent);
+            }
+        });
+
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+        myDialog.show();
+    }
+
+
+
+    @Override
+    public void onBackPressed() {
+
+        myDialog.setContentView(R.layout.review_stop_popup);
+        myDialog.setCancelable(false);
+
+        Button yesButton = (Button) myDialog.findViewById(R.id.yes_button);
+        Button noButton = (Button) myDialog.findViewById(R.id.no_button);
+
+        //네 버튼을 눌렀을때
+        yesButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+                myDialog.dismiss();
+            }
+        });
+
+        //아니요 버튼을 눌렀을때
+        noButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                myDialog.dismiss();
             }
         });
 

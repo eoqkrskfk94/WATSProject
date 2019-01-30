@@ -1,5 +1,6 @@
 package com.example.mjkim.watsproject;
 
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -10,6 +11,7 @@ import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,6 +25,8 @@ import com.example.mjkim.watsproject.Naver.NaverBlogSearch;
 import com.example.mjkim.watsproject.Review.ReviewAdapter;
 import com.example.mjkim.watsproject.Review.ReviewFirebaseJson;
 import com.example.mjkim.watsproject.Review.ReviewList;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -38,18 +42,19 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
     public static ArrayList<ReviewList> reviewLists;
     private NaverBlogSearch naverBlogSearch;
     private NaverBlogAdapter naverBlogAdapter;
-    ViewPager viewPager;
-    LinearLayout sliderDots;
-    public int dotCounts;
-    public ImageView[] dots;
     private ReviewAdapter reviewAdapter;
     public static int length; //리뷰 갯수
+    private FirebaseUser currentUser;
+    private FirebaseAuth mAuth;
 
     //리뷰 변수들 선언
     Boolean tag1, tag2, tag3, tag4, tag5, tag6;
     String locationName, locationCategory, locationAddress, locationNumber, reviewDescription, userEmail, userName, key, reviewDate;
     double locationMapx, locationMapy;
 
+    String location_name, location_category, location_addess, location_number;
+    double location_x, location_y;
+    String imageUrl1,imageUrl2,imageUrl3,imageUrl4,imageUrl5,imageUrl6,imageUrl7,imageUrl8,imageUrl9;
 
 
 
@@ -58,7 +63,8 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_location_detail_screen);
 
-
+        mAuth = FirebaseAuth.getInstance(); // 로그인 작업의 onCreate 메소드에서 FirebaseAuth 개체의 공유 인스턴스를 가져옵니다
+        currentUser = mAuth.getCurrentUser();
 
         // 제일 위부터 보기
         scrollView = new ScrollView(this);
@@ -66,7 +72,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
         scrollView.scrollTo(0,600);
 
 
-        myDialog = new Dialog(this); //회원가입 팝업 변수 선언
+        myDialog = new Dialog(this); //팝업 변수 선언
         Intent intent = getIntent();
         blogList = new ArrayList<NaverBlogList>(); //블로그 리스트 선언
         naverBlogSearch = new NaverBlogSearch();
@@ -193,27 +199,44 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
 
         //장소 정보 화면 출력
-        final String location_name, location_category, location_addess, location_number;
-        final Integer location_x, location_y;
+//        String location_name, location_category, location_addess, location_number;
+//        double location_x, location_y;
 
         location_name = getIntent().getExtras().getString("NAME");
         location_category = getIntent().getExtras().getString("CATEGORY");
         location_addess = getIntent().getExtras().getString("ADDRESS");
         location_number = getIntent().getExtras().getString("TELEPHONE");
-        location_x = getIntent().getExtras().getInt("MAPX");
+        location_x = (double)getIntent().getExtras().getInt("MAPX");
         location_y = getIntent().getExtras().getInt("MAPY");
+
+        System.out.println("newmap3 : " + location_addess + "  " + location_x + "  " + location_y);
 
         locationNameText.setText(location_name);
         locationCategoryText.setText(location_category);
         locationAddressText.setText(location_addess);
         locationNumberText.setText(location_number);
 
-        //전화번호 눌렀을때 통화 기능
+        // 주소 누르면 지도 뜸
+        locationAddressText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LocationDetailScreenActivity.this, WatchLocationActivity.class);
+                intent.putExtra("NAME", location_name);
+                intent.putExtra("CATEGORY", location_category);
+                intent.putExtra("ADDRESS", location_addess);
+                intent.putExtra("TELEPHONE", location_number);
+                intent.putExtra("MAPX", location_x);
+                intent.putExtra("MAPY", location_y);
+                startActivity(intent);
+            }
+        });
+
+        // 전화번호 눌렀을때 통화 기능
         locationNumberText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1 = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + getIntent().getExtras().getString("TELEPHONE")));
-                startActivity(intent1);
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + getIntent().getExtras().getString("TELEPHONE")));
+                startActivity(intent);
             }
         });
 
@@ -222,7 +245,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
         Button backButton = (Button)findViewById(R.id.back_button);
         Button createReviewButton = (Button)findViewById(R.id.c_review_button);
 
-        //돌아가기 버튼 눌렀을때 전 화면을 돌아간다
+        // 돌아가기 버튼 눌렀을때 전 화면을 돌아간다
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -235,14 +258,44 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
         createReviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(LocationDetailScreenActivity.this,CreateReviewScreenActivity.class);
-                intent.putExtra("NAME", location_name);
-                intent.putExtra("CATEGORY", location_category);
-                intent.putExtra("ADDRESS", location_addess);
-                intent.putExtra("TELEPHONE", location_number);
-                intent.putExtra("MAPX", location_x);
-                intent.putExtra("MAPY", location_y);
-                startActivity(intent);
+                if(currentUser == null){
+                    myDialog.setContentView(R.layout.login_popup);
+                    myDialog.setCancelable(false);
+
+                    Button loginButton = (Button) myDialog.findViewById(R.id.login_button);
+                    Button closeButton = (Button) myDialog.findViewById(R.id.cancel_button);
+
+                    //로그인 버튼을 눌렀을때
+                    loginButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            Intent intent=new Intent(LocationDetailScreenActivity.this,LoginScreenActivity.class);
+                            startActivity(intent);
+                        }
+                    });
+
+                    //닫기 버튼을 눌렀을때
+                    closeButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View view) {
+                            myDialog.dismiss();
+                        }
+                    });
+
+                    myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+                    myDialog.show();
+                }
+
+                else {
+                    Intent intent = new Intent(LocationDetailScreenActivity.this, CreateReviewScreenActivity.class);
+                    intent.putExtra("NAME", location_name);
+                    intent.putExtra("CATEGORY", location_category);
+                    intent.putExtra("ADDRESS", location_addess);
+                    intent.putExtra("TELEPHONE", location_number);
+                    intent.putExtra("MAPX", location_x);
+                    intent.putExtra("MAPY", location_y);
+                    startActivity(intent);
+                }
             }
         });
 
@@ -291,18 +344,12 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
 
             String json = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getReview_json_string();
-            System.out.println("제이슨: " + json);
             length = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getReview_count();
-            System.out.println("길이: " + length);
             JSONArray IDs = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getReview_json_userID();
-            System.out.println("제이슨2: " + IDs);
             String Fire_locationName = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getLocation_name();
-            System.out.println("제이슨: " + Fire_locationName);
 
             try{
                 JSONObject obj = new JSONObject(json);
-
-                System.out.println("진짜 안되??");
 
                 for (int i = 0; i < length; i++) {
                     JSONObject jsonObj = obj.getJSONObject(IDs.getString(i));
@@ -331,7 +378,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
                     userEmail = jsonObj.getString("userEmail");
                     reviewDate = jsonObj.getString("date");
 
-/*                    imageUrl1 = jsonObj.getString("imageUrl1");
+                    imageUrl1 = jsonObj.getString("imageUrl1");
                     imageUrl2 = jsonObj.getString("imageUrl2");
                     imageUrl3 = jsonObj.getString("imageUrl3");
                     imageUrl4 = jsonObj.getString("imageUrl4");
@@ -339,16 +386,15 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
                     imageUrl6 = jsonObj.getString("imageUrl6");
                     imageUrl7 = jsonObj.getString("imageUrl7");
                     imageUrl8 = jsonObj.getString("imageUrl8");
-                    imageUrl9 = jsonObj.getString("imageUrl9");*/
+                    imageUrl9 = jsonObj.getString("imageUrl9");
 
 
 
                     if(intent.getExtras().getString("NAME").equals(location_name)) {
 
-                        System.out.println("여기면 되는거야");
-
-                        reviewLists.add(num++, new ReviewList(intent.getExtras().getString("NAME"), locationAddress, locationNumber, locationCategory, reviewDescription, locationMapx, locationMapx,
-                                tag1, tag2, tag3, tag4, tag5, tag6, reviewDate, userName, key));
+                        reviewLists.add(num++, new ReviewList(intent.getExtras().getString("NAME"), locationAddress, locationNumber, locationCategory, reviewDescription, locationMapx, locationMapy,
+                                tag1, tag2, tag3, tag4, tag5, tag6, reviewDate, userName, key,imageUrl1,imageUrl2,imageUrl3,imageUrl4,imageUrl5,imageUrl6,
+                                imageUrl7,imageUrl8,imageUrl9));
 
                     }
                 }
@@ -368,12 +414,15 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
         }
         else if(reviewLists.size() == 1) {
 
-            reviewListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 600));
+            reviewListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         }
         else if(reviewLists.size() == 2) {
 
-            reviewListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1500));
+            View view = getLayoutInflater().inflate(R.layout.review_list_box, null);
+            View view2 = view.findViewById(R.id.list_size);
+            reviewListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, view2.getLayoutParams().height * 2 + 200));
         }
+
 
         new Handler().postDelayed(new Runnable() {
             @Override

@@ -2,12 +2,15 @@ package com.example.mjkim.watsproject;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
+import android.os.Handler;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -20,11 +23,25 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ListView;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.mjkim.watsproject.Convert.GeoTrans;
+import com.example.mjkim.watsproject.Convert.GeoTransPoint;
 import com.example.mjkim.watsproject.FirstSreenFragments.ListFragment;
 import com.example.mjkim.watsproject.FirstSreenFragments.MypageFragment;
 import com.example.mjkim.watsproject.OtherClasses.BackPressCloseHandler;
+import com.example.mjkim.watsproject.Review.ReviewAdapter;
+import com.example.mjkim.watsproject.Review.UserReviewAdapter;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+import com.example.mjkim.watsproject.Review.ReviewList;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.CameraUpdate;
@@ -42,21 +59,23 @@ import java.util.ArrayList;
 public class MainScreenActivity extends AppCompatActivity implements OnMapReadyCallback, NaverMap.OnLocationChangeListener {
     // 쥐피에스
     private FusedLocationSource locationSource;
-    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000;
-    private static final int REQUEST_CODE_LOCATION = 2;
+    private static final int LOCATION_PERMISSION_REQUEST_CODE = 1000, REQUEST_CODE_LOCATION = 2;
     private BackPressCloseHandler backPressCloseHandler;
     private static double myLatitude, myLongitude;
-    private static Location location;
     private static LatLng latLng;
+    private FirebaseUser currentUser;
+    private FirebaseAuth mAuth;
+    Dialog myDialog;
+    private ReviewAdapter reviewAdapter;
 
-    int check = 0;
-    private ArrayList<Marker> markers;
-
+    static public int totalLocationCount;
+    private int check = 0, i = 0;
 
     private BottomNavigationView mMainNav; //하단 메뉴 아이콘
-    private FrameLayout mMainFrame;
-    private FrameLayout statsFrame;
+    private FrameLayout mMainFrame, statsFrame;
     private Dialog reviewDialog;
+    private TextView location_categoryTextView, location_nameTextView, location_phoneTextView, location_addressTextView;
+
 
     //화면에서의 fragment들 선언
     private MapFragment mapFragment; //NaverMapFragment안쓰고 따로 네이버에서 제공하는 클래스 사용하는 것임
@@ -64,7 +83,26 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     private MypageFragment mypageFragment;
     private StatsFragment statsFragment;
 
-    Marker marker;
+    private Marker marker;
+
+    // 리뷰 정보 담을 변수
+    private ReviewList reviewList;
+    public static ArrayList<ReviewList> reviewLists;
+    FirebaseAuth auth;
+    private DatabaseReference mDatabase;
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    final Context context;
+    private String locationName, key, reviewerName, reviewDate, reviewDescription, locationNumber, userEmail, userName, locationCategory, locationAddress;
+    private Boolean tag1, tag2, tag3, tag4, tag5, tag6;
+    private String imageUrl1, imageUrl2, imageUrl3, imageUrl4, imageUrl5, imageUrl6, imageUrl7, imageUrl8, imageUrl9;
+    private double mapx, mapy;
+
+
+    {
+        context = this;
+    }
+
+
 
 
 
@@ -73,7 +111,14 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_screen);
 
+        mAuth = FirebaseAuth.getInstance(); // 로그인 작업의 onCreate 메소드에서 FirebaseAuth 개체의 공유 인스턴스를 가져옵니다
+        currentUser = mAuth.getCurrentUser();
+        myDialog = new Dialog(this); //팝업 변수 선언
+
+        totalLocationCount = 0;
         backPressCloseHandler = new BackPressCloseHandler(this);
+
+        TextView mainText = (TextView)findViewById(R.id.main_text);
 
         Button searchButton = (Button)findViewById(R.id.search_button);
 
@@ -81,7 +126,8 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(MainScreenActivity.this,SearchScreenActivity.class);
+                finish();
+                Intent intent=new Intent(MainScreenActivity.this,SearchDetailScreenActivity.class);
                 startActivity(intent);
             }
         });
@@ -90,6 +136,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
 
         reviewDialog = new Dialog(this); //회원가입 팝업 변수 선언
 
+
         mMainFrame = (FrameLayout) findViewById(R.id.main_frame);
         mMainNav = (BottomNavigationView) findViewById(R.id.main_nav);
         statsFrame = (FrameLayout)findViewById(R.id.stats_frame_layout);
@@ -97,12 +144,10 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         listFragment = new ListFragment();
         mypageFragment = new MypageFragment();
         statsFragment = new StatsFragment();
-
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
 
 
-
-        // 위치 설정 권한 없을 때 넣기
+        // 위치 설정 권한 없을 때 받기
         int permssionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
         if (permssionCheck!= PackageManager.PERMISSION_GRANTED) {
 
@@ -115,13 +160,10 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         REQUEST_CODE_LOCATION);
             }
-//                        finish();
-//            Intent intent=new Intent(this,LoadingScreenActivity.class);
-//            startActivity(intent);
         }
 
         // 기본 화면 지도 뜨게 함
-        setFragment(listFragment);
+        setMapFragment();
 
 
 
@@ -132,16 +174,49 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                 switch (item.getItemId()) {
 
                     case R.id.nav_map:
+                        mainText.setText("지도");
                         check = 0;
                         setMapFragment();
                         return true;
 
                     case R.id.nav_list:
+                        mainText.setText("장소 리스트");
                         setFragment(listFragment);
                         return true;
 
                     case R.id.nav_mypage:
-                        setFragment(mypageFragment);
+                        if(currentUser == null){
+                            myDialog.setContentView(R.layout.login_popup);
+                            myDialog.setCancelable(false);
+
+                            Button loginButton = (Button) myDialog.findViewById(R.id.login_button);
+                            Button closeButton = (Button) myDialog.findViewById(R.id.cancel_button);
+
+                            //로그인 버튼을 눌렀을때
+                            loginButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    Intent intent=new Intent(MainScreenActivity.this,LoginScreenActivity.class);
+                                    startActivity(intent);
+                                }
+                            });
+
+                            //닫기 버튼을 눌렀을때
+                            closeButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    myDialog.dismiss();
+                                }
+                            });
+
+                            myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+                            myDialog.show();
+
+                        }
+                        else {
+                            setFragment(mypageFragment);
+                            mainText.setText("마이 페이지");
+                        }
                         return true;
 
                     default:
@@ -182,8 +257,6 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
             mapFragment = MapFragment.newInstance();
             getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, mapFragment).commit();
             System.out.println("두번째 : " + mapFragment.toString());
-            // 원래 꺼를 지워줘야 지도가 다시 실행되도 안 튕김
-            //getSupportFragmentManager().beginTransaction().remove(mapFragment);
             getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, mapFragment).addToBackStack("parent").commit();
 
         }
@@ -206,7 +279,6 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     // 지도 관련 정보 사용할 때
     @Override
     public void onMapReady(@NonNull NaverMap naverMap) {
-
         // 현위치 버튼 o, 축척바 x 등 기타 지도 세팅
         naverMap.getUiSettings().setLocationButtonEnabled(true);
         naverMap.getUiSettings().setScaleBarEnabled(false);
@@ -214,51 +286,103 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         naverMap.setLayerGroupEnabled(NaverMap.LAYER_GROUP_TRANSIT, true);
         naverMap.setIndoorEnabled(true);
 
-        System.out.println("세번째 : " + mapFragment.toString());
-        // 마커 객체 생성, 설정
-        markers = new ArrayList<Marker>();
-        markers.add(0, new Marker(new LatLng(36.102905, 129.388745)));
-        markers.get(0).setHeight(110);
-        markers.get(0).setWidth(80);
-        markers.get(0).setCaptionText("한동대학교");
-        markers.get(0).setMap(naverMap);
-        markers.add(1, new Marker(new LatLng(36.086844, 129.409631)));
-        markers.get(1).setHeight(110);
-        markers.get(1).setWidth(80);
-        markers.get(1).setCaptionText("포항대학교");
-        markers.get(1).setMap(naverMap);
+        // 리뷰 전부 가지고 오기
+        auth = FirebaseAuth.getInstance();
+        mDatabase = database.getReference();
+        mDatabase.child("review lists").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-        // 마커 누르는 이벤트
-        markers.get(1).setOnClickListener(overlay -> {
-//            //누르면 프래그먼트 뜨기, 다이얼로그로 해보려고 잠궈둠
-//            statsFrame.setVisibility(View.VISIBLE);
-//            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-//            fragmentTransaction.replace(R.id.stats_frame_layout, statsFragment);
-//            fragmentTransaction.addToBackStack(null);
-//            fragmentTransaction.commit();
+                mDatabase.child("review lists").child(dataSnapshot.getKey()).addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
+                        System.out.println("review3 : " + myreview.getLocation_name());
+                        System.out.println("review5 : " + myreview.getUserEmail() + myreview.getPhone_number());
+                        System.out.println("review4 : " + myreview.toString() + myreview.getUserName());
 
-            reviewDialog.setContentView(R.layout.click_review_popup);
-            Button closeButton = (Button) reviewDialog.findViewById(R.id.category);
+                        // 좌표 계산해서 좌표 만듬
+                        GeoTransPoint oKA = new GeoTransPoint(myreview.getMapx(), myreview.getMapy());
+                        GeoTransPoint oGeo = GeoTrans.convert(GeoTrans.KATEC, GeoTrans.GEO, oKA);
+                        marker = new Marker(new LatLng(oGeo.getY(), oGeo.getX()));
+                        marker.setHeight(110);
+                        marker.setWidth(80);
+                        marker.setCaptionText(myreview.getLocation_name());
+                        marker.setMap(naverMap);
+                        System.out.println("working : " + marker.getCaptionText() + marker.getPosition().toString());
 
-            //닫기 버튼을 눌렀을때
-            closeButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) { reviewDialog.dismiss(); }});
+                        // 마커 누르는 이벤트
+                        marker.setOnClickListener(overlay -> {
+                            reviewDialog.setContentView(R.layout.click_location_popup);
+                            reviewDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+                            reviewDialog.getWindow().setGravity(Gravity.BOTTOM);
+                            reviewDialog.show();
 
-            reviewDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
-            reviewDialog.getWindow().setGravity(Gravity.BOTTOM);
-            reviewDialog.show();
+                            location_categoryTextView = (TextView)reviewDialog.findViewById(R.id.location_categoryTextView);
+                            location_addressTextView = (TextView)reviewDialog.findViewById(R.id.location_addressTextView);
+                            location_nameTextView = (TextView)reviewDialog.findViewById(R.id.location_nameTextView);
+                            location_phoneTextView = (TextView)reviewDialog.findViewById(R.id.location_phoneTextView);
+                            location_categoryTextView.setText(myreview.getLocation_category());
+                            location_nameTextView.setText(myreview.getLocation_name());
+                            location_phoneTextView.setText(myreview.getPhone_number());
+                            location_addressTextView.setText(myreview.getLocation_address());
 
 
-            return false;
+                            return false;
+                        });
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
+//                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+//                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
+//                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
+//                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        System.out.println("errororororororor");
+                    }
+                });
+
+
+
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
         });
 
 
-
-
-//        for(Marker marker : markers) {
-//            marker.
-//        }
+        System.out.println("세번째 : " + mapFragment.toString());
 
 
         // gps로 내 위치 잡음
@@ -283,13 +407,14 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
 
             // 처음에만 내 위치로 이동함
             if(check == 0) {
-                naverMap.setCameraPosition(new CameraPosition(latLng, 13));
+                naverMap.setCameraPosition(new CameraPosition(latLng, 15));
                 CameraUpdate cameraUpdate = CameraUpdate.scrollTo(latLng);//.animate(CameraAnimation..Easing);
 //                Toast.makeText(this, "myLatitude : " + myLatitude + ",,,,myLongtitude : " + myLongitude, Toast.LENGTH_LONG).show();
                 naverMap.moveCamera(cameraUpdate);
                 check ++;
             }
         });
+
     }
 
 

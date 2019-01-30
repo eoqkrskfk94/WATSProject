@@ -103,7 +103,7 @@ public class UserReviewAdapter extends BaseAdapter {
                 });
 
                 myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
-                myDialog.show(); //삭제 팝업창.
+                myDialog.show(); //팝업창.
 
 
             }
@@ -121,7 +121,7 @@ public class UserReviewAdapter extends BaseAdapter {
             public void onClick(View view){ GoCorrectionScreen(position); }});
 
 
-
+//        userName.setText(arr.get(position).getUserNickName());
         userName.setText(arr.get(position).getUserName());
         reviewDescription.setText(arr.get(position).getReview_description());
         postDate.setText(arr.get(position).getDate());
@@ -162,7 +162,7 @@ public class UserReviewAdapter extends BaseAdapter {
     public void GoReview(int a){
 
         Intent intent = new Intent(m_activity, CertainReviewScreenActivity.class);
-/*        intent.putExtra("IMAGE1", arr.get(a).getImageUrl1());
+        intent.putExtra("IMAGE1", arr.get(a).getImageUrl1());
         intent.putExtra("IMAGE2", arr.get(a).getImageUrl2());
         intent.putExtra("IMAGE3", arr.get(a).getImageUrl3());
         intent.putExtra("IMAGE4", arr.get(a).getImageUrl4());
@@ -170,10 +170,18 @@ public class UserReviewAdapter extends BaseAdapter {
         intent.putExtra("IMAGE6", arr.get(a).getImageUrl6());
         intent.putExtra("IMAGE7", arr.get(a).getImageUrl7());
         intent.putExtra("IMAGE8", arr.get(a).getImageUrl8());
-        intent.putExtra("IMAGE9", arr.get(a).getImageUrl9());*/
+        intent.putExtra("IMAGE9", arr.get(a).getImageUrl9());
 
         intent.putExtra("Email", arr.get(a).getUserEmail());
-        intent.putExtra("Name", arr.get(a).getName());
+        intent.putExtra("Name", arr.get(a).getUserName());
+//        intent.putExtra("NickName", arr.get(a).getUserNickName());
+        intent.putExtra("Review", arr.get(a).getReview_description());
+        intent.putExtra("LocationAddress", arr.get(a).getLocation_address());
+        intent.putExtra("LocationCategory", arr.get(a).getLocation_category());
+        intent.putExtra("LocationName", arr.get(a).getLocation_name());
+        intent.putExtra("LocationNumber", arr.get(a).getPhone_number());
+        intent.putExtra("Mapx", arr.get(a).getMapx());
+        intent.putExtra("Mapy", arr.get(a).getMapy());
         intent.putExtra("ReviewDescription", arr.get(a).getReview_description());
         intent.putExtra("Date",arr.get(a).getDate());
         intent.putExtra("Tag1",arr.get(a).getTag1());
@@ -185,12 +193,14 @@ public class UserReviewAdapter extends BaseAdapter {
 
 
         m_activity.startActivity(intent);
+
+
     }
 
     public void GoCorrectionScreen(int a) {
 
         Intent intent = new Intent(m_activity, ReviseReviewScreen.class);
-/*        intent.putExtra("IMAGE1", arr.get(a).getImageUrl1());
+        intent.putExtra("IMAGE1", arr.get(a).getImageUrl1());
         intent.putExtra("IMAGE2", arr.get(a).getImageUrl2());
         intent.putExtra("IMAGE3", arr.get(a).getImageUrl3());
         intent.putExtra("IMAGE4", arr.get(a).getImageUrl4());
@@ -198,21 +208,27 @@ public class UserReviewAdapter extends BaseAdapter {
         intent.putExtra("IMAGE6", arr.get(a).getImageUrl6());
         intent.putExtra("IMAGE7", arr.get(a).getImageUrl7());
         intent.putExtra("IMAGE8", arr.get(a).getImageUrl8());
-        intent.putExtra("IMAGE9", arr.get(a).getImageUrl9());*/
+        intent.putExtra("IMAGE9", arr.get(a).getImageUrl9());
 
-        intent.putExtra("Location_name", arr.get(a).getLocation_name());
-        intent.putExtra("Email", arr.get(a).getUserEmail());
-        intent.putExtra("Name", arr.get(a).getName());
-        intent.putExtra("ReviewDescription", arr.get(a).getReview_description());
-        intent.putExtra("Date", arr.get(a).getDate());
-        intent.putExtra("Tag1", arr.get(a).getTag1());
-        intent.putExtra("Tag2", arr.get(a).getTag2());
-        intent.putExtra("Tag3", arr.get(a).getTag3());
-        intent.putExtra("Tag4", arr.get(a).getTag4());
-        intent.putExtra("Tag5", arr.get(a).getTag5());
-        intent.putExtra("Tag6", arr.get(a).getTag6());
-        intent.putExtra("Key", arr.get(a).getKey());
-
+        intent.putExtra("LOCATIONNAME", arr.get(a).getLocation_name());
+        intent.putExtra("EMAIL", arr.get(a).getUserEmail());
+        intent.putExtra("NAME", arr.get(a).getUserName());
+        //        intent.putExtra("NickName", arr.get(a).getUserNickName());
+        intent.putExtra("REVIEW", arr.get(a).getReview_description());
+        intent.putExtra("ADDRESS", arr.get(a).getLocation_address());
+        intent.putExtra("CATEGORY", arr.get(a).getLocation_category());
+        intent.putExtra("TELEPHONE", arr.get(a).getPhone_number());
+        intent.putExtra("MAPX", arr.get(a).getMapx());
+        intent.putExtra("MAPY", arr.get(a).getMapy());
+        intent.putExtra("DATE", arr.get(a).getDate());
+        intent.putExtra("TAG1", arr.get(a).getTag1());
+        intent.putExtra("TAG2", arr.get(a).getTag2());
+        intent.putExtra("TAG3", arr.get(a).getTag3());
+        intent.putExtra("TAG4", arr.get(a).getTag4());
+        intent.putExtra("TAG5", arr.get(a).getTag5());
+        intent.putExtra("TAG6", arr.get(a).getTag6());
+        intent.putExtra("KEY", arr.get(a).getKey());
+        System.out.println("엑스와 와이: " + arr.get(a).getMapx() + arr.get(a).getMapy());
 
         m_activity.startActivity(intent);
     }

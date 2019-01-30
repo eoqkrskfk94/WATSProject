@@ -66,6 +66,7 @@ public class ReviewAdapter extends BaseAdapter {
         LinearLayout layout_view = (LinearLayout) convertView.findViewById(R.id.vi_view);
 
 
+//        reviewerName.setText(arr.get(position).getUserNickName());
         reviewerName.setText(arr.get(position).getUserName());
         description.setText(arr.get(position).getReview_description());
         postDate.setText(arr.get(position).getDate());
@@ -92,6 +93,7 @@ public class ReviewAdapter extends BaseAdapter {
 
 
         intent.putExtra("Email", arr.get(a).getUserEmail());
+//        intent.putExtra("Name", arr.get(a).getUserNickName());
         intent.putExtra("Name", arr.get(a).getUserName());
         intent.putExtra("Review", arr.get(a).getReview_description());
         intent.putExtra("Date",arr.get(a).getDate());
@@ -101,8 +103,16 @@ public class ReviewAdapter extends BaseAdapter {
         intent.putExtra("Tag4",arr.get(a).getTag4());
         intent.putExtra("Tag5",arr.get(a).getTag5());
         intent.putExtra("Tag6",arr.get(a).getTag6());
-
-
+        intent.putExtra("IMAGE1",arr.get(a).getImageUrl1());
+        intent.putExtra("IMAGE2",arr.get(a).getImageUrl2());
+        intent.putExtra("IMAGE3",arr.get(a).getImageUrl3());
+        intent.putExtra("IMAGE4",arr.get(a).getImageUrl4());
+        intent.putExtra("IMAGE5",arr.get(a).getImageUrl5());
+        intent.putExtra("IMAGE6",arr.get(a).getImageUrl6());
+        intent.putExtra("IMAGE7",arr.get(a).getImageUrl7());
+        intent.putExtra("IMAGE8",arr.get(a).getImageUrl8());
+        intent.putExtra("IMAGE9",arr.get(a).getImageUrl9());
+        System.out.println("리뷰어뎁터에서 확인"+arr.get(a).getImageUrl1()+"  "+ arr.get(a).getImageUrl2()+arr.get(a).getReview_description());
         m_activity.startActivity(intent);
     }
 }

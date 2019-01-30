@@ -147,9 +147,11 @@ public class NaverLocationAdapter extends BaseAdapter{
         TextView telephone = (TextView)convertView.findViewById(R.id.vi_telephone); //장소 전화번호
         LinearLayout layout_view =  (LinearLayout)convertView.findViewById(R.id.vi_view); //형식
 
+        String shortCategory = arr.get(position).getCategory().substring(arr.get(position).getCategory().lastIndexOf(">")+1);
+
 
         title.setText(arr.get(position).getName());
-        category.setText(arr.get(position).getCategory());
+        category.setText(shortCategory);
         road_address.setText(arr.get(position).getRoad_address());
         telephone.setText(arr.get(position).getTelephone());
 

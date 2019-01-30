@@ -1,12 +1,8 @@
 package com.example.mjkim.watsproject;
 
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
-import android.app.Dialog;
 import android.content.Intent;
-import android.graphics.Color;
-import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -16,13 +12,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.mjkim.watsproject.User.UserInformation;
-import com.bumptech.glide.Glide;
-import com.bumptech.glide.request.target.DrawableImageViewTarget;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseNetworkException;
@@ -46,7 +38,7 @@ public class LoginScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.login_screen);
+        setContentView(R.layout.activity_login_screen);
         mAuth = FirebaseAuth.getInstance(); // 로그인 작업의 onCreate 메소드에서 FirebaseAuth 개체의 공유 인스턴스를 가져옵니다
         mAuth.setLanguageCode("ko"); //한국어
         currentUser = mAuth.getCurrentUser();
@@ -70,7 +62,7 @@ public class LoginScreenActivity extends AppCompatActivity {
         });
 
         //비회원 이용하기 버튼을 눌렀을때
-        createUserButton.setOnClickListener(new View.OnClickListener() {
+        nonMemberButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent=new Intent(LoginScreenActivity.this,MainScreenActivity.class);

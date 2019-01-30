@@ -18,6 +18,7 @@ import android.widget.Toast;
 import com.example.mjkim.watsproject.ChangeInfoScreenActivity;
 import com.example.mjkim.watsproject.LoginScreenActivity;
 import com.example.mjkim.watsproject.MainScreenActivity;
+import com.example.mjkim.watsproject.MyReviewScreenActivity;
 import com.example.mjkim.watsproject.R;
 import com.example.mjkim.watsproject.SearchScreenActivity;
 import com.example.mjkim.watsproject.User.UserInformation;
@@ -123,7 +124,7 @@ public class MypageFragment extends Fragment {
         logout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
+                getActivity().finish();
                 auth.signOut();
                 Intent intent =new Intent(getActivity(), LoginScreenActivity.class);
                 startActivity(intent);
@@ -134,6 +135,7 @@ public class MypageFragment extends Fragment {
         changeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                getActivity().finish();
                 Intent intent=new Intent(getActivity(),ChangeInfoScreenActivity.class);
                 startActivity(intent);
             }
@@ -143,7 +145,11 @@ public class MypageFragment extends Fragment {
         myreviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(),"준비중입니다.",Toast.LENGTH_LONG).show();
+                getActivity().finish();
+                System.out.println("프래그맨트 : " + getFragmentManager().getFragments().toString());
+
+                Intent intent=new Intent(getActivity(),MyReviewScreenActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -154,7 +160,7 @@ public class MypageFragment extends Fragment {
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                 builder.setTitle("1.01버전");
-                builder.setMessage("개발자: 김명진 남준영 정희석");
+                builder.setMessage("개발자 : 김명진 남준영 정희석");
                 builder.setPositiveButton("확인",
                         new DialogInterface.OnClickListener() {
                             public void onClick(DialogInterface dialog, int which) {
@@ -166,6 +172,8 @@ public class MypageFragment extends Fragment {
         });
 
         return v;
+
+
     }
 
 

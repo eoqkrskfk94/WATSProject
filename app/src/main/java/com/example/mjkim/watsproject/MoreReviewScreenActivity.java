@@ -15,7 +15,7 @@ public class MoreReviewScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.more_review_screen);
+        setContentView(R.layout.activity_more_review_screen);
 
         Button cancelButton = (Button)findViewById(R.id.cancel_button);
 

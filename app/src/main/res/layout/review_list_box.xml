@@ -19,6 +19,7 @@
 
 
         <LinearLayout
+            android:id="@+id/list_size"
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:layout_marginLeft="5dp"

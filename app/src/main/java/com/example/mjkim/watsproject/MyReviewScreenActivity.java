@@ -15,6 +15,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.mjkim.watsproject.Review.CategoryAdapter;
 import com.example.mjkim.watsproject.Review.ReviewList;
 import com.example.mjkim.watsproject.Review.UserReviewAdapter;
 import com.google.firebase.auth.FirebaseAuth;

@@ -398,7 +398,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                     // permission denied, boo! Disable the
                     // functionality that depends on this permission.
                 }
-                }
+            }
             case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
                 if(grantResults.length > 0
                         && grantResults[0] == PackageManager.PERMISSION_GRANTED){
@@ -410,11 +410,11 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
 
             }
 
-                return;
-            }
+            return;
+        }
 
-            // other 'case' lines to check for other
-            // permissions this app might request
+        // other 'case' lines to check for other
+        // permissions this app might request
     }
     private int exifOrientationToDegrees(int exifOrientation) {
         if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_90) {
@@ -562,58 +562,76 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
         }
         if(requestCode==pick_from_album) {
             if (id_view == R.id.Imagebutton1) {
-                imagePath1 = getPath(data.getData());
-                File f1 = new File(imagePath1);
-                picture1.setImageURI(Uri.fromFile(f1));
-                pic1=1;
+                if(data!=null) {
+                    imagePath1 = getPath(data.getData());
+                    File f1 = new File(imagePath1);
+                    picture1.setImageURI(Uri.fromFile(f1));
+                    pic1 = 1;
+                }
             }
             if (id_view == R.id.Imagebutton2) {
-                imagePath2 = getPath(data.getData());
-                File f2 = new File(imagePath2);
-                picture2.setImageURI(Uri.fromFile(f2));
-                pic2=1;
+                if(data!=null) {
+                    imagePath2 = getPath(data.getData());
+                    File f2 = new File(imagePath2);
+                    picture2.setImageURI(Uri.fromFile(f2));
+                    pic2 = 1;
+                }
             }
             if (id_view == R.id.Imagebutton3) {
-                imagePath3 = getPath(data.getData());
-                File f3 = new File(imagePath3);
-                picture3.setImageURI(Uri.fromFile(f3));
-                pic3=1;
+                if(data!=null) {
+                    imagePath3 = getPath(data.getData());
+                    File f3 = new File(imagePath3);
+                    picture3.setImageURI(Uri.fromFile(f3));
+                    pic3 = 1;
+                }
             }
             if (id_view == R.id.Imagebutton4) {
-                imagePath4 = getPath(data.getData());
-                File f4 = new File(imagePath4);
-                picture4.setImageURI(Uri.fromFile(f4));
-                pic4=1;
+                if(data!=null) {
+                    imagePath4 = getPath(data.getData());
+                    File f4 = new File(imagePath4);
+                    picture4.setImageURI(Uri.fromFile(f4));
+                    pic4 = 1;
+                }
             }
             if (id_view == R.id.Imagebutton5) {
-                imagePath5 = getPath(data.getData());
-                File f5 = new File(imagePath5);
-                picture5.setImageURI(Uri.fromFile(f5));
-                pic5=1;
+                if(data!=null) {
+                    imagePath5 = getPath(data.getData());
+                    File f5 = new File(imagePath5);
+                    picture5.setImageURI(Uri.fromFile(f5));
+                    pic5 = 1;
+                }
             }
             if (id_view == R.id.Imagebutton6) {
-                imagePath6 = getPath(data.getData());
-                File f6 = new File(imagePath6);
-                picture6.setImageURI(Uri.fromFile(f6));
-                pic6=1;
+                if(data!=null) {
+                    imagePath6 = getPath(data.getData());
+                    File f6 = new File(imagePath6);
+                    picture6.setImageURI(Uri.fromFile(f6));
+                    pic6 = 1;
+                }
             }
             if (id_view == R.id.Imagebutton7) {
-                imagePath7 = getPath(data.getData());
-                File f7 = new File(imagePath7);
-                picture7.setImageURI(Uri.fromFile(f7));
-                pic7=1;
+                if(data!=null) {
+                    imagePath7 = getPath(data.getData());
+                    File f7 = new File(imagePath7);
+                    picture7.setImageURI(Uri.fromFile(f7));
+                    pic7 = 1;
+                }
             }
             if (id_view == R.id.Imagebutton8) {
-                imagePath8 = getPath(data.getData());
-                File f8 = new File(imagePath8);
-                picture8.setImageURI(Uri.fromFile(f8));
-                pic8=1;
+                if(data!=null) {
+                    imagePath8 = getPath(data.getData());
+                    File f8 = new File(imagePath8);
+                    picture8.setImageURI(Uri.fromFile(f8));
+                    pic8 = 1;
+                }
             }
             if (id_view == R.id.Imagebutton9) {
-                imagePath9 = getPath(data.getData());
-                File f9 = new File(imagePath9);
-                picture9.setImageURI(Uri.fromFile(f9));
-                pic9=1;
+                if(data!=null) {
+                    imagePath9 = getPath(data.getData());
+                    File f9 = new File(imagePath9);
+                    picture9.setImageURI(Uri.fromFile(f9));
+                    pic9 = 1;
+                }
             }
         }
     }
@@ -658,29 +676,6 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
         if(pic1==2){
             file = Uri.fromFile(new File(imagePath1));
         }
-
-        Bitmap bitmap1=null;
-        try {
-            bitmap1 = MediaStore.Images.Media.getBitmap(this.getContentResolver(), file);
-        } catch (FileNotFoundException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        } catch (IOException e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
-        }
-        bitmap1.compress(Bitmap.CompressFormat.JPEG,30,baos);
-
-//        Uri uriBit;
-//
-//        String path123 = MediaStore.Images.Media.insertImage(CreateReviewScreenActivity.this.getContentResolver(), bitmap1, "Title", null);
-//
-//        uriBit=Uri.parse(path123);
-
-//        System.out.println("비트맵실험1"+uriBit.getPath()+" "+uriBit.getLastPathSegment());
-
-
-
 
 
 

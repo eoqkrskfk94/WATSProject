@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -22,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,6 +32,8 @@ import com.example.mjkim.watsproject.Convert.GeoTransPoint;
 import com.example.mjkim.watsproject.FirstSreenFragments.ListFragment;
 import com.example.mjkim.watsproject.FirstSreenFragments.MypageFragment;
 import com.example.mjkim.watsproject.OtherClasses.BackPressCloseHandler;
+import com.example.mjkim.watsproject.Review.ReviewAdapter;
+import com.example.mjkim.watsproject.Review.UserReviewAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.example.mjkim.watsproject.Review.ReviewList;
@@ -61,13 +65,15 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     private static LatLng latLng;
     private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
+    Dialog myDialog;
+    private ReviewAdapter reviewAdapter;
 
     static public int totalLocationCount;
     private int check = 0, i = 0;
 
     private BottomNavigationView mMainNav; //하단 메뉴 아이콘
     private FrameLayout mMainFrame, statsFrame;
-    private Dialog reviewDialog, myDialog;
+    private Dialog reviewDialog;
     private TextView location_categoryTextView, location_nameTextView, location_phoneTextView, location_addressTextView;
 
 
@@ -80,14 +86,23 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     private Marker marker;
 
     // 리뷰 정보 담을 변수
+    private ReviewList reviewList;
+    public static ArrayList<ReviewList> reviewLists;
     FirebaseAuth auth;
     private DatabaseReference mDatabase;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private String userEmail;
     final Context context;
+    private String locationName, key, reviewerName, reviewDate, reviewDescription, locationNumber, userEmail, userName, locationCategory, locationAddress;
+    private Boolean tag1, tag2, tag3, tag4, tag5, tag6;
+    private String imageUrl1, imageUrl2, imageUrl3, imageUrl4, imageUrl5, imageUrl6, imageUrl7, imageUrl8, imageUrl9;
+    private double mapx, mapy;
+
+
     {
         context = this;
     }
+
+
 
 
 
@@ -102,6 +117,8 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
 
         totalLocationCount = 0;
         backPressCloseHandler = new BackPressCloseHandler(this);
+
+        TextView mainText = (TextView)findViewById(R.id.main_text);
 
         Button searchButton = (Button)findViewById(R.id.search_button);
 
@@ -157,11 +174,13 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                 switch (item.getItemId()) {
 
                     case R.id.nav_map:
+                        mainText.setText("지도");
                         check = 0;
                         setMapFragment();
                         return true;
 
                     case R.id.nav_list:
+                        mainText.setText("장소 리스트");
                         setFragment(listFragment);
                         return true;
 
@@ -194,8 +213,10 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                             myDialog.show();
 
                         }
-                        else
+                        else {
                             setFragment(mypageFragment);
+                            mainText.setText("마이 페이지");
+                        }
                         return true;
 
                     default:

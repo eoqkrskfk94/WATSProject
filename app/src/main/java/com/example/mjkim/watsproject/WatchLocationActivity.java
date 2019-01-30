@@ -112,6 +112,7 @@ public class WatchLocationActivity extends Activity implements OnMapReadyCallbac
         marker.setWidth(80);
         marker.setCaptionText(location_name);
         marker.setMap(naverMap);
+        System.out.println("newmap5 : " + location_x + location_y);
 
         // 카메라 위치 이동
         naverMap.setCameraPosition(new CameraPosition(new LatLng(oGeo.getY(), oGeo.getX()), 14));

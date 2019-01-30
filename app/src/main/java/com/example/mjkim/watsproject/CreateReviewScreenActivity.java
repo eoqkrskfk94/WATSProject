@@ -678,6 +678,18 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
         }
 
 
+//        Uri uriBit;
+//
+//        String path123 = MediaStore.Images.Media.insertImage(CreateReviewScreenActivity.this.getContentResolver(), bitmap1, "Title", null);
+//
+//        uriBit=Uri.parse(path123);
+
+//        System.out.println("비트맵실험1"+uriBit.getPath()+" "+uriBit.getLastPathSegment());
+
+
+
+
+
 
 
         StorageReference riverRef=storageRef.child("images/"+file.getLastPathSegment());

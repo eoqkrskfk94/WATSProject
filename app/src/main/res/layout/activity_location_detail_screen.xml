@@ -105,6 +105,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="5dp"
                         android:layout_weight="1"
+                        android:textColor="@color/colorAccent"
                         android:text="포항시 북구 흥해읍 남송리 3번지" />
                 </LinearLayout>
 
@@ -221,8 +222,8 @@
                     android:layout_marginRight="40dp"
                     android:layout_marginTop="40dp"
                     app:srcCompat="@drawable/new_horz_line" />
-                    android:layout_marginTop="10dp"
-                    app:srcCompat="@drawable/long_horz_line" />
+                android:layout_marginTop="10dp"
+                app:srcCompat="@drawable/long_horz_line" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -253,7 +254,6 @@
                 </LinearLayout>
 
             </LinearLayout>
-
             <ImageView
                 android:id="@+id/imageView18"
                 android:layout_width="match_parent"
@@ -286,7 +286,6 @@
                     android:textColor="@android:color/darker_gray"
                     android:textSize="18sp" />
             </LinearLayout>
-
             <ListView
                 android:id="@+id/review_list"
                 android:layout_width="match_parent"

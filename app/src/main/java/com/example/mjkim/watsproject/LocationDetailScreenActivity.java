@@ -56,7 +56,8 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
     String locationName, locationCategory, locationAddress, locationNumber, reviewDescription, userEmail, userName, key, reviewDate;
     double locationMapx, locationMapy;
 
-
+    String location_name, location_category, location_addess, location_number;
+    double location_x, location_y;
 
 
     @Override
@@ -200,27 +201,44 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
 
         //장소 정보 화면 출력
-        final String location_name, location_category, location_addess, location_number;
-        final Integer location_x, location_y;
+//        String location_name, location_category, location_addess, location_number;
+//        double location_x, location_y;
 
         location_name = getIntent().getExtras().getString("NAME");
         location_category = getIntent().getExtras().getString("CATEGORY");
         location_addess = getIntent().getExtras().getString("ADDRESS");
         location_number = getIntent().getExtras().getString("TELEPHONE");
-        location_x = getIntent().getExtras().getInt("MAPX");
-        location_y = getIntent().getExtras().getInt("MAPY");
+        location_x = getIntent().getExtras().getDouble("MAPX");
+        location_y = getIntent().getExtras().getDouble("MAPY");
+
+        System.out.println("newmap3 : " + location_addess + "  " + location_x + "  " + location_y);
 
         locationNameText.setText(location_name);
         locationCategoryText.setText(location_category);
         locationAddressText.setText(location_addess);
         locationNumberText.setText(location_number);
 
-        //전화번호 눌렀을때 통화 기능
+        // 주소 누르면 지도 뜸
+        locationAddressText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(LocationDetailScreenActivity.this, WatchLocationActivity.class);
+                intent.putExtra("NAME", location_name);
+                intent.putExtra("CATEGORY", location_category);
+                intent.putExtra("ADDRESS", location_addess);
+                intent.putExtra("TELEPHONE", location_number);
+                intent.putExtra("MAPX", location_x);
+                intent.putExtra("MAPY", location_y);
+                startActivity(intent);
+            }
+        });
+
+        // 전화번호 눌렀을때 통화 기능
         locationNumberText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent1 = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + getIntent().getExtras().getString("TELEPHONE")));
-                startActivity(intent1);
+                Intent intent = new Intent(Intent.ACTION_DIAL, Uri.parse("tel:" + getIntent().getExtras().getString("TELEPHONE")));
+                startActivity(intent);
             }
         });
 
@@ -229,7 +247,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
         Button backButton = (Button)findViewById(R.id.back_button);
         Button createReviewButton = (Button)findViewById(R.id.c_review_button);
 
-        //돌아가기 버튼 눌렀을때 전 화면을 돌아간다
+        // 돌아가기 버튼 눌렀을때 전 화면을 돌아간다
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -328,26 +346,20 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
 
             String json = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getReview_json_string();
-            System.out.println("제이슨: " + json);
             length = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getReview_count();
-            System.out.println("길이: " + length);
             JSONArray IDs = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getReview_json_userID();
-            System.out.println("제이슨2: " + IDs);
             String Fire_locationName = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getLocation_name();
-            System.out.println("제이슨: " + Fire_locationName);
 
             try{
                 JSONObject obj = new JSONObject(json);
-
-                System.out.println("진짜 안되??");
 
                 for (int i = 0; i < length; i++) {
                     JSONObject jsonObj = obj.getJSONObject(IDs.getString(i));
                     locationName = jsonObj.getString("location_name");
                     locationCategory = jsonObj.getString("location_category");
                     locationAddress = jsonObj.getString("location_address");
-                    locationMapx = jsonObj.getInt("mapx");
-                    locationMapy = jsonObj.getInt("mapy");
+                    location_x = jsonObj.getInt("mapx");
+                    location_y = jsonObj.getInt("mapy");
                     locationNumber = jsonObj.getString("phone_number");
 
                     tag1 = jsonObj.getBoolean("tag1");
@@ -382,7 +394,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
                     if(intent.getExtras().getString("NAME").equals(location_name)) {
 
-                        reviewLists.add(num++, new ReviewList(intent.getExtras().getString("NAME"), locationAddress, locationNumber, locationCategory, reviewDescription, locationMapx, locationMapx,
+                        reviewLists.add(num++, new ReviewList(intent.getExtras().getString("NAME"), locationAddress, locationNumber, locationCategory, reviewDescription, location_x, location_y,
                                 tag1, tag2, tag3, tag4, tag5, tag6, reviewDate, userName, key));
 
                     }

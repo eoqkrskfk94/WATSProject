@@ -35,9 +35,9 @@
 
         <Button
             android:id="@+id/search_button"
-            android:layout_width="50dp"
+            android:layout_width="35dp"
             android:layout_height="match_parent"
-            android:layout_margin="10dp"
+            android:layout_margin="12dp"
             android:layout_weight="1"
             android:background="@drawable/search_icon" />
 

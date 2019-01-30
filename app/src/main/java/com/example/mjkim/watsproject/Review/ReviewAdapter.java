@@ -66,6 +66,7 @@ public class ReviewAdapter extends BaseAdapter {
         LinearLayout layout_view = (LinearLayout) convertView.findViewById(R.id.vi_view);
 
 
+//        reviewerName.setText(arr.get(position).getUserNickName());
         reviewerName.setText(arr.get(position).getUserName());
         description.setText(arr.get(position).getReview_description());
         postDate.setText(arr.get(position).getDate());
@@ -92,6 +93,7 @@ public class ReviewAdapter extends BaseAdapter {
 
 
         intent.putExtra("Email", arr.get(a).getUserEmail());
+//        intent.putExtra("Name", arr.get(a).getUserNickName());
         intent.putExtra("Name", arr.get(a).getUserName());
         intent.putExtra("Review", arr.get(a).getReview_description());
         intent.putExtra("Date",arr.get(a).getDate());

@@ -239,7 +239,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="동반지 필요" />
+                            android:text="동반 필요" />
                     </LinearLayout>
 
                 </LinearLayout>
@@ -392,7 +392,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="동반지 필요" />
+                            android:text="동반자 필요" />
                     </LinearLayout>
 
                     <LinearLayout

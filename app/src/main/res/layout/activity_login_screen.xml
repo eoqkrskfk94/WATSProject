@@ -52,6 +52,22 @@
             android:layout_marginRight="20dp"
             android:ems="10"
             android:inputType="textPassword" />
+        <LinearLayout
+            android:layout_marginLeft="15dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content">
+
+            <CheckBox
+                android:id="@+id/id_check_box"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="이메일 저장"/>
+        </LinearLayout>
+
 
         <Button
             android:id="@+id/login_button"
@@ -60,7 +76,7 @@
             android:layout_gravity="center"
             android:layout_marginLeft="30dp"
             android:layout_marginRight="30dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             android:background="@drawable/login_button" />
 
         <LinearLayout
@@ -116,7 +132,7 @@
 
         <Button
             android:id="@+id/nonmember_button"
-            android:layout_width="150dp"
+            android:layout_width="160dp"
             android:layout_height="40dp"
             android:layout_gravity="center"
             android:layout_marginTop="25dp"

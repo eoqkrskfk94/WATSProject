@@ -23,7 +23,7 @@
             android:layout_width="0dp"
             android:layout_height="200dp"
             android:layout_marginLeft="5dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:layout_weight="2.5"
             android:background="@drawable/list_box"
             android:gravity="center_vertical"

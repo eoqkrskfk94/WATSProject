@@ -13,17 +13,11 @@ import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ArrayAdapter;
 import android.widget.ListView;
-import android.widget.TextView;
 
-import com.example.mjkim.watsproject.MainScreenActivity;
-import com.example.mjkim.watsproject.MyReviewScreenActivity;
 import com.example.mjkim.watsproject.R;
 import com.example.mjkim.watsproject.Review.CategoryAdapter;
-import com.example.mjkim.watsproject.Review.ReviewAdapter;
 import com.example.mjkim.watsproject.Review.ReviewList;
-import com.example.mjkim.watsproject.Review.UserReviewAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
@@ -40,7 +34,7 @@ import java.util.TimerTask;
  */
 public class ListFragment extends Fragment {
 
-    private CategoryAdapter reviewAdapter;
+    private CategoryAdapter categoryAdapter;
     Dialog myDialog;
     // 리뷰 정보 담을 변수
     private ReviewList reviewList;
@@ -123,9 +117,23 @@ public class ListFragment extends Fragment {
 
                         reviewList.setUserName(myreview.getUserName());
 
-                        reviewLists.add(totalLocationCount, myreview);
+                        // 겹치는거는 장소 리스트에 안 넣음
+                        if(totalLocationCount != 0) {
+                            for(int i = 0; i < totalLocationCount; i++) {
+                                if(reviewLists.get(i).getLocation_name().equals(locationName)) { }
+                                else {
+                                    if(i == totalLocationCount-1) {
+                                        reviewLists.add(totalLocationCount, myreview);
+                                        totalLocationCount++;
+                                    }
+                                }
+                            }
+                        } else {
+                            reviewLists.add(totalLocationCount, myreview);
+                            totalLocationCount++;
+                        }
 
-                        totalLocationCount++;
+
 
                         // 리뷰 갯수
                         //TextView review_count = (TextView) findViewById(R.id.review_count);
@@ -202,8 +210,8 @@ public class ListFragment extends Fragment {
             @Override
             public void run() {
                 ListView reviewListView = (ListView) v.findViewById(R.id.category_list);
-                reviewAdapter = new CategoryAdapter(getActivity(), reviewLists, context, getActivity(), totalLocationCount);
-                reviewListView.setAdapter(reviewAdapter);
+                categoryAdapter = new CategoryAdapter(getActivity(), reviewLists, context, getActivity(), totalLocationCount);
+                reviewListView.setAdapter(categoryAdapter);
             }
         }, 2300);
 

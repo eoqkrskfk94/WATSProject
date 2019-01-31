@@ -47,15 +47,7 @@ public class CertainReviewScreenActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 장소리스트에서 후기 들어왔을 때
-                if(getIntent().getExtras().getInt("Check") == 1) {
-                    Intent intent = new Intent(CertainReviewScreenActivity.this, MainScreenActivity.class);
-                    startActivity(intent);
-                }
-                // 검색에서 후기 들어왔을 때
-                else {
-                    finish();
-                }
+                finish();
             }
         });
 

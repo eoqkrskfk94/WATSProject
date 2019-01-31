@@ -33,7 +33,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class LocationDetailScreenActivity extends AppCompatActivity {
+public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
 
     Dialog myDialog;
     ScrollView scrollView;
@@ -61,7 +61,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_location_detail_screen);
+        setContentView(R.layout.activity_location_detail_from_map_screen);
 
         mAuth = FirebaseAuth.getInstance(); // 로그인 작업의 onCreate 메소드에서 FirebaseAuth 개체의 공유 인스턴스를 가져옵니다
         currentUser = mAuth.getCurrentUser();
@@ -211,7 +211,10 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
         System.out.println("newmap3 : " + location_addess + "  " + location_x + "  " + location_y);
 
-        locationNameText.setText(location_name);
+        int index = location_name.indexOf(" , ");
+        String correct_location_name = location_name.substring(0, index);
+
+        locationNameText.setText(correct_location_name);
         locationCategoryText.setText(location_category);
         locationAddressText.setText(location_addess);
         locationNumberText.setText(location_number);
@@ -220,7 +223,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
         locationAddressText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LocationDetailScreenActivity.this, WatchLocationActivity.class);
+                Intent intent = new Intent(LocationDetailFromMapScreenActivity.this, WatchLocationActivity.class);
                 intent.putExtra("NAME", location_name);
                 intent.putExtra("CATEGORY", location_category);
                 intent.putExtra("ADDRESS", location_addess);
@@ -269,7 +272,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
                     loginButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent=new Intent(LocationDetailScreenActivity.this,LoginScreenActivity.class);
+                            Intent intent=new Intent(LocationDetailFromMapScreenActivity.this,LoginScreenActivity.class);
                             startActivity(intent);
                         }
                     });
@@ -287,7 +290,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
                 }
 
                 else {
-                    Intent intent = new Intent(LocationDetailScreenActivity.this, CreateReviewScreenActivity.class);
+                    Intent intent = new Intent(LocationDetailFromMapScreenActivity.this, CreateReviewScreenActivity.class);
                     intent.putExtra("NAME", location_name);
                     intent.putExtra("CATEGORY", location_category);
                     intent.putExtra("ADDRESS", location_addess);
@@ -323,7 +326,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
             blogListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1500));
         }
 
-        naverBlogAdapter = new NaverBlogAdapter(LocationDetailScreenActivity.this, blogList);
+        naverBlogAdapter = new NaverBlogAdapter(LocationDetailFromMapScreenActivity.this, blogList);
         blogListView.setAdapter(naverBlogAdapter);
 
         Button moreBlogButton = (Button)findViewById(R.id.see_more_blog);  //블로그 전체보기 버튼
@@ -428,7 +431,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
             @Override
             public void run() {
                 ListView reviewListView = (ListView) findViewById(R.id.review_list);
-                reviewAdapter = new ReviewAdapter(LocationDetailScreenActivity.this, reviewLists);
+                reviewAdapter = new ReviewAdapter(LocationDetailFromMapScreenActivity.this, reviewLists);
                 reviewListView.setAdapter(reviewAdapter);
             }
         }, 900);

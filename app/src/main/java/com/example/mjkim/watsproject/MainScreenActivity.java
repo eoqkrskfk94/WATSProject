@@ -27,6 +27,7 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,6 +76,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
 
     static public int totalLocationCount;
     private int check = 0, i = 0;
+    static int count = 0;
 
     private BottomNavigationView mMainNav; //하단 메뉴 아이콘
     private FrameLayout mMainFrame, statsFrame;
@@ -299,10 +301,16 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
+                long length = dataSnapshot.getChildrenCount();
+                System.out.println("길이용 : " +  dataSnapshot.getChildrenCount());
+                int[] tag_array = {0,0,0,0,0,0};
+                count = 0;
+
                 mDatabase.child("review lists").child(dataSnapshot.getKey()).addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
+
 
                         //주소 빼고 이름만 사용
                         int index = myreview.getLocation_name().indexOf(" , ");
@@ -315,8 +323,11 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                         marker.setWidth(80);
 //                        marker.setIcon(OverlayImage.fromResource(R.drawable.logo));
                         marker.setCaptionText(location_name);
+                        marker.setCaptionColor(Color.parseColor("#1502F8"));
                         marker.setMap(naverMap);
                         System.out.println("working : " + marker.getCaptionText() + marker.getPosition().toString());
+
+
 
                         // 마커 누르는 이벤트
                         marker.setOnClickListener(overlay -> {
@@ -332,6 +343,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                             location_addressTextView = (TextView)reviewDialog.findViewById(R.id.vi_address);
                             location_nameTextView = (TextView)reviewDialog.findViewById(R.id.vi_name);
                             location_phoneTextView = (TextView)reviewDialog.findViewById(R.id.vi_telephone);
+                            LinearLayout locationBox = (LinearLayout)reviewDialog.findViewById(R.id.location_view);
 
                             String shortCategory = myreview.getLocation_category().substring(myreview.getLocation_category().lastIndexOf(">")+1);
                             location_categoryTextView.setText(shortCategory);
@@ -340,36 +352,68 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                             location_addressTextView.setText(myreview.getLocation_address());
 
 
-                            tagShow1 = (ImageView) myDialog.findViewById(R.id.tag_done_1);
-                            tagShow2 = (ImageView) myDialog.findViewById(R.id.tag_done_2);
-                            tagShow3 = (ImageView) myDialog.findViewById(R.id.tag_done_3);
-                            tagShow4 = (ImageView) myDialog.findViewById(R.id.tag_done_4);
-                            tagShow5 = (ImageView) myDialog.findViewById(R.id.tag_done_5);
-                            tagShow6 = (ImageView) myDialog.findViewById(R.id.tag_done_6);
-
-//                            if(myreview.getTag1() == true) tagShow1.setImageResource(R.drawable.restroom);
-//                            else tagShow1.setImageResource(R.drawable.restroom_dimmed);
-//
-//                            if(myreview.getTag2() == true) tagShow2.setImageResource(R.drawable.parking);
-//                            else tagShow2.setImageResource(R.drawable.parking_dimmed);
-//
-//                            if(myreview.getTag3() == true) tagShow3.setImageResource(R.drawable.elevator);
-//                            else tagShow3.setImageResource(R.drawable.elevator_dimmed);
-//
-//                            if(myreview.getTag4() == true) tagShow4.setImageResource(R.drawable.slope);
-//                            else tagShow4.setImageResource(R.drawable.slope_dimmed);
-//
-//                            if(myreview.getTag5() == true) tagShow5.setImageResource(R.drawable.table);
-//                            else tagShow5.setImageResource(R.drawable.table_dimmed);
-//
-//                            if(myreview.getTag6() == true) tagShow6.setImageResource(R.drawable.assistant);
-//                            else tagShow6.setImageResource(R.drawable.assistant_dimmed);
+                            tagShow1 = (ImageView) reviewDialog.findViewById(R.id.tag_done_1);
+                            tagShow2 = (ImageView) reviewDialog.findViewById(R.id.tag_done_2);
+                            tagShow3 = (ImageView) reviewDialog.findViewById(R.id.tag_done_3);
+                            tagShow4 = (ImageView) reviewDialog.findViewById(R.id.tag_done_4);
+                            tagShow5 = (ImageView) reviewDialog.findViewById(R.id.tag_done_5);
+                            tagShow6 = (ImageView) reviewDialog.findViewById(R.id.tag_done_6);
 
 
+                            if(tag_array[0] > length/2 &&  tag_array[0] != 0) tagShow1.setImageResource(R.drawable.restroom);
+                            else tagShow1.setImageResource(R.drawable.restroom_dimmed);
+
+                            if(tag_array[1] > length/2 &&  tag_array[1] != 0) tagShow2.setImageResource(R.drawable.parking);
+                            else tagShow2.setImageResource(R.drawable.parking_dimmed);
+
+                            if(tag_array[2] > length/2 &&  tag_array[2] != 0) tagShow3.setImageResource(R.drawable.elevator);
+                            else tagShow3.setImageResource(R.drawable.elevator_dimmed);
+
+                            if(tag_array[3] > length/2 &&  tag_array[3] != 0) tagShow4.setImageResource(R.drawable.slope);
+                            else tagShow4.setImageResource(R.drawable.slope_dimmed);
+
+                            if(tag_array[4] > length/2 &&  tag_array[4] != 0) tagShow5.setImageResource(R.drawable.table);
+                            else tagShow5.setImageResource(R.drawable.table_dimmed);
+
+                            if(tag_array[5] > length/2 &&  tag_array[5] != 0) tagShow6.setImageResource(R.drawable.assistant);
+                            else tagShow6.setImageResource(R.drawable.assistant_dimmed);
+
+
+                            locationBox.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view) {
+                                    finish();
+                                    Intent intent=new Intent(MainScreenActivity.this,LocationDetailFromMapScreenActivity.class);
+                                    intent.putExtra("NAME", myreview.getLocation_name());
+                                    intent.putExtra("CATEGORY", myreview.getLocation_category());
+                                    intent.putExtra("ADDRESS", myreview.getLocation_address());
+                                    intent.putExtra("TELEPHONE", myreview.getPhone_number());
+                                    intent.putExtra("MAPX", myreview.getMapx());
+                                    intent.putExtra("MAPY", myreview.getMapy());
+                                    startActivity(intent);
+                                    reviewDialog.dismiss();
+                                }
+                            });
 
 
                             return false;
                         });
+
+                        if(myreview.getTag1() == true) tag_array[0]  = tag_array[0] +  1;
+                        System.out.println("태그1 : " +  tag_array[0]);
+                        if(myreview.getTag2() == true) tag_array[1]  = tag_array[1] +  1;
+                        System.out.println("태그2 : " +  tag_array[1]);
+                        if(myreview.getTag3() == true) tag_array[2]  = tag_array[2] +  1;
+                        System.out.println("태그3 : " +  tag_array[2]);
+                        if(myreview.getTag4() == true) tag_array[3]  = tag_array[3] +  1;
+                        System.out.println("태그4 : " +  tag_array[3]);
+                        if(myreview.getTag5() == true) tag_array[4]  = tag_array[4] +  1;
+                        System.out.println("태그5 : " +  tag_array[4]);
+                        if(myreview.getTag6() == true) tag_array[5]  = tag_array[5] +  1;
+                        System.out.println("태그6 : " +  tag_array[5]);
+                        count++;
+
+
                     }
 
                     @Override

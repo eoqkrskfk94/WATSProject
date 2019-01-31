@@ -289,6 +289,7 @@ public class ReviseReviewScreen extends AppCompatActivity {
             reviewList.setImageUrl9(image9);
         }
 
+
         //갤러리 사용 권한 체크
         if (ContextCompat.checkSelfPermission(ReviseReviewScreen.this,
                 Manifest.permission.READ_CONTACTS)

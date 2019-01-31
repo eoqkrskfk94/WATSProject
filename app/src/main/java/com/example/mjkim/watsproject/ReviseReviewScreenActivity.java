@@ -293,7 +293,6 @@ public class ReviseReviewScreenActivity extends AppCompatActivity {
 
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(ReviseReviewScreenActivity.this,
-            if (ActivityCompat.shouldShowRequestPermissionRationale(ReviseReviewScreen.this,
                     Manifest.permission.READ_CONTACTS)) {
 
             } else {
@@ -307,8 +306,7 @@ public class ReviseReviewScreenActivity extends AppCompatActivity {
         if (ContextCompat.checkSelfPermission(ReviseReviewScreenActivity.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
-
-            if (ActivityCompat.shouldShowRequestPermissionRationale(ReviseReviewScreen.this,
+            
             // Should we show an explanation?
             if (ActivityCompat.shouldShowRequestPermissionRationale(ReviseReviewScreenActivity.this,
                     Manifest.permission.READ_EXTERNAL_STORAGE)) {

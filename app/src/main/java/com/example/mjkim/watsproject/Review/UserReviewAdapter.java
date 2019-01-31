@@ -3,11 +3,9 @@ package com.example.mjkim.watsproject.Review;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
-import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,13 +13,11 @@ import android.widget.BaseAdapter;
 import android.widget.Button;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
+
 import com.example.mjkim.watsproject.CertainReviewScreenActivity;
-import com.example.mjkim.watsproject.MainScreenActivity;
 import com.example.mjkim.watsproject.MyReviewScreenActivity;
 import com.example.mjkim.watsproject.R;
-import com.example.mjkim.watsproject.ReviseReviewScreen;
-import com.example.mjkim.watsproject.SignInScreenActivity;
+import com.example.mjkim.watsproject.ReviseReviewScreenActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import java.util.ArrayList;
@@ -199,7 +195,7 @@ public class UserReviewAdapter extends BaseAdapter {
 
     public void GoCorrectionScreen(int a) {
 
-        Intent intent = new Intent(m_activity, ReviseReviewScreen.class);
+        Intent intent = new Intent(m_activity, ReviseReviewScreenActivity.class);
         intent.putExtra("IMAGE1", arr.get(a).getImageUrl1());
         intent.putExtra("IMAGE2", arr.get(a).getImageUrl2());
         intent.putExtra("IMAGE3", arr.get(a).getImageUrl3());

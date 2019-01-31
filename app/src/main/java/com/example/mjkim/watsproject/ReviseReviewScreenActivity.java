@@ -3,7 +3,6 @@ package com.example.mjkim.watsproject;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -23,7 +22,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.FileProvider;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -55,14 +53,12 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Random;
 
-public class ReviseReviewScreen extends AppCompatActivity {
+public class ReviseReviewScreenActivity extends AppCompatActivity {
 
     public ReviewList reviewList = new ReviewList();
     Dialog myDialog;
@@ -291,30 +287,34 @@ public class ReviseReviewScreen extends AppCompatActivity {
 
 
         //갤러리 사용 권한 체크
-        if (ContextCompat.checkSelfPermission(ReviseReviewScreen.this,
+        if (ContextCompat.checkSelfPermission(ReviseReviewScreenActivity.this,
                 Manifest.permission.READ_CONTACTS)
                 != PackageManager.PERMISSION_GRANTED) {
 
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(ReviseReviewScreenActivity.this,
             if (ActivityCompat.shouldShowRequestPermissionRationale(ReviseReviewScreen.this,
                     Manifest.permission.READ_CONTACTS)) {
 
             } else {
                 // No explanation needed, we can request the permission.
-                ActivityCompat.requestPermissions(ReviseReviewScreen.this,
+                ActivityCompat.requestPermissions(ReviseReviewScreenActivity.this,
                         new String[]{Manifest.permission.READ_CONTACTS},
                         MY_PERMISSIONS_REQUEST_READ_CONTACTS);
             }
         }
 
-        if (ContextCompat.checkSelfPermission(ReviseReviewScreen.this,
+        if (ContextCompat.checkSelfPermission(ReviseReviewScreenActivity.this,
                 Manifest.permission.READ_EXTERNAL_STORAGE)
                 != PackageManager.PERMISSION_GRANTED) {
 
             if (ActivityCompat.shouldShowRequestPermissionRationale(ReviseReviewScreen.this,
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(ReviseReviewScreenActivity.this,
                     Manifest.permission.READ_EXTERNAL_STORAGE)) {
             } else {
                 // No explanation needed, we can request the permission.
-                ActivityCompat.requestPermissions(ReviseReviewScreen.this,
+                ActivityCompat.requestPermissions(ReviseReviewScreenActivity.this,
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
             }
@@ -434,10 +434,10 @@ public class ReviseReviewScreen extends AppCompatActivity {
         }
     }
     public void doTakePhotoAction(){  //카메라에서 사진 가져오기.
-        int permissioncheck= ContextCompat.checkSelfPermission(ReviseReviewScreen.this,Manifest.permission.CAMERA);
+        int permissioncheck= ContextCompat.checkSelfPermission(ReviseReviewScreenActivity.this,Manifest.permission.CAMERA);
         if(permissioncheck== PackageManager.PERMISSION_DENIED){
             //권한없음
-            ActivityCompat.requestPermissions(ReviseReviewScreen.this,new String[]{Manifest.permission.CAMERA},0);
+            ActivityCompat.requestPermissions(ReviseReviewScreenActivity.this,new String[]{Manifest.permission.CAMERA},0);
             Toast.makeText(this,"권한없음",Toast.LENGTH_SHORT).show();
         }
         else{ // 권한있을 경우.
@@ -451,7 +451,7 @@ public class ReviseReviewScreen extends AppCompatActivity {
                 }
 
                 if (photoFile != null) {
-                    photoUri = FileProvider.getUriForFile(ReviseReviewScreen.this, getPackageName(), photoFile);
+                    photoUri = FileProvider.getUriForFile(ReviseReviewScreenActivity.this, getPackageName(), photoFile);
                     takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri);
                     startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
                 }
@@ -487,7 +487,7 @@ public class ReviseReviewScreen extends AppCompatActivity {
 
                 }
                 else{
-                    Toast.makeText(ReviseReviewScreen.this, "Permission Denied", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(ReviseReviewScreenActivity.this, "Permission Denied", Toast.LENGTH_SHORT).show();
                 }
 
             }
@@ -1030,7 +1030,7 @@ public class ReviseReviewScreen extends AppCompatActivity {
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(ReviseReviewScreen.this,MainScreenActivity.class);
+                Intent intent=new Intent(ReviseReviewScreenActivity.this,MainScreenActivity.class);
                 startActivity(intent);
             }
         });

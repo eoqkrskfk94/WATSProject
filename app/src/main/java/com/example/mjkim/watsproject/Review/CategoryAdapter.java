@@ -11,7 +11,7 @@ import android.widget.BaseAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
-import com.example.mjkim.watsproject.CertainReviewScreenActivity;
+import com.example.mjkim.watsproject.LocationDetailScreenActivity;
 import com.example.mjkim.watsproject.MyReviewScreenActivity;
 import com.example.mjkim.watsproject.R;
 import com.google.firebase.database.DatabaseReference;
@@ -58,24 +58,37 @@ public class CategoryAdapter extends BaseAdapter {
         if(convertView == null){
 
             int res = 0;
-            res = R.layout.review_list_box;
+            res = R.layout.category_review_list_box;
             convertView = mInflater.inflate(res, parent, false);
 
         }
 
+        String locationName = arr.get(position).getLocation_name();
 
-        TextView userName = (TextView)convertView.findViewById(R.id.vi_name);
-        TextView reviewDescription = (TextView)convertView.findViewById(R.id.vi_description);
-        TextView postDate = (TextView)convertView.findViewById(R.id.vi_date);
+        TextView locationNameTextView = (TextView)convertView.findViewById(R.id.location_name);
+        TextView locationCategoryTextView = (TextView)convertView.findViewById(R.id.location_category);
+        TextView locationAddressTextView = (TextView)convertView.findViewById(R.id.location_address);
+        TextView locationPhoneTextView = (TextView)convertView.findViewById(R.id.location_phone);
+//        TextView userNameTextView = (TextView)convertView.findViewById(R.id.vi_name);
+//        TextView reviewDescriptionTextView = (TextView)convertView.findViewById(R.id.vi_description);
+//        TextView postDateTextView = (TextView)convertView.findViewById(R.id.vi_date);
         LinearLayout layout_view =  (LinearLayout)convertView.findViewById(R.id.vi_view);
 
 
 
+        //주소 빼고 이름만 사용
+        int index = locationName.indexOf(" , ");
+        String correctionLocationName = locationName.toString().substring(0, index);
+//        String correctionLocationName = "< " + newLocationName + " >";
 
 
-        userName.setText(arr.get(position).getUserName());
-        reviewDescription.setText(arr.get(position).getReview_description());
-        postDate.setText(arr.get(position).getDate());
+        locationNameTextView.setText(correctionLocationName);
+        locationCategoryTextView.setText(arr.get(position).getLocation_category());
+        locationAddressTextView.setText(arr.get(position).getLocation_address());
+        locationPhoneTextView.setText(arr.get(position).getPhone_number());
+//        userNameTextView.setText(arr.get(position).getUserName());
+//        reviewDescriptionTextView.setText(arr.get(position).getReview_description());
+//        postDateTextView.setText(arr.get(position).getDate());
 
         /*  버튼에 이벤트처리를 하기위해선 setTag를 이용해서 사용할 수 있습니다.
 
@@ -111,9 +124,9 @@ public class CategoryAdapter extends BaseAdapter {
 
 
     public void GoReview(int a){
-        // 피니시해야 안 꺼
+        // 피니시해야 안 꺼짐
         m_activity.finish();
-        Intent intent = new Intent(m_activity, CertainReviewScreenActivity.class);
+        Intent intent = new Intent(m_activity, LocationDetailScreenActivity.class);
         intent.putExtra("IMAGE1", arr.get(a).getImageUrl1());
         intent.putExtra("IMAGE2", arr.get(a).getImageUrl2());
         intent.putExtra("IMAGE3", arr.get(a).getImageUrl3());

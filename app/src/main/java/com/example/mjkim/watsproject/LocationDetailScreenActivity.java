@@ -245,11 +245,19 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
         Button backButton = (Button)findViewById(R.id.back_button);
         Button createReviewButton = (Button)findViewById(R.id.c_review_button);
 
-        // 돌아가기 버튼 눌렀을때 전 화면을 돌아간다
+        //돌아가기 버튼 눌렀을때 전 화면을 돌아간다
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                // 장소리스트에서 후기 들어왔을 때
+                if(getIntent().getExtras().getInt("Check") == 1) {
+                    Intent intent = new Intent(LocationDetailScreenActivity.this, MainScreenActivity.class);
+                    startActivity(intent);
+                }
+                // 검색에서 후기 들어왔을 때
+                else {
+                    finish();
+                }
             }
         });
 

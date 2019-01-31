@@ -1,8 +1,10 @@
 package com.example.mjkim.watsproject;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -11,6 +13,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
@@ -51,6 +54,20 @@ public class LoginScreenActivity extends AppCompatActivity {
         Button nonMemberButton = (Button)findViewById(R.id.nonmember_button); //비회원 이용하기 버튼 선언
         final EditText idEdit=(EditText)findViewById(R.id.id_text); //입력 Id
         final EditText passEdit=(EditText)findViewById(R.id.pass_text); // 입력 pass
+        CheckBox idCheckBox = (CheckBox)findViewById(R.id.id_check_box); // 아이디 저장
+
+
+        // 아이디 저장 가져오기
+        SharedPreferences pref=getSharedPreferences("pref",Activity.MODE_PRIVATE);
+
+        String id=pref.getString("id_save", "");
+        Boolean chk1=pref.getBoolean("chk1", false);
+
+        if(chk1==true){
+            idEdit.setText(id);
+            idCheckBox.setChecked(chk1);
+        }
+
 
         //회원가입 버튼을 눌렀을때
         createUserButton.setOnClickListener(new View.OnClickListener() {
@@ -278,6 +295,26 @@ public class LoginScreenActivity extends AppCompatActivity {
             startActivity(new Intent(LoginScreenActivity.this, MainScreenActivity.class));
             finish();
         }
+    }
+
+    // 나가도 아이디 자동 저장
+    @Override
+    public void onStop() {
+        super.onStop();
+
+        SharedPreferences pref = getSharedPreferences("pref", Activity.MODE_PRIVATE);
+        SharedPreferences.Editor editor = pref.edit();
+        EditText etId=(EditText)findViewById(R.id.id_text);
+        CheckBox etIdSave=(CheckBox)findViewById(R.id.id_check_box);
+
+        //SharedPreferences에 각 아이디를 지정하고 EditText 내용을 저장한다.
+
+
+        editor.putString("id_save", etId.getText().toString());
+        editor.putBoolean("chk1", etIdSave.isChecked());
+
+        editor.commit();
+
     }
 
 }

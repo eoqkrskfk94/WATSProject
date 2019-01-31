@@ -360,23 +360,23 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                             tagShow6 = (ImageView) reviewDialog.findViewById(R.id.tag_done_6);
 
 
-                            if(tag_array[0] > length/2 &&  tag_array[0] != 0) tagShow1.setImageResource(R.drawable.restroom);
-                            else tagShow1.setImageResource(R.drawable.restroom_dimmed);
+                            if(tag_array[0] > length/2 &&  tag_array[0] != 0) {tagShow1.setImageResource(R.drawable.restroom); tag1 = true;}
+                            else {tagShow1.setImageResource(R.drawable.restroom_dimmed); tag1 = false;}
 
-                            if(tag_array[1] > length/2 &&  tag_array[1] != 0) tagShow2.setImageResource(R.drawable.parking);
-                            else tagShow2.setImageResource(R.drawable.parking_dimmed);
+                            if(tag_array[1] > length/2 &&  tag_array[1] != 0) {tagShow2.setImageResource(R.drawable.restroom); tag2 = true;}
+                            else {tagShow1.setImageResource(R.drawable.restroom_dimmed); tag2 = false;}
 
-                            if(tag_array[2] > length/2 &&  tag_array[2] != 0) tagShow3.setImageResource(R.drawable.elevator);
-                            else tagShow3.setImageResource(R.drawable.elevator_dimmed);
+                            if(tag_array[2] > length/2 &&  tag_array[2] != 0) {tagShow3.setImageResource(R.drawable.restroom); tag3 = true;}
+                            else {tagShow1.setImageResource(R.drawable.restroom_dimmed); tag3 = false;}
 
-                            if(tag_array[3] > length/2 &&  tag_array[3] != 0) tagShow4.setImageResource(R.drawable.slope);
-                            else tagShow4.setImageResource(R.drawable.slope_dimmed);
+                            if(tag_array[3] > length/2 &&  tag_array[3] != 0) {tagShow4.setImageResource(R.drawable.restroom); tag4 = true;}
+                            else {tagShow1.setImageResource(R.drawable.restroom_dimmed); tag4 = false;}
 
-                            if(tag_array[4] > length/2 &&  tag_array[4] != 0) tagShow5.setImageResource(R.drawable.table);
-                            else tagShow5.setImageResource(R.drawable.table_dimmed);
+                            if(tag_array[4] > length/2 &&  tag_array[4] != 0) {tagShow5.setImageResource(R.drawable.restroom); tag5 = true;}
+                            else {tagShow1.setImageResource(R.drawable.restroom_dimmed); tag5 = false;}
 
-                            if(tag_array[5] > length/2 &&  tag_array[5] != 0) tagShow6.setImageResource(R.drawable.assistant);
-                            else tagShow6.setImageResource(R.drawable.assistant_dimmed);
+                            if(tag_array[5] > length/2 &&  tag_array[5] != 0) {tagShow6.setImageResource(R.drawable.restroom); tag6 = true;}
+                            else {tagShow1.setImageResource(R.drawable.restroom_dimmed); tag6 = false;}
 
 
                             locationBox.setOnClickListener(new View.OnClickListener() {
@@ -390,6 +390,13 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                                     intent.putExtra("TELEPHONE", myreview.getPhone_number());
                                     intent.putExtra("MAPX", myreview.getMapx());
                                     intent.putExtra("MAPY", myreview.getMapy());
+                                    intent.putExtra("TAG1", tag1);
+                                    intent.putExtra("TAG2", tag2);
+                                    intent.putExtra("TAG3", tag3);
+                                    intent.putExtra("TAG4", tag4);
+                                    intent.putExtra("TAG5", tag5);
+                                    intent.putExtra("TAG6", tag6);
+
                                     startActivity(intent);
                                     reviewDialog.dismiss();
                                 }

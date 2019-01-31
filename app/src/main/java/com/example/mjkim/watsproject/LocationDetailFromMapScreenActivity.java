@@ -6,12 +6,16 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
+import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.view.ViewPager;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -19,6 +23,8 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.example.mjkim.watsproject.Convert.GeoTrans;
+import com.example.mjkim.watsproject.Convert.GeoTransPoint;
 import com.example.mjkim.watsproject.Naver.NaverBlogAdapter;
 import com.example.mjkim.watsproject.Naver.NaverBlogList;
 import com.example.mjkim.watsproject.Naver.NaverBlogSearch;
@@ -27,13 +33,20 @@ import com.example.mjkim.watsproject.Review.ReviewFirebaseJson;
 import com.example.mjkim.watsproject.Review.ReviewList;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.naver.maps.geometry.LatLng;
+import com.naver.maps.map.overlay.Marker;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
 
-public class LocationDetailScreenActivity extends AppCompatActivity {
+public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
 
     Dialog myDialog;
     ScrollView scrollView;
@@ -46,6 +59,10 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
     public static int length; //리뷰 갯수
     private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
+    FirebaseAuth auth;
+    private DatabaseReference mDatabase;
+    final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    private int num;
 
     //리뷰 변수들 선언
     Boolean tag1, tag2, tag3, tag4, tag5, tag6;
@@ -206,12 +223,15 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
         location_category = getIntent().getExtras().getString("CATEGORY");
         location_addess = getIntent().getExtras().getString("ADDRESS");
         location_number = getIntent().getExtras().getString("TELEPHONE");
-        location_x = getIntent().getExtras().getInt("MAPX");
-        location_y = getIntent().getExtras().getInt("MAPY");
+        location_x = getIntent().getExtras().getDouble("MAPX");
+        location_y = getIntent().getExtras().getDouble("MAPY");
 
         System.out.println("newmap3 : " + location_addess + "  " + location_x + "  " + location_y);
 
-        locationNameText.setText(location_name);
+        int index = location_name.indexOf(" , ");
+        String correct_location_name = location_name.substring(0, index);
+
+        locationNameText.setText(correct_location_name);
         locationCategoryText.setText(location_category);
         locationAddressText.setText(location_addess);
         locationNumberText.setText(location_number);
@@ -220,7 +240,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
         locationAddressText.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(LocationDetailScreenActivity.this, WatchLocationActivity.class);
+                Intent intent = new Intent(LocationDetailFromMapScreenActivity.this, WatchLocationActivity.class);
                 intent.putExtra("NAME", location_name);
                 intent.putExtra("CATEGORY", location_category);
                 intent.putExtra("ADDRESS", location_addess);
@@ -245,19 +265,13 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
         Button backButton = (Button)findViewById(R.id.back_button);
         Button createReviewButton = (Button)findViewById(R.id.c_review_button);
 
-        //돌아가기 버튼 눌렀을때 전 화면을 돌아간다
+        // 돌아가기 버튼 눌렀을때 전 화면을 돌아간다
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 장소리스트에서 후기 들어왔을 때
-                if(getIntent().getExtras().getInt("Check") == 1) {
-                    Intent intent = new Intent(LocationDetailScreenActivity.this, MainScreenActivity.class);
-                    startActivity(intent);
-                }
-                // 검색에서 후기 들어왔을 때
-                else {
-                    finish();
-                }
+                Intent intent = new Intent(LocationDetailFromMapScreenActivity.this, MainScreenActivity.class);
+                startActivity(intent);
+                finish();
             }
         });
 
@@ -277,7 +291,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
                     loginButton.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View view) {
-                            Intent intent=new Intent(LocationDetailScreenActivity.this,LoginScreenActivity.class);
+                            Intent intent=new Intent(LocationDetailFromMapScreenActivity.this,LoginScreenActivity.class);
                             startActivity(intent);
                         }
                     });
@@ -295,7 +309,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
                 }
 
                 else {
-                    Intent intent = new Intent(LocationDetailScreenActivity.this, CreateReviewScreenActivity.class);
+                    Intent intent = new Intent(LocationDetailFromMapScreenActivity.this, CreateReviewScreenActivity.class);
                     intent.putExtra("NAME", location_name);
                     intent.putExtra("CATEGORY", location_category);
                     intent.putExtra("ADDRESS", location_addess);
@@ -331,7 +345,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
             blogListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1500));
         }
 
-        naverBlogAdapter = new NaverBlogAdapter(LocationDetailScreenActivity.this, blogList);
+        naverBlogAdapter = new NaverBlogAdapter(LocationDetailFromMapScreenActivity.this, blogList);
         blogListView.setAdapter(naverBlogAdapter);
 
         Button moreBlogButton = (Button)findViewById(R.id.see_more_blog);  //블로그 전체보기 버튼
@@ -341,75 +355,115 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
         });
 
+        reviewLists = new ArrayList<ReviewList>();
 
-        //해당 장소의 리뷰들을 리스트로 저장하고 JSON 파싱을한다
-        int[] tag_array = {0,0,0,0,0,0};
+        // 리뷰 전부 가지고 오기
+        auth = FirebaseAuth.getInstance();
+        mDatabase = database.getReference();
+        mDatabase.child("review lists").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-        if(ReviewFirebaseJson.reviewJson.size() > intent.getExtras().getInt("NUMBER")){
+                long length = dataSnapshot.getChildrenCount();
+                System.out.println("길이용 : " +  dataSnapshot.getChildrenCount());
+                int[] tag_array = {0,0,0,0,0,0};
+                num = 0;
 
-            reviewLists = new ArrayList<ReviewList>();
-            int num = 0;
-
-
-            String json = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getReview_json_string();
-            length = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getReview_count();
-            JSONArray IDs = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getReview_json_userID();
-            String Fire_locationName = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getLocation_name();
-
-            try{
-                JSONObject obj = new JSONObject(json);
-
-                for (int i = 0; i < length; i++) {
-                    JSONObject jsonObj = obj.getJSONObject(IDs.getString(i));
-                    locationName = jsonObj.getString("location_name");
-                    locationCategory = jsonObj.getString("location_category");
-                    locationAddress = jsonObj.getString("location_address");
-                    locationMapx = jsonObj.getInt("mapx");
-                    locationMapy = jsonObj.getInt("mapy");
-                    locationNumber = jsonObj.getString("phone_number");
-
-                    tag1 = jsonObj.getBoolean("tag1");
-                    if(tag1 == true) tag_array[0]  = tag_array[0] +  1;
-                    tag2 = jsonObj.getBoolean("tag2");
-                    if(tag2 == true) tag_array[1]  = tag_array[1] +  1;
-                    tag3 = jsonObj.getBoolean("tag3");
-                    if(tag3 == true) tag_array[2]  = tag_array[2] +  1;
-                    tag4 = jsonObj.getBoolean("tag4");
-                    if(tag4 == true) tag_array[3]  = tag_array[3] +  1;
-                    tag5 = jsonObj.getBoolean("tag5");
-                    if(tag5 == true) tag_array[4]  = tag_array[4] +  1;
-                    tag6 = jsonObj.getBoolean("tag6");
-                    if(tag6 == true) tag_array[5]  = tag_array[5] +  1;
-
-                    reviewDescription = jsonObj.getString("review_description");
-                    userName = jsonObj.getString("userName");
-                    userEmail = jsonObj.getString("userEmail");
-                    reviewDate = jsonObj.getString("date");
-
-                    imageUrl1 = jsonObj.getString("imageUrl1");
-                    imageUrl2 = jsonObj.getString("imageUrl2");
-                    imageUrl3 = jsonObj.getString("imageUrl3");
-                    imageUrl4 = jsonObj.getString("imageUrl4");
-                    imageUrl5 = jsonObj.getString("imageUrl5");
-                    imageUrl6 = jsonObj.getString("imageUrl6");
-                    imageUrl7 = jsonObj.getString("imageUrl7");
-                    imageUrl8 = jsonObj.getString("imageUrl8");
-                    imageUrl9 = jsonObj.getString("imageUrl9");
+                mDatabase.child("review lists").child(dataSnapshot.getKey()).addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
 
 
+                        //주소 빼고 이름만 사용
+                        int index = myreview.getLocation_name().indexOf(" , ");
+                        String location_name = myreview.getLocation_name().substring(0, index);
 
-                    if(intent.getExtras().getString("NAME").equals(location_name)) {
+                        System.out.println("장보정보: " + myreview.getLocation_name() + myreview.getLocation_category());
+                        locationAddress = myreview.getLocation_address();
+                        locationNumber = myreview.getPhone_number();
+                        locationCategory = myreview.getLocation_category();
+                        reviewDescription = myreview.getReview_description();
+                        locationMapx = myreview.getMapx();
+                        locationMapy = myreview.getMapy();
+                        imageUrl1 = myreview.getImageUrl1();
+                        imageUrl2 = myreview.getImageUrl2();
+                        imageUrl3 = myreview.getImageUrl3();
+                        imageUrl4 = myreview.getImageUrl4();
+                        imageUrl5 = myreview.getImageUrl5();
+                        imageUrl6 = myreview.getImageUrl6();
+                        imageUrl7 = myreview.getImageUrl7();
+                        imageUrl8 = myreview.getImageUrl8();
+                        imageUrl9 = myreview.getImageUrl9();
 
-                        reviewLists.add(num++, new ReviewList(intent.getExtras().getString("NAME"), locationAddress, locationNumber, locationCategory, reviewDescription, locationMapx, locationMapy,
-                                tag1, tag2, tag3, tag4, tag5, tag6, reviewDate, userName, key,imageUrl1,imageUrl2,imageUrl3,imageUrl4,imageUrl5,imageUrl6,
-                                imageUrl7,imageUrl8,imageUrl9));
 
+                        String nameAndAddress = location_name + " , " + locationAddress;
+                        System.out.println("여기는 될까요2" + intent.getExtras().getString("NAME"));
+
+                        if(intent.getExtras().getString("NAME").equals(nameAndAddress)) {
+                            System.out.println("여기는 될까요?????????");
+                            reviewLists.add(num++, new ReviewList(intent.getExtras().getString("NAME"), locationAddress, locationNumber, locationCategory, reviewDescription, locationMapx, locationMapy,
+                                    tag1, tag2, tag3, tag4, tag5, tag6, reviewDate, userName, key,imageUrl1,imageUrl2,imageUrl3,imageUrl4,imageUrl5,imageUrl6,
+                                    imageUrl7,imageUrl8,imageUrl9));
+
+                        }
+
+                        System.out.println("리스트 길이: " + reviewLists.size());
                     }
-                }
-            }catch (Exception e) {
-                e.printStackTrace();
+
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
+//                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+//                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
+//                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
+//                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                        System.out.println("errororororororor");
+                    }
+                });
+
+                System.out.println("리스트 길이2: " + reviewLists.size());
+
             }
-        }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+
+        });
+
+
 
 
         //리뷰 보기
@@ -436,7 +490,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
             @Override
             public void run() {
                 ListView reviewListView = (ListView) findViewById(R.id.review_list);
-                reviewAdapter = new ReviewAdapter(LocationDetailScreenActivity.this, reviewLists);
+                reviewAdapter = new ReviewAdapter(LocationDetailFromMapScreenActivity.this, reviewLists);
                 reviewListView.setAdapter(reviewAdapter);
             }
         }, 900);
@@ -450,23 +504,13 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
 
         //태그 기준 설정 및 출력
-        if(tag_array[0] > length/2 &&  tag_array[0] != 0) tagShow1.setImageResource(R.drawable.restroom);
-        System.out.println("태그1: " + tag_array[0]);
-        if(tag_array[1] > length/2 &&  tag_array[1] != 0) tagShow2.setImageResource(R.drawable.parking);
-        System.out.println("태그2: " + tag_array[1]);
-        if(tag_array[2] > length/2 &&  tag_array[2] != 0) tagShow3.setImageResource(R.drawable.elevator);
-        System.out.println("태그3: " + tag_array[2]);
-        if(tag_array[3] > length/2 &&  tag_array[3] != 0) tagShow4.setImageResource(R.drawable.slope);
-        System.out.println("태그4: " + tag_array[3]);
-        if(tag_array[4] > length/2 &&  tag_array[4] != 0) tagShow5.setImageResource(R.drawable.table);
-        System.out.println("태그5: " + tag_array[4]);
-        if(tag_array[5] > length/2 &&  tag_array[5] != 0) tagShow6.setImageResource(R.drawable.assistant);
-        System.out.println("태그6: " + tag_array[5]);
-
-
-
+        if(intent.getExtras().getBoolean("TAG1")) tagShow1.setImageResource(R.drawable.restroom);
+        if(intent.getExtras().getBoolean("TAG2")) tagShow2.setImageResource(R.drawable.parking);
+        if(intent.getExtras().getBoolean("TAG3")) tagShow3.setImageResource(R.drawable.elevator);
+        if(intent.getExtras().getBoolean("TAG4")) tagShow4.setImageResource(R.drawable.slope);
+        if(intent.getExtras().getBoolean("TAG5")) tagShow5.setImageResource(R.drawable.table);
+        if(intent.getExtras().getBoolean("TAG6")) tagShow6.setImageResource(R.drawable.assistant);
     }
-
 
     //블로그 전체보기 버튼 기능
     public void openBlogTab(){

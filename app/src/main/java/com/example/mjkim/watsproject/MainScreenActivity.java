@@ -8,6 +8,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
+import android.media.Image;
 import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -21,8 +22,11 @@ import android.os.Bundle;
 import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,6 +79,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     private FrameLayout mMainFrame, statsFrame;
     private Dialog reviewDialog;
     private TextView location_categoryTextView, location_nameTextView, location_phoneTextView, location_addressTextView;
+    private ImageView tagShow1,tagShow2,tagShow3,tagShow4,tagShow5,tagShow6;
 
 
     //화면에서의 fragment들 선언
@@ -297,35 +302,70 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
-                        System.out.println("review3 : " + myreview.getLocation_name());
-                        System.out.println("review5 : " + myreview.getUserEmail() + myreview.getPhone_number());
-                        System.out.println("review4 : " + myreview.toString() + myreview.getUserName());
 
+                        //주소 빼고 이름만 사용
+                        int index = myreview.getLocation_name().indexOf(" , ");
+                        String location_name = myreview.getLocation_name().substring(0, index);
                         // 좌표 계산해서 좌표 만듬
                         GeoTransPoint oKA = new GeoTransPoint(myreview.getMapx(), myreview.getMapy());
                         GeoTransPoint oGeo = GeoTrans.convert(GeoTrans.KATEC, GeoTrans.GEO, oKA);
                         marker = new Marker(new LatLng(oGeo.getY(), oGeo.getX()));
                         marker.setHeight(110);
                         marker.setWidth(80);
-                        marker.setCaptionText(myreview.getLocation_name());
+                        marker.setCaptionText(location_name);
                         marker.setMap(naverMap);
                         System.out.println("working : " + marker.getCaptionText() + marker.getPosition().toString());
 
+
+
                         // 마커 누르는 이벤트
                         marker.setOnClickListener(overlay -> {
-                            reviewDialog.setContentView(R.layout.click_location_popup);
+                            reviewDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                            //reviewDialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL, WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+                            reviewDialog.setContentView(R.layout.click_location_box);
                             reviewDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
                             reviewDialog.getWindow().setGravity(Gravity.BOTTOM);
+
                             reviewDialog.show();
 
-                            location_categoryTextView = (TextView)reviewDialog.findViewById(R.id.location_categoryTextView);
-                            location_addressTextView = (TextView)reviewDialog.findViewById(R.id.location_addressTextView);
-                            location_nameTextView = (TextView)reviewDialog.findViewById(R.id.location_nameTextView);
-                            location_phoneTextView = (TextView)reviewDialog.findViewById(R.id.location_phoneTextView);
-                            location_categoryTextView.setText(myreview.getLocation_category());
-                            location_nameTextView.setText(myreview.getLocation_name());
+                            location_categoryTextView = (TextView)reviewDialog.findViewById(R.id.vi_category);
+                            location_addressTextView = (TextView)reviewDialog.findViewById(R.id.vi_address);
+                            location_nameTextView = (TextView)reviewDialog.findViewById(R.id.vi_name);
+                            location_phoneTextView = (TextView)reviewDialog.findViewById(R.id.vi_telephone);
+
+                            String shortCategory = myreview.getLocation_category().substring(myreview.getLocation_category().lastIndexOf(">")+1);
+                            location_categoryTextView.setText(shortCategory);
+                            location_nameTextView.setText(location_name);
                             location_phoneTextView.setText(myreview.getPhone_number());
                             location_addressTextView.setText(myreview.getLocation_address());
+
+
+                            tagShow1 = (ImageView) myDialog.findViewById(R.id.tag_done_1);
+                            tagShow2 = (ImageView) myDialog.findViewById(R.id.tag_done_2);
+                            tagShow3 = (ImageView) myDialog.findViewById(R.id.tag_done_3);
+                            tagShow4 = (ImageView) myDialog.findViewById(R.id.tag_done_4);
+                            tagShow5 = (ImageView) myDialog.findViewById(R.id.tag_done_5);
+                            tagShow6 = (ImageView) myDialog.findViewById(R.id.tag_done_6);
+
+                            if(myreview.getTag1() == true) tagShow1.setImageResource(R.drawable.restroom);
+                            else tagShow1.setImageResource(R.drawable.restroom_dimmed);
+
+                            if(myreview.getTag2() == true) tagShow2.setImageResource(R.drawable.parking);
+                            else tagShow2.setImageResource(R.drawable.parking_dimmed);
+
+                            if(myreview.getTag3() == true) tagShow3.setImageResource(R.drawable.elevator);
+                            else tagShow3.setImageResource(R.drawable.elevator_dimmed);
+
+                            if(myreview.getTag4() == true) tagShow4.setImageResource(R.drawable.slope);
+                            else tagShow4.setImageResource(R.drawable.slope_dimmed);
+
+                            if(myreview.getTag5() == true) tagShow5.setImageResource(R.drawable.table);
+                            else tagShow5.setImageResource(R.drawable.table_dimmed);
+
+                            if(myreview.getTag6() == true) tagShow6.setImageResource(R.drawable.assistant);
+                            else tagShow6.setImageResource(R.drawable.assistant_dimmed);
+
+
 
 
                             return false;

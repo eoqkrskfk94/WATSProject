@@ -978,7 +978,7 @@ public class ReviseReviewScreen extends AppCompatActivity {
             upload(imagePath1, imagePath2, imagePath3,imagePath4,imagePath5,imagePath6,imagePath7,imagePath8,imagePath9);
         }
         else{
-            reviewData.saveData(location_name, reviewList);  //사진 없을때
+            reviewData.saveData(nameAndAdress, reviewList);  //사진 없을때
         }
 
         myDialog.setContentView(R.layout.revise_popup);

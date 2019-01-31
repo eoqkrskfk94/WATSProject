@@ -50,10 +50,19 @@ public class ChangeInfoScreenActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainScreenActivity.class);
+        startActivity(intent);
+        super.onBackPressed();
+    }
+
     // 뒤로가기 버튼 누르면 메인으로
     public void BackButton(View view) {
         finish();
         Intent intent = new Intent(this, MainScreenActivity.class);
         startActivity(intent);
     }
+
+
 }

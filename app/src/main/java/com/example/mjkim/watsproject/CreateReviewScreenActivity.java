@@ -100,6 +100,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
     String imagePath8="";
     String imagePath9="";
     String nameAndAdress = ""; //이름이랑 주소 같이 나오는 스트
+    private double location_x, location_y;
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     int pic1=0;
@@ -135,6 +136,10 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
         final String userEmail = new String(auth.getCurrentUser().getEmail()); //Useremail이 현재 사용자 이메일이다.
         final DatabaseReference myreview = database.getReference();
         final TextView textId=(TextView)findViewById(R.id.id_name);
+
+        location_x = getIntent().getExtras().getDouble("MAPX");
+        location_y = getIntent().getExtras().getDouble("MAPY");
+        System.out.println("newmap9 : " + location_name + "  "  + "  " + location_x + "  " + location_y);
 
 
         //돌아가기 버튼 선언, 돌아가기 버튼 눌렀을때 전 화면을 돌아간다
@@ -678,6 +683,18 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
         }
 
 
+//        Uri uriBit;
+//
+//        String path123 = MediaStore.Images.Media.insertImage(CreateReviewScreenActivity.this.getContentResolver(), bitmap1, "Title", null);
+//
+//        uriBit=Uri.parse(path123);
+
+//        System.out.println("비트맵실험1"+uriBit.getPath()+" "+uriBit.getLastPathSegment());
+
+
+
+
+
 
 
         StorageReference riverRef=storageRef.child("images/"+file.getLastPathSegment());
@@ -927,10 +944,9 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
  //       int index = location_name.indexOf(" , ");
   //      location_name = location_name.substring(0, index);
         String location_category = review_intent.getExtras().getString("CATEGORY");
-        String location_addess = review_intent.getExtras().getString("ADDRESS");
+        String location_address = review_intent.getExtras().getString("ADDRESS");
         String location_number = review_intent.getExtras().getString("TELEPHONE");
-        double location_mapx = (double)review_intent.getExtras().getInt("MAPX");
-        double location_mapy = (double)review_intent.getExtras().getInt("MAPY");
+        System.out.println("newmap10 : " + location_name + "  " + location_address + "  " + location_x + "  " + location_y);
 
         //리뷰 문장 받아오기
         String review_description = review_text.getText().toString();
@@ -943,10 +959,10 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
         if(chk[5].isChecked() == true) tag6 = true; else tag6 = false;
 
 
-        reviewList = new ReviewList(location_name, location_addess, location_number, location_category, review_description, location_mapx, location_mapy, tag1, tag2, tag3, tag4, tag5, tag6, mTime, userName, key
+        reviewList = new ReviewList(location_name, location_address, location_number, location_category, review_description, location_x, location_y, tag1, tag2, tag3, tag4, tag5, tag6, mTime, userName, key
                 ,imagePath1,imagePath2,imagePath3,imagePath4,imagePath5,imagePath6,imagePath7,imagePath8,imagePath9);
 
-        nameAndAdress = location_name + " , " + location_addess;
+        nameAndAdress = location_name + " , " + location_address;
 
         if(pic1 !=0 || pic2 !=0 || pic3 !=0 || pic4 !=0 || pic5 !=0 || pic6 !=0 || pic7 !=0 || pic8!=0 || pic9!=0 ) {  // 사진이 하나라도 있으면.
             upload(imagePath1, imagePath2, imagePath3,imagePath4,imagePath5,imagePath6,imagePath7,imagePath8,imagePath9);

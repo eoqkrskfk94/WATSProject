@@ -206,8 +206,8 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
         location_category = getIntent().getExtras().getString("CATEGORY");
         location_addess = getIntent().getExtras().getString("ADDRESS");
         location_number = getIntent().getExtras().getString("TELEPHONE");
-        location_x = getIntent().getExtras().getDouble("MAPX");
-        location_y = getIntent().getExtras().getDouble("MAPY");
+        location_x = (double)getIntent().getExtras().getInt("MAPX");
+        location_y = getIntent().getExtras().getInt("MAPY");
 
         System.out.println("newmap3 : " + location_addess + "  " + location_x + "  " + location_y);
 
@@ -356,8 +356,8 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
                     locationName = jsonObj.getString("location_name");
                     locationCategory = jsonObj.getString("location_category");
                     locationAddress = jsonObj.getString("location_address");
-                    location_x = jsonObj.getInt("mapx");
-                    location_y = jsonObj.getInt("mapy");
+                    locationMapx = jsonObj.getInt("mapx");
+                    locationMapy = jsonObj.getInt("mapy");
                     locationNumber = jsonObj.getString("phone_number");
 
                     tag1 = jsonObj.getBoolean("tag1");
@@ -392,7 +392,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
                     if(intent.getExtras().getString("NAME").equals(location_name)) {
 
-                        reviewLists.add(num++, new ReviewList(intent.getExtras().getString("NAME"), locationAddress, locationNumber, locationCategory, reviewDescription, location_x, location_y,
+                        reviewLists.add(num++, new ReviewList(intent.getExtras().getString("NAME"), locationAddress, locationNumber, locationCategory, reviewDescription, locationMapx, locationMapy,
                                 tag1, tag2, tag3, tag4, tag5, tag6, reviewDate, userName, key,imageUrl1,imageUrl2,imageUrl3,imageUrl4,imageUrl5,imageUrl6,
                                 imageUrl7,imageUrl8,imageUrl9));
 

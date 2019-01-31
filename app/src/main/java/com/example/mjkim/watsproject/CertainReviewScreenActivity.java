@@ -1,6 +1,7 @@
 package com.example.mjkim.watsproject;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.graphics.drawable.Drawable;
@@ -26,7 +27,6 @@ import java.util.List;
 public class CertainReviewScreenActivity extends AppCompatActivity {
 
     Dialog myDialog;
-
     List<Drawable> temp;
     List<StorageReference> refList;
     String image1,image2,image3,image4,image5,image6,image7,image8,image9;
@@ -42,11 +42,20 @@ public class CertainReviewScreenActivity extends AppCompatActivity {
 
         myDialog = new Dialog(this);
 
+
         //돌아가기 버튼 눌렀을때 전 화면을 돌아간다
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                // 장소리스트에서 후기 들어왔을 때
+                if(getIntent().getExtras().getInt("Check") == 1) {
+                    Intent intent = new Intent(CertainReviewScreenActivity.this, MainScreenActivity.class);
+                    startActivity(intent);
+                }
+                // 검색에서 후기 들어왔을 때
+                else {
+                    finish();
+                }
             }
         });
 

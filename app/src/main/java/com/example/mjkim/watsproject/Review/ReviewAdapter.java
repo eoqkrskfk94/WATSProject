@@ -89,6 +89,7 @@ public class ReviewAdapter extends BaseAdapter {
 
     public void GoIntent(int a){
 
+
         Intent intent = new Intent(m_activity, CertainReviewScreenActivity.class);
 
 

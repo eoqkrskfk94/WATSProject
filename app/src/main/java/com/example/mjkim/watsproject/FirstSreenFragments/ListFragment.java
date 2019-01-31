@@ -123,7 +123,7 @@ public class ListFragment extends Fragment {
 
                         reviewList.setUserName(myreview.getUserName());
 
-                        reviewLists.add(totalLocationCount, reviewList);
+                        reviewLists.add(totalLocationCount, myreview);
 
                         totalLocationCount++;
 
@@ -202,7 +202,7 @@ public class ListFragment extends Fragment {
             @Override
             public void run() {
                 ListView reviewListView = (ListView) v.findViewById(R.id.category_list);
-                reviewAdapter = new CategoryAdapter(getActivity(), reviewLists,context,getActivity(),totalLocationCount);
+                reviewAdapter = new CategoryAdapter(getActivity(), reviewLists, context, getActivity(), totalLocationCount);
                 reviewListView.setAdapter(reviewAdapter);
             }
         }, 2300);

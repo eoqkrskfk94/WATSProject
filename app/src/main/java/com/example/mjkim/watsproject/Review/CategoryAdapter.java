@@ -119,7 +119,8 @@ public class CategoryAdapter extends BaseAdapter {
 
 
     public void GoReview(int a){
-
+        // 피니시해야 안 꺼
+        m_activity.finish();
         Intent intent = new Intent(m_activity, CertainReviewScreenActivity.class);
         intent.putExtra("IMAGE1", arr.get(a).getImageUrl1());
         intent.putExtra("IMAGE2", arr.get(a).getImageUrl2());
@@ -148,6 +149,9 @@ public class CategoryAdapter extends BaseAdapter {
         intent.putExtra("Tag4",arr.get(a).getTag4());
         intent.putExtra("Tag5",arr.get(a).getTag5());
         intent.putExtra("Tag6",arr.get(a).getTag6());
+
+        // 장소리스트에서 후기 볼 때만 뒤로가기 누르면 다시 액티비티 시작하게 함
+        intent.putExtra("Check", 1);
 
 
         m_activity.startActivity(intent);

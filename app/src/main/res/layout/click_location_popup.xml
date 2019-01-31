@@ -52,7 +52,7 @@
                 android:id="@+id/location_phoneTextView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:hint="전화번호"/>
+                android:hint="전화번호 내역 X"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -62,8 +62,7 @@
                 <ImageView
                     android:id="@+id/toilet_image"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    />
+                    android:layout_height="wrap_content" />
 
             </LinearLayout>
         </LinearLayout>

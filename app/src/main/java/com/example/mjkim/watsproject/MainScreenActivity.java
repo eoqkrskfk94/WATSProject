@@ -55,6 +55,7 @@ import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.overlay.LocationOverlay;
 import com.naver.maps.map.overlay.Marker;
+import com.naver.maps.map.overlay.OverlayImage;
 import com.naver.maps.map.util.FusedLocationSource;
 
 import java.util.ArrayList;
@@ -156,7 +157,8 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         int permssionCheck = ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION);
         if (permssionCheck!= PackageManager.PERMISSION_GRANTED) {
 
-            Toast.makeText(this,"위치 권한 승인을 해주세요",Toast.LENGTH_LONG).show();
+//            Toast.makeText(this,"위치 권한 승인을 해주세요",Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"위치 권한 승인 후 다시 아래의 지도를 눌러주세요",Toast.LENGTH_LONG).show();
 
             if (ActivityCompat.shouldShowRequestPermissionRationale(this,
                     Manifest.permission.ACCESS_FINE_LOCATION)) {
@@ -164,7 +166,9 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                 ActivityCompat.requestPermissions(this,
                         new String[]{Manifest.permission.ACCESS_FINE_LOCATION},
                         REQUEST_CODE_LOCATION);
+                Toast.makeText(this,"위치 권한 승인 후 다시 아래의 지도를 눌러주세요",Toast.LENGTH_LONG).show();
             }
+            Toast.makeText(this,"위치 권한 승인 후 다시 아래의 지도를 눌러주세요",Toast.LENGTH_LONG).show();
         }
 
         // 기본 화면 지도 뜨게 함
@@ -254,14 +258,11 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         if (mapFragment == null) {
 
             mapFragment = MapFragment.newInstance();
-            System.out.println("첫번째 : " + mapFragment.toString());
             getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, mapFragment).addToBackStack("parent").commit();
 
         }
         else {
             mapFragment = MapFragment.newInstance();
-            getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, mapFragment).commit();
-            System.out.println("두번째 : " + mapFragment.toString());
             getSupportFragmentManager().beginTransaction().replace(R.id.main_frame, mapFragment).addToBackStack("parent").commit();
 
         }
@@ -312,11 +313,10 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                         marker = new Marker(new LatLng(oGeo.getY(), oGeo.getX()));
                         marker.setHeight(110);
                         marker.setWidth(80);
+//                        marker.setIcon(OverlayImage.fromResource(R.drawable.logo));
                         marker.setCaptionText(location_name);
                         marker.setMap(naverMap);
                         System.out.println("working : " + marker.getCaptionText() + marker.getPosition().toString());
-
-
 
                         // 마커 누르는 이벤트
                         marker.setOnClickListener(overlay -> {
@@ -347,23 +347,23 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                             tagShow5 = (ImageView) myDialog.findViewById(R.id.tag_done_5);
                             tagShow6 = (ImageView) myDialog.findViewById(R.id.tag_done_6);
 
-                            if(myreview.getTag1() == true) tagShow1.setImageResource(R.drawable.restroom);
-                            else tagShow1.setImageResource(R.drawable.restroom_dimmed);
-
-                            if(myreview.getTag2() == true) tagShow2.setImageResource(R.drawable.parking);
-                            else tagShow2.setImageResource(R.drawable.parking_dimmed);
-
-                            if(myreview.getTag3() == true) tagShow3.setImageResource(R.drawable.elevator);
-                            else tagShow3.setImageResource(R.drawable.elevator_dimmed);
-
-                            if(myreview.getTag4() == true) tagShow4.setImageResource(R.drawable.slope);
-                            else tagShow4.setImageResource(R.drawable.slope_dimmed);
-
-                            if(myreview.getTag5() == true) tagShow5.setImageResource(R.drawable.table);
-                            else tagShow5.setImageResource(R.drawable.table_dimmed);
-
-                            if(myreview.getTag6() == true) tagShow6.setImageResource(R.drawable.assistant);
-                            else tagShow6.setImageResource(R.drawable.assistant_dimmed);
+//                            if(myreview.getTag1() == true) tagShow1.setImageResource(R.drawable.restroom);
+//                            else tagShow1.setImageResource(R.drawable.restroom_dimmed);
+//
+//                            if(myreview.getTag2() == true) tagShow2.setImageResource(R.drawable.parking);
+//                            else tagShow2.setImageResource(R.drawable.parking_dimmed);
+//
+//                            if(myreview.getTag3() == true) tagShow3.setImageResource(R.drawable.elevator);
+//                            else tagShow3.setImageResource(R.drawable.elevator_dimmed);
+//
+//                            if(myreview.getTag4() == true) tagShow4.setImageResource(R.drawable.slope);
+//                            else tagShow4.setImageResource(R.drawable.slope_dimmed);
+//
+//                            if(myreview.getTag5() == true) tagShow5.setImageResource(R.drawable.table);
+//                            else tagShow5.setImageResource(R.drawable.table_dimmed);
+//
+//                            if(myreview.getTag6() == true) tagShow6.setImageResource(R.drawable.assistant);
+//                            else tagShow6.setImageResource(R.drawable.assistant_dimmed);
 
 
 

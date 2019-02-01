@@ -1,10 +1,13 @@
 package com.example.mjkim.watsproject;
 
 import android.app.Activity;
+import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
@@ -32,11 +35,16 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.Timer;
+import java.util.TimerTask;
+
 public class LoginScreenActivity extends AppCompatActivity {
     public static int save = 0; // 로그인 되어있음을 확인하는 변수
     private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
+    Dialog myDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -256,6 +264,26 @@ public class LoginScreenActivity extends AppCompatActivity {
     }
     //로그인 버튼을 눌렀을때 일어나는 함수.
     public void loginStart(String email, String password) {
+
+        myDialog = new Dialog(LoginScreenActivity.this); //로딩 팝업 변수 선언
+
+
+        myDialog.setContentView(R.layout.login_loading_popup);
+        myDialog.setCancelable(false);
+
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+
+        myDialog.show(); //회원가입 팝업창.
+
+
+        final Timer timer2 = new Timer();
+        timer2.schedule(new TimerTask() {
+            public void run() {
+                myDialog.dismiss();
+                timer2.cancel(); //this will cancel the timer of the system
+            }
+        }, 1000); // the timer will count 2.4 seconds....
+
         if(!email.equals("") || !password.equals("")) {
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
@@ -273,6 +301,7 @@ public class LoginScreenActivity extends AppCompatActivity {
                             Toast.makeText(LoginScreenActivity.this, "Exception", Toast.LENGTH_SHORT).show();
                         }
                     } else {
+
                         save = 1;
                         currentUser = mAuth.getCurrentUser();
                         Toast.makeText(LoginScreenActivity.this, "로그인 성공", Toast.LENGTH_SHORT).show();

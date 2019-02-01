@@ -47,6 +47,7 @@ public class ListFragment extends Fragment {
     private String imageUrl1, imageUrl2, imageUrl3, imageUrl4, imageUrl5, imageUrl6, imageUrl7, imageUrl8, imageUrl9;
     private double mapx, mapy;
     static public int totalLocationCount;
+    int count;
 
     final Context context;
 
@@ -78,8 +79,9 @@ public class ListFragment extends Fragment {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                System.out.println("키값: " + dataSnapshot.getKey());
-
+                long length = dataSnapshot.getChildrenCount();
+                int[] tag_array = {0,0,0,0,0,0};
+                count = 0;
 
                 mymyreview.child("review lists").child(dataSnapshot.getKey()).addChildEventListener(new ChildEventListener() {
                     @Override
@@ -123,21 +125,34 @@ public class ListFragment extends Fragment {
                                 if(reviewLists.get(i).getLocation_name().equals(locationName)) { }
                                 else {
                                     if(i == totalLocationCount-1) {
-                                        reviewLists.add(totalLocationCount, myreview);
+                                        reviewLists.add(totalLocationCount, reviewList);
                                         totalLocationCount++;
                                     }
                                 }
                             }
                         } else {
-                            reviewLists.add(totalLocationCount, myreview);
+                            reviewLists.add(totalLocationCount, reviewList);
                             totalLocationCount++;
                         }
 
 
+                        if(myreview.getTag1() == true) tag_array[0]  = tag_array[0] +  1;
+                        System.out.println("태그1 : " +  tag_array[0]);
+                        if(myreview.getTag2() == true) tag_array[1]  = tag_array[1] +  1;
+                        System.out.println("태그2 : " +  tag_array[1]);
+                        if(myreview.getTag3() == true) tag_array[2]  = tag_array[2] +  1;
+                        System.out.println("태그3 : " +  tag_array[2]);
+                        if(myreview.getTag4() == true) tag_array[3]  = tag_array[3] +  1;
+                        System.out.println("태그4 : " +  tag_array[3]);
+                        if(myreview.getTag5() == true) tag_array[4]  = tag_array[4] +  1;
+                        System.out.println("태그5 : " +  tag_array[4]);
+                        if(myreview.getTag6() == true) tag_array[5]  = tag_array[5] +  1;
+                        System.out.println("태그6 : " +  tag_array[5]);
+                        count++;
 
-                        // 리뷰 갯수
-                        //TextView review_count = (TextView) findViewById(R.id.review_count);
-                        //review_count.setText(Integer.toString(totalLocationCount));
+                        if(count == length){
+
+                        }
 
                     }
 

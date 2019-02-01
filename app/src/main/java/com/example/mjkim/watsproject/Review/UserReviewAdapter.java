@@ -108,6 +108,8 @@ public class UserReviewAdapter extends BaseAdapter {
         TextView userName = (TextView)convertView.findViewById(R.id.vi_name);
         TextView reviewDescription = (TextView)convertView.findViewById(R.id.vi_description);
         TextView postDate = (TextView)convertView.findViewById(R.id.vi_date);
+        TextView locationName = (TextView) convertView.findViewById(R.id.vi_location_name);
+        TextView locationCategory = (TextView)convertView.findViewById(R.id.vi_category);
         LinearLayout layout_view =  (LinearLayout)convertView.findViewById(R.id.vi_view);
 
 
@@ -118,6 +120,11 @@ public class UserReviewAdapter extends BaseAdapter {
 
 
 //        userName.setText(arr.get(position).getUserNickName());
+        int index = arr.get(position).getLocation_name().indexOf(" , ");
+        String location_name = arr.get(position).getLocation_name().substring(0, index);
+        locationName.setText(location_name);
+        String shortCategory = arr.get(position).getLocation_category().substring(arr.get(position).getLocation_category().lastIndexOf(">")+1);
+        locationCategory.setText(shortCategory);
         userName.setText(arr.get(position).getUserName());
         reviewDescription.setText(arr.get(position).getReview_description());
         postDate.setText(arr.get(position).getDate());

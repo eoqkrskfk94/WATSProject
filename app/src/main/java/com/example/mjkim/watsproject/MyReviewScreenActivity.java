@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -89,13 +90,10 @@ public class MyReviewScreenActivity extends AppCompatActivity {
 
 
 
-
         mDatabase.child("review lists").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
-                System.out.println("이메일2 : " + mymyreview.child("review lists").child(dataSnapshot.getKey()).orderByChild("email").toString());
-                System.out.println("키값: " + dataSnapshot.getKey());
 
 
                 mymyreview.child("review lists").child(dataSnapshot.getKey()).orderByChild("userEmail").equalTo(user_email).addChildEventListener(new ChildEventListener() {
@@ -141,6 +139,7 @@ public class MyReviewScreenActivity extends AppCompatActivity {
                         // 리뷰 갯수
                         TextView review_count = (TextView) findViewById(R.id.review_count);
                         review_count.setText(Integer.toString(totalLocationCount));
+
 
                     }
 

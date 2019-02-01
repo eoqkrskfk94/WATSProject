@@ -105,7 +105,6 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     private String imageUrl1, imageUrl2, imageUrl3, imageUrl4, imageUrl5, imageUrl6, imageUrl7, imageUrl8, imageUrl9;
     private double mapx, mapy;
 
-
     {
         context = this;
     }
@@ -302,7 +301,6 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
                 long length = dataSnapshot.getChildrenCount();
-                System.out.println("길이용 : " +  dataSnapshot.getChildrenCount());
                 int[] tag_array = {0,0,0,0,0,0};
                 count = 0;
 
@@ -363,20 +361,20 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                             if(tag_array[0] > length/2 &&  tag_array[0] != 0) {tagShow1.setImageResource(R.drawable.restroom); tag1 = true;}
                             else {tagShow1.setImageResource(R.drawable.restroom_dimmed); tag1 = false;}
 
-                            if(tag_array[1] > length/2 &&  tag_array[1] != 0) {tagShow2.setImageResource(R.drawable.restroom); tag2 = true;}
-                            else {tagShow1.setImageResource(R.drawable.restroom_dimmed); tag2 = false;}
+                            if(tag_array[1] > length/2 &&  tag_array[1] != 0) {tagShow2.setImageResource(R.drawable.parking); tag2 = true;}
+                            else {tagShow2.setImageResource(R.drawable.parking_dimmed); tag2 = false;}
 
-                            if(tag_array[2] > length/2 &&  tag_array[2] != 0) {tagShow3.setImageResource(R.drawable.restroom); tag3 = true;}
-                            else {tagShow1.setImageResource(R.drawable.restroom_dimmed); tag3 = false;}
+                            if(tag_array[2] > length/2 &&  tag_array[2] != 0) {tagShow3.setImageResource(R.drawable.elevator); tag3 = true;}
+                            else {tagShow3.setImageResource(R.drawable.elevator_dimmed); tag3 = false;}
 
-                            if(tag_array[3] > length/2 &&  tag_array[3] != 0) {tagShow4.setImageResource(R.drawable.restroom); tag4 = true;}
-                            else {tagShow1.setImageResource(R.drawable.restroom_dimmed); tag4 = false;}
+                            if(tag_array[3] > length/2 &&  tag_array[3] != 0) {tagShow4.setImageResource(R.drawable.slope); tag4 = true;}
+                            else {tagShow4.setImageResource(R.drawable.slope_dimmed); tag4 = false;}
 
-                            if(tag_array[4] > length/2 &&  tag_array[4] != 0) {tagShow5.setImageResource(R.drawable.restroom); tag5 = true;}
-                            else {tagShow1.setImageResource(R.drawable.restroom_dimmed); tag5 = false;}
+                            if(tag_array[4] > length/2 &&  tag_array[4] != 0) {tagShow5.setImageResource(R.drawable.table); tag5 = true;}
+                            else {tagShow5.setImageResource(R.drawable.table_dimmed); tag5 = false;}
 
-                            if(tag_array[5] > length/2 &&  tag_array[5] != 0) {tagShow6.setImageResource(R.drawable.restroom); tag6 = true;}
-                            else {tagShow1.setImageResource(R.drawable.restroom_dimmed); tag6 = false;}
+                            if(tag_array[5] > length/2 &&  tag_array[5] != 0) {tagShow6.setImageResource(R.drawable.assistant); tag6 = true;}
+                            else {tagShow6.setImageResource(R.drawable.assistant_dimmed); tag6 = false;}
 
 
                             locationBox.setOnClickListener(new View.OnClickListener() {
@@ -407,44 +405,27 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                         });
 
                         if(myreview.getTag1() == true) tag_array[0]  = tag_array[0] +  1;
-                        System.out.println("태그1 : " +  tag_array[0]);
                         if(myreview.getTag2() == true) tag_array[1]  = tag_array[1] +  1;
-                        System.out.println("태그2 : " +  tag_array[1]);
                         if(myreview.getTag3() == true) tag_array[2]  = tag_array[2] +  1;
-                        System.out.println("태그3 : " +  tag_array[2]);
                         if(myreview.getTag4() == true) tag_array[3]  = tag_array[3] +  1;
-                        System.out.println("태그4 : " +  tag_array[3]);
                         if(myreview.getTag5() == true) tag_array[4]  = tag_array[4] +  1;
-                        System.out.println("태그5 : " +  tag_array[4]);
                         if(myreview.getTag6() == true) tag_array[5]  = tag_array[5] +  1;
-                        System.out.println("태그6 : " +  tag_array[5]);
                         count++;
 
 
                     }
 
                     @Override
-                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
-//                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
-                    }
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
 
                     @Override
-                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-//                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
-//                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
-                    }
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) { }
 
                     @Override
-                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
-//                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
-                    }
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        System.out.println("errororororororor");
-                    }
+                    public void onCancelled(@NonNull DatabaseError databaseError) { }
                 });
 
 

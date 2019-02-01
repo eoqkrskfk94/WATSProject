@@ -8,9 +8,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.example.mjkim.watsproject.LocationDetailFromMapScreenActivity;
 import com.example.mjkim.watsproject.LocationDetailScreenActivity;
 import com.example.mjkim.watsproject.MyReviewScreenActivity;
 import com.example.mjkim.watsproject.R;
@@ -29,6 +31,7 @@ public class CategoryAdapter extends BaseAdapter {
     Context context;
     Activity activity;
     Dialog myDialog;
+    private ImageView tagShow1,tagShow2,tagShow3,tagShow4,tagShow5,tagShow6;
 
 
 
@@ -69,10 +72,14 @@ public class CategoryAdapter extends BaseAdapter {
         TextView locationCategoryTextView = (TextView)convertView.findViewById(R.id.location_category);
         TextView locationAddressTextView = (TextView)convertView.findViewById(R.id.location_address);
         TextView locationPhoneTextView = (TextView)convertView.findViewById(R.id.location_phone);
-//        TextView userNameTextView = (TextView)convertView.findViewById(R.id.vi_name);
-//        TextView reviewDescriptionTextView = (TextView)convertView.findViewById(R.id.vi_description);
-//        TextView postDateTextView = (TextView)convertView.findViewById(R.id.vi_date);
         LinearLayout layout_view =  (LinearLayout)convertView.findViewById(R.id.vi_view);
+
+        tagShow1 = (ImageView) convertView.findViewById(R.id.tag_done_1);
+        tagShow2 = (ImageView) convertView.findViewById(R.id.tag_done_2);
+        tagShow3 = (ImageView) convertView.findViewById(R.id.tag_done_3);
+        tagShow4 = (ImageView) convertView.findViewById(R.id.tag_done_4);
+        tagShow5 = (ImageView) convertView.findViewById(R.id.tag_done_5);
+        tagShow6 = (ImageView) convertView.findViewById(R.id.tag_done_6);
 
 
 
@@ -86,9 +93,7 @@ public class CategoryAdapter extends BaseAdapter {
         locationCategoryTextView.setText(arr.get(position).getLocation_category());
         locationAddressTextView.setText(arr.get(position).getLocation_address());
         locationPhoneTextView.setText(arr.get(position).getPhone_number());
-//        userNameTextView.setText(arr.get(position).getUserName());
-//        reviewDescriptionTextView.setText(arr.get(position).getReview_description());
-//        postDateTextView.setText(arr.get(position).getDate());
+
 
         /*  버튼에 이벤트처리를 하기위해선 setTag를 이용해서 사용할 수 있습니다.
 
@@ -126,7 +131,7 @@ public class CategoryAdapter extends BaseAdapter {
     public void GoReview(int a){
         // 피니시해야 안 꺼짐
         m_activity.finish();
-        Intent intent = new Intent(m_activity, LocationDetailScreenActivity.class);
+        Intent intent = new Intent(m_activity, LocationDetailFromMapScreenActivity.class);
         intent.putExtra("IMAGE1", arr.get(a).getImageUrl1());
         intent.putExtra("IMAGE2", arr.get(a).getImageUrl2());
         intent.putExtra("IMAGE3", arr.get(a).getImageUrl3());
@@ -138,22 +143,22 @@ public class CategoryAdapter extends BaseAdapter {
         intent.putExtra("IMAGE9", arr.get(a).getImageUrl9());
 
         intent.putExtra("Email", arr.get(a).getUserEmail());
-        intent.putExtra("Name", arr.get(a).getUserName());
+        intent.putExtra("USERNAME", arr.get(a).getUserName());
         intent.putExtra("Review", arr.get(a).getReview_description());
-        intent.putExtra("LocationAddress", arr.get(a).getLocation_address());
-        intent.putExtra("LocationCategory", arr.get(a).getLocation_category());
-        intent.putExtra("LocationName", arr.get(a).getLocation_name());
-        intent.putExtra("LocationNumber", arr.get(a).getPhone_number());
-        intent.putExtra("Mapx", arr.get(a).getMapx());
-        intent.putExtra("Mapy", arr.get(a).getMapy());
+        intent.putExtra("ADDRESS", arr.get(a).getLocation_address());
+        intent.putExtra("CATEGORY", arr.get(a).getLocation_category());
+        intent.putExtra("NAME", arr.get(a).getLocation_name());
+        intent.putExtra("TELEPHONE", arr.get(a).getPhone_number());
+        intent.putExtra("MAPX", arr.get(a).getMapx());
+        intent.putExtra("MAPY", arr.get(a).getMapy());
         intent.putExtra("ReviewDescription", arr.get(a).getReview_description());
         intent.putExtra("Date",arr.get(a).getDate());
-        intent.putExtra("Tag1",arr.get(a).getTag1());
-        intent.putExtra("Tag2",arr.get(a).getTag2());
-        intent.putExtra("Tag3",arr.get(a).getTag3());
-        intent.putExtra("Tag4",arr.get(a).getTag4());
-        intent.putExtra("Tag5",arr.get(a).getTag5());
-        intent.putExtra("Tag6",arr.get(a).getTag6());
+        intent.putExtra("TAG1",arr.get(a).getTag1());
+        intent.putExtra("TAG2",arr.get(a).getTag2());
+        intent.putExtra("TAG3",arr.get(a).getTag3());
+        intent.putExtra("TAG4",arr.get(a).getTag4());
+        intent.putExtra("TAG5",arr.get(a).getTag5());
+        intent.putExtra("TAG6",arr.get(a).getTag6());
 
         // 장소리스트에서 후기 볼 때만 뒤로가기 누르면 다시 액티비티 시작하게 함
         intent.putExtra("Check", 1);

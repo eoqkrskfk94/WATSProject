@@ -351,6 +351,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
             int num = 0;
 
 
+
             String json = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getReview_json_string();
             length = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getReview_count();
             JSONArray IDs = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getReview_json_userID();
@@ -471,6 +472,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
     //블로그 전체보기 버튼 기능
     public void openBlogTab(){
         Intent intent = new Intent(this, MoreBlogScreenActivity.class);
+        intent.putExtra("SELECT", 0);
         startActivity(intent);
     }
 
@@ -480,6 +482,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
     //리뷰 전체보기 버튼 기능
     public void openReviewTab(){
         Intent intent = new Intent(this, MoreReviewScreenActivity.class);
+        intent.putExtra("SELECT", 0);
         startActivity(intent);
     }
 }

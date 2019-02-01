@@ -28,6 +28,7 @@ import com.example.mjkim.watsproject.Convert.GeoTransPoint;
 import com.example.mjkim.watsproject.Naver.NaverBlogAdapter;
 import com.example.mjkim.watsproject.Naver.NaverBlogList;
 import com.example.mjkim.watsproject.Naver.NaverBlogSearch;
+import com.example.mjkim.watsproject.Review.MapReviewAdapter;
 import com.example.mjkim.watsproject.Review.ReviewAdapter;
 import com.example.mjkim.watsproject.Review.ReviewFirebaseJson;
 import com.example.mjkim.watsproject.Review.ReviewList;
@@ -55,7 +56,7 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
     public static ArrayList<ReviewList> reviewLists;
     private NaverBlogSearch naverBlogSearch;
     private NaverBlogAdapter naverBlogAdapter;
-    private ReviewAdapter reviewAdapter;
+    private MapReviewAdapter mapReviewAdapter;
     public static int length; //리뷰 갯수
     private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
@@ -78,7 +79,7 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_location_detail_screen);
+        setContentView(R.layout.activity_location_detail_from_map_screen);
 
         mAuth = FirebaseAuth.getInstance(); // 로그인 작업의 onCreate 메소드에서 FirebaseAuth 개체의 공유 인스턴스를 가져옵니다
         currentUser = mAuth.getCurrentUser();
@@ -310,7 +311,9 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
 
                 else {
                     Intent intent = new Intent(LocationDetailFromMapScreenActivity.this, CreateReviewScreenActivity.class);
-                    intent.putExtra("NAME", location_name);
+                    int index = location_name.indexOf(" , ");
+                    String new_location_name = location_name.substring(0, index);
+                    intent.putExtra("NAME", new_location_name);
                     intent.putExtra("CATEGORY", location_category);
                     intent.putExtra("ADDRESS", location_addess);
                     intent.putExtra("TELEPHONE", location_number);
@@ -386,6 +389,13 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
                         reviewDescription = myreview.getReview_description();
                         locationMapx = myreview.getMapx();
                         locationMapy = myreview.getMapy();
+                        userName = myreview.getUserName();
+                        tag1 = myreview.getTag1();
+                        tag2 = myreview.getTag2();
+                        tag3 = myreview.getTag3();
+                        tag4 = myreview.getTag4();
+                        tag5 = myreview.getTag5();
+                        tag6 = myreview.getTag6();
                         imageUrl1 = myreview.getImageUrl1();
                         imageUrl2 = myreview.getImageUrl2();
                         imageUrl3 = myreview.getImageUrl3();
@@ -414,20 +424,16 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
 
                     @Override
                     public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
-//                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
+                        System.out.println("리스트 길이3: " + reviewLists.size());
                     }
 
                     @Override
                     public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-//                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
-//                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
                     }
 
                     @Override
                     public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
-//                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
+                        System.out.println("리스트 길이5: " + reviewLists.size());
                     }
 
                     @Override
@@ -467,31 +473,34 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
 
 
         //리뷰 보기
-        ReviewAdapter.select = 1;
+        //ReviewAdapter.select = 1;
+        System.out.println("리스트 길이6: " + reviewLists.size());
 
-        ListView reviewListView = (ListView) findViewById(R.id.review_list);
-        if(reviewLists.size() == 0) {
 
-            reviewListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 50));
-        }
-        else if(reviewLists.size() == 1) {
-
-            reviewListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
-        }
-        else if(reviewLists.size() == 2) {
-
-            View view = getLayoutInflater().inflate(R.layout.review_list_box, null);
-            View view2 = view.findViewById(R.id.list_size);
-            reviewListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, view2.getLayoutParams().height * 2 + 200));
-        }
 
 
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
                 ListView reviewListView = (ListView) findViewById(R.id.review_list);
-                reviewAdapter = new ReviewAdapter(LocationDetailFromMapScreenActivity.this, reviewLists);
-                reviewListView.setAdapter(reviewAdapter);
+                if(reviewLists.size() == 0) {
+
+                    reviewListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 50));
+                }
+                else if(reviewLists.size() == 1) {
+
+                    reviewListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+                }
+                else if(reviewLists.size() >= 2) {
+
+                    View view = getLayoutInflater().inflate(R.layout.review_list_box, null);
+                    View view2 = view.findViewById(R.id.list_size);
+                    reviewListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, view2.getLayoutParams().height * 2 + 150));
+                }
+
+                mapReviewAdapter = new MapReviewAdapter(LocationDetailFromMapScreenActivity.this, reviewLists);
+                reviewListView.setAdapter(mapReviewAdapter);
+                System.out.println("리스트 길이3: " + reviewLists.size());
             }
         }, 900);
 
@@ -515,6 +524,7 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
     //블로그 전체보기 버튼 기능
     public void openBlogTab(){
         Intent intent = new Intent(this, MoreBlogScreenActivity.class);
+        intent.putExtra("SELECT", 1);
         startActivity(intent);
     }
 
@@ -524,6 +534,16 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
     //리뷰 전체보기 버튼 기능
     public void openReviewTab(){
         Intent intent = new Intent(this, MoreReviewScreenActivity.class);
+        intent.putExtra("SELECT", 1);
         startActivity(intent);
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent(this, MainScreenActivity.class);
+        startActivity(intent);
+        super.onBackPressed();
+    }
 }
+
+

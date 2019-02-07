@@ -13,14 +13,11 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.mjkim.watsproject.ChangeInfoScreenActivity;
 import com.example.mjkim.watsproject.LoginScreenActivity;
-import com.example.mjkim.watsproject.MainScreenActivity;
 import com.example.mjkim.watsproject.MyReviewScreenActivity;
 import com.example.mjkim.watsproject.R;
-import com.example.mjkim.watsproject.SearchScreenActivity;
 import com.example.mjkim.watsproject.User.UserInformation;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;

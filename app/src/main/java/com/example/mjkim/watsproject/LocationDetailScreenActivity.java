@@ -49,10 +49,10 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
     //리뷰 변수들 선언
     Boolean tag1, tag2, tag3, tag4, tag5, tag6;
-    String locationName, locationCategory, locationAddress, locationNumber, reviewDescription, userEmail, userName, key, reviewDate;
+    String locationName, locationCategory, shortCategory, locationAddress, locationNumber, reviewDescription, userEmail, userName, userNickName, key, reviewDate;
     double locationMapx, locationMapy;
 
-    String location_name, location_category, location_addess, location_number;
+    String location_name, location_category, short_category, location_address, location_number;
     double location_x, location_y;
     String imageUrl1,imageUrl2,imageUrl3,imageUrl4,imageUrl5,imageUrl6,imageUrl7,imageUrl8,imageUrl9;
 
@@ -69,7 +69,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
         // 제일 위부터 보기
         scrollView = new ScrollView(this);
         scrollView.findViewById(R.id.scroll_view);
-        scrollView.scrollTo(0,600);
+        scrollView.scrollTo(0,0);
 
 
         myDialog = new Dialog(this); //팝업 변수 선언
@@ -204,16 +204,17 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
         location_name = getIntent().getExtras().getString("NAME");
         location_category = getIntent().getExtras().getString("CATEGORY");
-        location_addess = getIntent().getExtras().getString("ADDRESS");
+        short_category = location_category.substring(location_category.lastIndexOf(">")+1);
+        location_address = getIntent().getExtras().getString("ADDRESS");
         location_number = getIntent().getExtras().getString("TELEPHONE");
         location_x = getIntent().getExtras().getInt("MAPX");
         location_y = getIntent().getExtras().getInt("MAPY");
 
-        System.out.println("newmap3 : " + location_addess + "  " + location_x + "  " + location_y);
+        System.out.println("newmap3 : " + location_address + "  " + location_x + "  " + location_y);
 
         locationNameText.setText(location_name);
         locationCategoryText.setText(location_category);
-        locationAddressText.setText(location_addess);
+        locationAddressText.setText(location_address);
         locationNumberText.setText(location_number);
 
         // 주소 누르면 지도 뜸
@@ -223,7 +224,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
                 Intent intent = new Intent(LocationDetailScreenActivity.this, WatchLocationActivity.class);
                 intent.putExtra("NAME", location_name);
                 intent.putExtra("CATEGORY", location_category);
-                intent.putExtra("ADDRESS", location_addess);
+                intent.putExtra("ADDRESS", location_address);
                 intent.putExtra("TELEPHONE", location_number);
                 intent.putExtra("MAPX", location_x);
                 intent.putExtra("MAPY", location_y);
@@ -298,7 +299,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
                     Intent intent = new Intent(LocationDetailScreenActivity.this, CreateReviewScreenActivity.class);
                     intent.putExtra("NAME", location_name);
                     intent.putExtra("CATEGORY", location_category);
-                    intent.putExtra("ADDRESS", location_addess);
+                    intent.putExtra("ADDRESS", location_address);
                     intent.putExtra("TELEPHONE", location_number);
                     intent.putExtra("MAPX", location_x);
                     intent.putExtra("MAPY", location_y);
@@ -351,6 +352,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
             int num = 0;
 
 
+
             String json = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getReview_json_string();
             length = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getReview_count();
             JSONArray IDs = ReviewFirebaseJson.reviewJson.get(intent.getExtras().getInt("NUMBER")).getReview_json_userID();
@@ -368,6 +370,8 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
                     locationMapy = jsonObj.getInt("mapy");
                     locationNumber = jsonObj.getString("phone_number");
 
+//                    System.out.println("count3 : " + location_name);
+//                    System.out.println("count4 : " + locationName);
                     tag1 = jsonObj.getBoolean("tag1");
                     if(tag1 == true) tag_array[0]  = tag_array[0] +  1;
                     tag2 = jsonObj.getBoolean("tag2");
@@ -383,6 +387,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
                     reviewDescription = jsonObj.getString("review_description");
                     userName = jsonObj.getString("userName");
+                    userNickName = jsonObj.getString("userNickName");
                     userEmail = jsonObj.getString("userEmail");
                     reviewDate = jsonObj.getString("date");
 
@@ -396,15 +401,15 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
                     imageUrl8 = jsonObj.getString("imageUrl8");
                     imageUrl9 = jsonObj.getString("imageUrl9");
 
-
-
+                    System.out.println("count3 : " + location_name);
                     if(intent.getExtras().getString("NAME").equals(location_name)) {
 
-                        reviewLists.add(num++, new ReviewList(intent.getExtras().getString("NAME"), locationAddress, locationNumber, locationCategory, reviewDescription, locationMapx, locationMapy,
-                                tag1, tag2, tag3, tag4, tag5, tag6, reviewDate, userName, key,imageUrl1,imageUrl2,imageUrl3,imageUrl4,imageUrl5,imageUrl6,
+                        reviewLists.add(num++, new ReviewList(intent.getExtras().getString("NAME"), locationAddress, locationNumber, locationCategory, shortCategory, reviewDescription, locationMapx, locationMapy,
+                                tag1, tag2, tag3, tag4, tag5, tag6, reviewDate, userName, userNickName, key,imageUrl1,imageUrl2,imageUrl3,imageUrl4,imageUrl5,imageUrl6,
                                 imageUrl7,imageUrl8,imageUrl9));
-
+                        System.out.println("count4 : " + location_name);
                     }
+
                 }
             }catch (Exception e) {
                 e.printStackTrace();
@@ -436,6 +441,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
             @Override
             public void run() {
                 ListView reviewListView = (ListView) findViewById(R.id.review_list);
+                System.out.println("count0 : " + reviewLists.size());
                 reviewAdapter = new ReviewAdapter(LocationDetailScreenActivity.this, reviewLists);
                 reviewListView.setAdapter(reviewAdapter);
             }
@@ -471,6 +477,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
     //블로그 전체보기 버튼 기능
     public void openBlogTab(){
         Intent intent = new Intent(this, MoreBlogScreenActivity.class);
+        intent.putExtra("SELECT", 0);
         startActivity(intent);
     }
 
@@ -480,6 +487,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
     //리뷰 전체보기 버튼 기능
     public void openReviewTab(){
         Intent intent = new Intent(this, MoreReviewScreenActivity.class);
+        intent.putExtra("SELECT", 0);
         startActivity(intent);
     }
 }

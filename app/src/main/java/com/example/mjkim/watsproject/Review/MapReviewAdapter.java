@@ -17,14 +17,14 @@ import com.example.mjkim.watsproject.R;
 
 import java.util.ArrayList;
 
-public class ReviewAdapter extends BaseAdapter {
+public class MapReviewAdapter extends BaseAdapter {
 
     private LayoutInflater mInflater;
     private Activity m_activity;
     private ArrayList<ReviewList> arr;
     public static int select = 0; //출력되는 리뷰 개수 선택 1이면 3개 2이면 최대 20개
 
-    public ReviewAdapter(Activity act, ArrayList<ReviewList> arr_item) {
+    public MapReviewAdapter(Activity act, ArrayList<ReviewList> arr_item) {
         this.m_activity = act;
         arr = arr_item;
         mInflater = (LayoutInflater) m_activity.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -57,7 +57,6 @@ public class ReviewAdapter extends BaseAdapter {
             convertView = mInflater.inflate(res, parent, false);
 
         }
-        System.out.println("count : " + arr.size());
 
         ImageView profilePic = (ImageView) convertView.findViewById(R.id.profile_pic);
         TextView reviewerName = (TextView) convertView.findViewById(R.id.vi_name);
@@ -66,8 +65,8 @@ public class ReviewAdapter extends BaseAdapter {
         LinearLayout layout_view = (LinearLayout) convertView.findViewById(R.id.vi_view);
 
 
-        reviewerName.setText(arr.get(position).getUserNickName());
-//        reviewerName.setText(arr.get(position).getUserName());
+
+        reviewerName.setText(arr.get(position).getUserName());
         description.setText(arr.get(position).getReview_description());
         postDate.setText(arr.get(position).getDate());
 
@@ -94,8 +93,8 @@ public class ReviewAdapter extends BaseAdapter {
 
 
         intent.putExtra("Email", arr.get(a).getUserEmail());
-        intent.putExtra("Name", arr.get(a).getUserNickName());
-//        intent.putExtra("Name", arr.get(a).getUserName());
+//        intent.putExtra("Name", arr.get(a).getUserNickName());
+        intent.putExtra("Name", arr.get(a).getUserName());
         intent.putExtra("Review", arr.get(a).getReview_description());
         intent.putExtra("Date",arr.get(a).getDate());
         intent.putExtra("Tag1",arr.get(a).getTag1());

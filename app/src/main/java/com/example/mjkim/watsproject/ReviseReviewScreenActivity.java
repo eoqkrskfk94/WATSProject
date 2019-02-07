@@ -63,7 +63,8 @@ public class ReviseReviewScreenActivity extends AppCompatActivity {
     public ReviewList reviewList = new ReviewList();
     Dialog myDialog;
     CheckBox chk[] = new CheckBox[6]; //태그 체크박스
-    String userName = ""; //유저 별명
+    String userName = ""; //유저 이름
+    String userNickName = ""; // 유저 별명
     String key = ""; //키값
     EditText review_text; //후기 적성부분
     Boolean tag1,tag2,tag3,tag4,tag5,tag6; //태그
@@ -329,7 +330,8 @@ public class ReviseReviewScreenActivity extends AppCompatActivity {
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
                         textId.setText(userInformation.getUserNickname()); // 그 유저에 해당하는 닉네임값을 보여줌.
-                        userName = userInformation.getUserNickname();
+                        userNickName = userInformation.getUserNickname();
+                        userName = userInformation.getUserName();
                     }
 
                     @Override
@@ -990,6 +992,7 @@ public class ReviseReviewScreenActivity extends AppCompatActivity {
         //       int index = location_name.indexOf(" , ");
         //      location_name = location_name.substring(0, index);
         String location_category = review_intent.getExtras().getString("CATEGORY");
+        String short_category = location_category.substring(location_category.lastIndexOf(">")+1);
         String location_addess = review_intent.getExtras().getString("ADDRESS");
         String location_number = review_intent.getExtras().getString("TELEPHONE");
         double location_mapx = review_intent.getExtras().getDouble("MAPX");
@@ -1006,7 +1009,7 @@ public class ReviseReviewScreenActivity extends AppCompatActivity {
         if(chk[5].isChecked() == true) tag6 = true; else tag6 = false;
 
 
-        reviewList = new ReviewList(location_name, location_addess, location_number, location_category, review_description, location_mapx, location_mapy, tag1, tag2, tag3, tag4, tag5, tag6, mTime, userName, key
+        reviewList = new ReviewList(location_name, location_addess, location_number, location_category, short_category, review_description, location_mapx, location_mapy, tag1, tag2, tag3, tag4, tag5, tag6, mTime, userName, userNickName, key
                 ,imagePath1,imagePath2,imagePath3,imagePath4,imagePath5,imagePath6,imagePath7,imagePath8,imagePath9);
 
 

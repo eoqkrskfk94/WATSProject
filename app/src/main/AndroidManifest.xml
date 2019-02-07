@@ -28,7 +28,6 @@
         <activity android:name=".LoginScreenActivity" />
         <activity android:name=".SignInScreenActivity" />
         <activity android:name=".MainScreenActivity" />
-        <activity android:name=".SearchScreenActivity" />
         <activity android:name=".SearchDetailScreenActivity" />
         <activity android:name=".LocationDetailScreenActivity" />
         <activity android:name=".CreateReviewScreenActivity" />
@@ -56,7 +55,6 @@
         <activity android:name=".MoreReviewScreenActivity" />
         <activity android:name=".MyReviewScreenActivity" />
         <activity android:name=".ReviseReviewScreenActivity" />
-        <activity android:name=".LocationDetailFromMapScreen"></activity>
     </application>
 
 </manifest>

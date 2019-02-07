@@ -19,7 +19,7 @@ import com.naver.maps.map.overlay.Marker;
 public class WatchLocationActivity extends Activity implements OnMapReadyCallback{
     private MapView mapView;
     private Button backButton;
-    public static String location_name, location_category, location_addess, location_number;
+    public static String location_name, location_category, location_address, location_number;
     public static double location_x, location_y;
     private Marker marker;
 
@@ -38,14 +38,16 @@ public class WatchLocationActivity extends Activity implements OnMapReadyCallbac
         });
 
         // 장소 정보 받아옴
+//        int index = getIntent().getExtras().getString("NAME").indexOf(" , ");
+//        location_name = getIntent().getExtras().getString("NAME").substring(0, index);
         location_name = getIntent().getExtras().getString("NAME");
         location_category = getIntent().getExtras().getString("CATEGORY");
-        location_addess = getIntent().getExtras().getString("ADDRESS");
+        location_address = getIntent().getExtras().getString("ADDRESS");
         location_number = getIntent().getExtras().getString("TELEPHONE");
         location_x = getIntent().getExtras().getDouble("MAPX");
         location_y = getIntent().getExtras().getDouble("MAPY");
 
-        System.out.println("newmap1 : " + location_addess + "  " + location_x + "  " + location_y);
+        System.out.println("newmap1 : " + location_address + "  " + location_x + "  " + location_y);
 
         // 맵 띄우기
         mapView = findViewById(R.id.map_view);
@@ -111,6 +113,7 @@ public class WatchLocationActivity extends Activity implements OnMapReadyCallbac
         marker.setHeight(110);
         marker.setWidth(80);
         marker.setCaptionText(location_name);
+        marker.setHideCollidedSymbols(true);
         marker.setMap(naverMap);
         System.out.println("newmap5 : " + location_x + location_y);
 

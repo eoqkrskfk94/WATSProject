@@ -5,7 +5,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
+import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
 import android.media.Image;
@@ -20,15 +22,18 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.Menu;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -38,7 +43,6 @@ import com.example.mjkim.watsproject.FirstSreenFragments.ListFragment;
 import com.example.mjkim.watsproject.FirstSreenFragments.MypageFragment;
 import com.example.mjkim.watsproject.OtherClasses.BackPressCloseHandler;
 import com.example.mjkim.watsproject.Review.ReviewAdapter;
-import com.example.mjkim.watsproject.Review.UserReviewAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.example.mjkim.watsproject.Review.ReviewList;
@@ -56,7 +60,6 @@ import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.overlay.LocationOverlay;
 import com.naver.maps.map.overlay.Marker;
-import com.naver.maps.map.overlay.OverlayImage;
 import com.naver.maps.map.util.FusedLocationSource;
 
 import java.util.ArrayList;
@@ -76,12 +79,12 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
 
     static public int totalLocationCount;
     private int check = 0, i = 0;
-    static int count = 0;
+    static int count = 0, markerCount = 0;
 
     private BottomNavigationView mMainNav; //하단 메뉴 아이콘
     private FrameLayout mMainFrame, statsFrame;
     private Dialog reviewDialog;
-    private TextView location_categoryTextView, location_nameTextView, location_phoneTextView, location_addressTextView;
+    private TextView mainMenu, location_categoryTextView, location_nameTextView, location_phoneTextView, location_addressTextView;
     private ImageView tagShow1,tagShow2,tagShow3,tagShow4,tagShow5,tagShow6;
 
 
@@ -92,6 +95,8 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     private StatsFragment statsFragment;
 
     private Marker marker;
+    private ArrayList<Marker> markers;
+    static String categoryName;
 
     // 리뷰 정보 담을 변수
     private ReviewList reviewList;
@@ -100,11 +105,10 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     private DatabaseReference mDatabase;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     final Context context;
-    private String locationName, key, reviewerName, reviewDate, reviewDescription, locationNumber, userEmail, userName, locationCategory, locationAddress;
+    private String locationName, key, reviewerName, reviewDate, reviewDescription, locationNumber, userEmail, userName, locationCategory, shortCategory, locationAddress;
     private Boolean tag1, tag2, tag3, tag4, tag5, tag6;
     private String imageUrl1, imageUrl2, imageUrl3, imageUrl4, imageUrl5, imageUrl6, imageUrl7, imageUrl8, imageUrl9;
     private double mapx, mapy;
-
 
     {
         context = this;
@@ -126,19 +130,72 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         totalLocationCount = 0;
         backPressCloseHandler = new BackPressCloseHandler(this);
 
-        TextView mainText = (TextView)findViewById(R.id.main_text);
-
+        EditText editText = (EditText) findViewById(R.id.editSearch);
+        TextView mainMenu = (TextView)findViewById(R.id.main_menu);
         Button searchButton = (Button)findViewById(R.id.search_button);
 
-        //검색하기 버튼을 눌렀을때
-        searchButton.setOnClickListener(new View.OnClickListener() {
+        // 메인텍스트 기본 세팅
+        mainMenu.setText("지도");
+
+
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void onClick(View view) {
-                finish();
-                Intent intent=new Intent(MainScreenActivity.this,SearchDetailScreenActivity.class);
-                startActivity(intent);
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if(EditorInfo.IME_ACTION_SEARCH == actionId){
+                    Intent intent=new Intent(MainScreenActivity.this,SearchDetailScreenActivity.class);
+                    intent.putExtra("SEARCH", editText.getText().toString());
+                    startActivity(intent);
+                }
+                return false;
             }
         });
+
+        // 카테고리 버튼
+        Button categoryButton = (Button)findViewById(R.id.category_button);
+        categoryName = "전체";
+        categoryButton.setText(categoryName);
+
+
+
+
+
+        categoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 버튼 클릭시 팝업 메뉴가 나오게 하기
+                PopupMenu p = new PopupMenu(
+                        getApplicationContext(), // 현재 화면의 제어권자
+                        v); // anchor : 팝업을 띄울 기준될 위젯
+                getMenuInflater().inflate(R.menu.category_menu, p.getMenu());
+                // 이벤트 처리
+                p.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        categoryName = item.getTitle().toString();
+                        System.out.println("categoryName : " + categoryName);
+                        categoryButton.setText(categoryName);
+
+                        System.out.println("여기는 어떨까요? 님??: " + mainMenu.getText());
+                        // 카테고리 누르면 해당 마커 뜸
+
+                        if(mainMenu.getText().toString().equals("지도")){
+                            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                            fragmentTransaction.detach(mapFragment).commit();
+                            setMapFragment();
+                        }
+                        else{
+                            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+                            fragmentTransaction.detach(listFragment).attach(listFragment).commit();
+                            return false;
+                        }
+
+                        return false;
+                    }
+                });
+                p.show(); // 메뉴를 띄우기
+            }
+        });
+
 
         MapFragment mapFragment = (MapFragment)getSupportFragmentManager().findFragmentById(R.id.main_frame);
 
@@ -185,17 +242,27 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                 switch (item.getItemId()) {
 
                     case R.id.nav_map:
-                        mainText.setText("지도");
+                        categoryName = "전체";
+                        categoryButton.setText(categoryName);
+                        categoryButton.setVisibility(View.VISIBLE);
+                        mainMenu.setText("지도");
                         check = 0;
                         setMapFragment();
                         return true;
 
                     case R.id.nav_list:
-                        mainText.setText("장소 리스트");
+                        categoryName = "전체";
+                        categoryButton.setText(categoryName);
+                        categoryButton.setVisibility(View.VISIBLE);
+                        mainMenu.setText("장소 리스트");
+                        System.out.println("themap3 : " + mainMenu.getText());
                         setFragment(listFragment);
                         return true;
 
                     case R.id.nav_mypage:
+                        // 카테고리 숨기기
+                        categoryButton.setVisibility(View.INVISIBLE);
+
                         if(currentUser == null){
                             myDialog.setContentView(R.layout.login_popup);
                             myDialog.setCancelable(false);
@@ -226,7 +293,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                         }
                         else {
                             setFragment(mypageFragment);
-                            mainText.setText("마이 페이지");
+                            //mainMenu.setText("마이 페이지");
                         }
                         return true;
 
@@ -243,6 +310,11 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     @Override
     public void onBackPressed() { backPressCloseHandler.onBackPressed(); }
 
+    // getter
+    public String getCategoryName() {
+        System.out.println("blah0 : " + categoryName);
+        return categoryName;
+    }
 
     // fragment 화면을 출력해주는 함수
     private void setFragment(Fragment fragment) {
@@ -252,10 +324,8 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         statsFrame.setVisibility(View.INVISIBLE);
     }
 
-
     // 지도 띄우는 프래그먼트 설정
     private void setMapFragment() {
-
 
         if (mapFragment == null) {
 
@@ -294,6 +364,8 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         naverMap.setLayerGroupEnabled(NaverMap.LAYER_GROUP_TRANSIT, true);
         naverMap.setIndoorEnabled(true);
 
+        markers = new ArrayList<Marker>();
+
         // 리뷰 전부 가지고 오기
         auth = FirebaseAuth.getInstance();
         mDatabase = database.getReference();
@@ -302,7 +374,6 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
                 long length = dataSnapshot.getChildrenCount();
-                System.out.println("길이용 : " +  dataSnapshot.getChildrenCount());
                 int[] tag_array = {0,0,0,0,0,0};
                 count = 0;
 
@@ -311,21 +382,60 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
 
-
                         //주소 빼고 이름만 사용
-                        int index = myreview.getLocation_name().indexOf(" , ");
-                        String location_name = myreview.getLocation_name().substring(0, index);
+                        int nameIndex = myreview.getLocation_name().indexOf(" , ");
+                        String location_name = myreview.getLocation_name().substring(0, nameIndex);
+                        locationCategory = myreview.getLocation_category();
+                        int categoryIndex = locationCategory.indexOf(">");
+                        shortCategory = locationCategory.substring(0, categoryIndex);
+
+
                         // 좌표 계산해서 좌표 만듬
                         GeoTransPoint oKA = new GeoTransPoint(myreview.getMapx(), myreview.getMapy());
                         GeoTransPoint oGeo = GeoTrans.convert(GeoTrans.KATEC, GeoTrans.GEO, oKA);
-                        marker = new Marker(new LatLng(oGeo.getY(), oGeo.getX()));
-                        marker.setHeight(110);
-                        marker.setWidth(80);
+
+                        // 카테고리 전체일 때
+                        if(categoryName.equals("전체")) {
+                            markerCount = 0;
+                            marker = new Marker(new LatLng(oGeo.getY(), oGeo.getX()));
+                            marker.setHeight(110);
+                            marker.setWidth(80);
+                            marker.setHideCollidedSymbols(true);
 //                        marker.setIcon(OverlayImage.fromResource(R.drawable.logo));
-                        marker.setCaptionText(location_name);
-                        marker.setCaptionColor(Color.parseColor("#1502F8"));
-                        marker.setMap(naverMap);
-                        System.out.println("working : " + marker.getCaptionText() + marker.getPosition().toString());
+                            marker.setCaptionText(location_name);
+                            marker.setCaptionColor(Color.parseColor("#1502F8"));
+//                            marker.setCaptionColor(Color.parseColor("#FF921A"));
+//                            marker.setMap(naverMap);
+                            markers.add(markerCount++, marker);
+                            System.out.println("working0 : " + marker.getCaptionText() + marker.getPosition().toString());
+                        }
+                        // 아닐때
+                        else {
+                            // 마커 리셋
+                            for(Marker marker : markers) {
+                                marker.setMap(null);
+                            }
+
+                            if(shortCategory.equals(categoryName)) {
+                                markerCount = 0;
+                                marker = new Marker(new LatLng(oGeo.getY(), oGeo.getX()));
+                                marker.setHeight(110);
+                                marker.setWidth(80);
+                                marker.setHideCollidedSymbols(true);
+//                        marker.setIcon(OverlayImage.fromResource(R.drawable.logo));
+                                marker.setCaptionText(location_name);
+                                marker.setCaptionColor(Color.parseColor("#1502F8"));
+//                                marker.setMap(naverMap);
+                                markers.add(markerCount++, marker);
+                                System.out.println("working : " + marker.getCaptionText() + marker.getPosition().toString());
+                            }
+                        }
+
+                        // 마커 띄우기
+                        for(Marker marker : markers) {
+                            marker.setMap(naverMap);
+                        }
+
 
 
 
@@ -345,8 +455,8 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                             location_phoneTextView = (TextView)reviewDialog.findViewById(R.id.vi_telephone);
                             LinearLayout locationBox = (LinearLayout)reviewDialog.findViewById(R.id.location_view);
 
-                            String shortCategory = myreview.getLocation_category().substring(myreview.getLocation_category().lastIndexOf(">")+1);
-                            location_categoryTextView.setText(shortCategory);
+//                            String shortCategory = myreview.getLocation_category().substring(myreview.getLocation_category().lastIndexOf(">")+1);
+                            location_categoryTextView.setText(locationCategory);
                             location_nameTextView.setText(location_name);
                             location_phoneTextView.setText(myreview.getPhone_number());
                             location_addressTextView.setText(myreview.getLocation_address());
@@ -363,20 +473,20 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                             if(tag_array[0] > length/2 &&  tag_array[0] != 0) {tagShow1.setImageResource(R.drawable.restroom); tag1 = true;}
                             else {tagShow1.setImageResource(R.drawable.restroom_dimmed); tag1 = false;}
 
-                            if(tag_array[1] > length/2 &&  tag_array[1] != 0) {tagShow2.setImageResource(R.drawable.restroom); tag2 = true;}
-                            else {tagShow1.setImageResource(R.drawable.restroom_dimmed); tag2 = false;}
+                            if(tag_array[1] > length/2 &&  tag_array[1] != 0) {tagShow2.setImageResource(R.drawable.parking); tag2 = true;}
+                            else {tagShow2.setImageResource(R.drawable.parking_dimmed); tag2 = false;}
 
-                            if(tag_array[2] > length/2 &&  tag_array[2] != 0) {tagShow3.setImageResource(R.drawable.restroom); tag3 = true;}
-                            else {tagShow1.setImageResource(R.drawable.restroom_dimmed); tag3 = false;}
+                            if(tag_array[2] > length/2 &&  tag_array[2] != 0) {tagShow3.setImageResource(R.drawable.elevator); tag3 = true;}
+                            else {tagShow3.setImageResource(R.drawable.elevator_dimmed); tag3 = false;}
 
-                            if(tag_array[3] > length/2 &&  tag_array[3] != 0) {tagShow4.setImageResource(R.drawable.restroom); tag4 = true;}
-                            else {tagShow1.setImageResource(R.drawable.restroom_dimmed); tag4 = false;}
+                            if(tag_array[3] > length/2 &&  tag_array[3] != 0) {tagShow4.setImageResource(R.drawable.slope); tag4 = true;}
+                            else {tagShow4.setImageResource(R.drawable.slope_dimmed); tag4 = false;}
 
-                            if(tag_array[4] > length/2 &&  tag_array[4] != 0) {tagShow5.setImageResource(R.drawable.restroom); tag5 = true;}
-                            else {tagShow1.setImageResource(R.drawable.restroom_dimmed); tag5 = false;}
+                            if(tag_array[4] > length/2 &&  tag_array[4] != 0) {tagShow5.setImageResource(R.drawable.table); tag5 = true;}
+                            else {tagShow5.setImageResource(R.drawable.table_dimmed); tag5 = false;}
 
-                            if(tag_array[5] > length/2 &&  tag_array[5] != 0) {tagShow6.setImageResource(R.drawable.restroom); tag6 = true;}
-                            else {tagShow1.setImageResource(R.drawable.restroom_dimmed); tag6 = false;}
+                            if(tag_array[5] > length/2 &&  tag_array[5] != 0) {tagShow6.setImageResource(R.drawable.assistant); tag6 = true;}
+                            else {tagShow6.setImageResource(R.drawable.assistant_dimmed); tag6 = false;}
 
 
                             locationBox.setOnClickListener(new View.OnClickListener() {
@@ -407,44 +517,27 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                         });
 
                         if(myreview.getTag1() == true) tag_array[0]  = tag_array[0] +  1;
-                        System.out.println("태그1 : " +  tag_array[0]);
                         if(myreview.getTag2() == true) tag_array[1]  = tag_array[1] +  1;
-                        System.out.println("태그2 : " +  tag_array[1]);
                         if(myreview.getTag3() == true) tag_array[2]  = tag_array[2] +  1;
-                        System.out.println("태그3 : " +  tag_array[2]);
                         if(myreview.getTag4() == true) tag_array[3]  = tag_array[3] +  1;
-                        System.out.println("태그4 : " +  tag_array[3]);
                         if(myreview.getTag5() == true) tag_array[4]  = tag_array[4] +  1;
-                        System.out.println("태그5 : " +  tag_array[4]);
                         if(myreview.getTag6() == true) tag_array[5]  = tag_array[5] +  1;
-                        System.out.println("태그6 : " +  tag_array[5]);
                         count++;
 
 
                     }
 
                     @Override
-                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
-//                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
-                    }
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
 
                     @Override
-                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
-//                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
-//                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
-                    }
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) { }
 
                     @Override
-                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-//                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
-//                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
-                    }
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
 
                     @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
-                        System.out.println("errororororororor");
-                    }
+                    public void onCancelled(@NonNull DatabaseError databaseError) { }
                 });
 
 
@@ -512,5 +605,24 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     @Override
     public void onLocationChange(@NonNull Location location) {
         // 작동 되는 꼴을 못 봄
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.category_menu, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+        if (id == 1) {
+            return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

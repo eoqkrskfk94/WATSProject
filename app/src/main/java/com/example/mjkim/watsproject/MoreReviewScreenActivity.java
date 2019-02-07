@@ -7,11 +7,13 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.example.mjkim.watsproject.Naver.NaverBlogAdapter;
+import com.example.mjkim.watsproject.Review.MapReviewAdapter;
 import com.example.mjkim.watsproject.Review.ReviewAdapter;
 
 public class MoreReviewScreenActivity extends AppCompatActivity {
 
     private ReviewAdapter reviewAdapter;
+    private MapReviewAdapter mapReviewAdapter;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -27,12 +29,20 @@ public class MoreReviewScreenActivity extends AppCompatActivity {
             }
         });
 
-        NaverBlogAdapter.select = 0;
+        ReviewAdapter.select = 0;
 
         ListView lv = (ListView) findViewById(R.id.more_review_list);
 
 
-        reviewAdapter = new ReviewAdapter(MoreReviewScreenActivity.this, LocationDetailScreenActivity.reviewLists);
-        lv.setAdapter(reviewAdapter);
+        if(getIntent().getExtras().getInt("SELECT") == 0){
+            reviewAdapter = new ReviewAdapter(MoreReviewScreenActivity.this, LocationDetailScreenActivity.reviewLists);
+            lv.setAdapter(reviewAdapter);
+        }
+
+        if(getIntent().getExtras().getInt("SELECT") == 1){
+            reviewAdapter = new ReviewAdapter(MoreReviewScreenActivity.this, LocationDetailFromMapScreenActivity.reviewLists);
+            lv.setAdapter(reviewAdapter);
+        }
+
     }
 }

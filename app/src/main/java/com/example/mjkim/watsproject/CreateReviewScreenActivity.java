@@ -3,7 +3,6 @@ package com.example.mjkim.watsproject;
 import android.Manifest;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -23,7 +22,6 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.FileProvider;
-import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -53,22 +51,20 @@ import com.google.firebase.storage.UploadTask;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.Random;
 
 public class CreateReviewScreenActivity extends AppCompatActivity {
 
     public ReviewList reviewList = new ReviewList();
     Dialog myDialog;
     CheckBox chk[] = new CheckBox[6]; //태그 체크박스
-    String userName = ""; //유저 별명
+    String userName = ""; //유저 이름
+    String userNickName = ""; // 유저 별명
     String key = ""; //키값
-    EditText review_text; //후기 적성부분
+    EditText reviewText; //후기 적성부분
     Boolean tag1,tag2,tag3,tag4,tag5,tag6; //태그
     private FirebaseStorage storage;
     StorageReference storageRef;
@@ -114,7 +110,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
     int pic9=0;
     int exifOrientation;
     int exifDegree;
-    static String location_name;
+    static String locationName;
     //파이어베이스 유저 관련 변수 선언
     private DatabaseReference mDatabase;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -139,7 +135,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
 
         location_x = getIntent().getExtras().getDouble("MAPX");
         location_y = getIntent().getExtras().getDouble("MAPY");
-        System.out.println("newmap9 : " + location_name + "  "  + "  " + location_x + "  " + location_y);
+        System.out.println("newmap9 : " + locationName + "  "  + "  " + location_x + "  " + location_y);
 
 
         //돌아가기 버튼 선언, 돌아가기 버튼 눌렀을때 전 화면을 돌아간다
@@ -256,7 +252,8 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
                         textId.setText(userInformation.getUserNickname()); // 그 유저에 해당하는 닉네임값을 보여줌.
-                        userName = userInformation.getUserNickname();
+                        userNickName = userInformation.getUserNickname();
+                        userName = userInformation.getUserName();
                     }
 
                     @Override
@@ -280,7 +277,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
 
-        review_text = (EditText) findViewById(R.id.review_text); //후기 작성 부분
+        reviewText = (EditText) findViewById(R.id.review_text); //후기 작성 부분
     }
 
 
@@ -938,18 +935,19 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
         String mTime = simpleDateFormat.format(currentTime);
 
 
-        Intent review_intent = getIntent();
+        Intent reviewIntent = getIntent();
 
-        location_name = review_intent.getExtras().getString("NAME");
+        locationName = reviewIntent.getExtras().getString("NAME");
  //       int index = location_name.indexOf(" , ");
   //      location_name = location_name.substring(0, index);
-        String location_category = review_intent.getExtras().getString("CATEGORY");
-        String location_address = review_intent.getExtras().getString("ADDRESS");
-        String location_number = review_intent.getExtras().getString("TELEPHONE");
-        System.out.println("newmap10 : " + location_name + "  " + location_address + "  " + location_x + "  " + location_y);
+        String locationCategory = reviewIntent.getExtras().getString("CATEGORY");
+        String shortCategory = locationCategory.substring(locationCategory.lastIndexOf(">")+1);
+        String locationAddress = reviewIntent.getExtras().getString("ADDRESS");
+        String locationNumber = reviewIntent.getExtras().getString("TELEPHONE");
+        System.out.println("newmap10 : " + locationName + "  " + locationAddress + "  " + location_x + "  " + location_y);
 
         //리뷰 문장 받아오기
-        String review_description = review_text.getText().toString();
+        String reviewDescription = reviewText.getText().toString();
 
         if(chk[0].isChecked() == true) tag1 = true; else tag1 = false;
         if(chk[1].isChecked() == true) tag2 = true; else tag2 = false;
@@ -959,10 +957,10 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
         if(chk[5].isChecked() == true) tag6 = true; else tag6 = false;
 
 
-        reviewList = new ReviewList(location_name, location_address, location_number, location_category, review_description, location_x, location_y, tag1, tag2, tag3, tag4, tag5, tag6, mTime, userName, key
+        reviewList = new ReviewList(locationName, locationAddress, locationNumber, locationCategory, shortCategory, reviewDescription, location_x, location_y, tag1, tag2, tag3, tag4, tag5, tag6, mTime, userName, userNickName, key
                 ,imagePath1,imagePath2,imagePath3,imagePath4,imagePath5,imagePath6,imagePath7,imagePath8,imagePath9);
 
-        nameAndAdress = location_name + " , " + location_address;
+        nameAndAdress = locationName + " , " + locationAddress;
 
         if(pic1 !=0 || pic2 !=0 || pic3 !=0 || pic4 !=0 || pic5 !=0 || pic6 !=0 || pic7 !=0 || pic8!=0 || pic9!=0 ) {  // 사진이 하나라도 있으면.
             upload(imagePath1, imagePath2, imagePath3,imagePath4,imagePath5,imagePath6,imagePath7,imagePath8,imagePath9);

@@ -47,7 +47,57 @@ public class SearchDetailScreenActivity extends AppCompatActivity {
                 Intent intent=new Intent(SearchDetailScreenActivity.this,MainScreenActivity.class);
                 startActivity(intent);
             }
+
         });
+
+        myDialog = new Dialog(SearchDetailScreenActivity.this); //로딩 팝업 변수 선언
+
+
+        myDialog.setContentView(R.layout.loading_popup);
+        myDialog.setCancelable(false);
+
+        myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+
+        myDialog.show(); //회원가입 팝업창.
+
+
+        final Timer timer2 = new Timer();
+        timer2.schedule(new TimerTask() {
+            public void run() {
+                myDialog.dismiss();
+                timer2.cancel(); //this will cancel the timer of the system
+            }
+        }, 1500); // the timer will count 2.4 seconds....
+
+
+
+        ReviewFirebaseJson.reviewJson.clear(); //검색할때 파이어베이서에 있는 리스트 초기화
+
+        naverLocationSearch = new NaverLocationSearch();
+        naverLocationLists = new ArrayList<NaverLocationList>();
+
+
+        try {
+            naverLocationLists = naverLocationSearch.execute(getIntent().getExtras().getString("SEARCH")).get();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(naverLocationLists.isEmpty()) {
+            Toast.makeText(SearchDetailScreenActivity.this, "검색 결과가 없습니다",
+                    Toast.LENGTH_SHORT).show();
+        }
+
+
+
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                ListView list = (ListView) findViewById(R.id.location_list);
+                naverLocationAdapter = new NaverLocationAdapter(SearchDetailScreenActivity.this, naverLocationLists, save);
+                list.setAdapter(naverLocationAdapter);
+            }
+        }, 1000);
 
 
 

@@ -32,7 +32,9 @@
             android:background="@drawable/search_box"
             android:ems="10"
             android:gravity="center"
-            android:inputType="textPersonName" />
+            android:inputType="textPersonName"
+            android:imeOptions="actionSearch"/>
+
 
         <Button
             android:id="@+id/search_button"

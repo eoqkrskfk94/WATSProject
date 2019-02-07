@@ -22,7 +22,6 @@ public class ReviewData {
 
 
         usersRef.child(name).push().setValue(reviewList);// 기본 database 하위 message라는 child에 chatData를 list로 만들기
-
     }
 }
 

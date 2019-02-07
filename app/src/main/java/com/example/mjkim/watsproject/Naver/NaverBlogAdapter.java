@@ -31,7 +31,7 @@ public class NaverBlogAdapter extends BaseAdapter{
     @Override
     public int getCount() {
         if(select == 1){
-            if(NaverBlogSearch.total_num < 3) return arr.size();
+            if(arr.size() < 3) return arr.size();
             else return 3;
         }
         else return arr.size();

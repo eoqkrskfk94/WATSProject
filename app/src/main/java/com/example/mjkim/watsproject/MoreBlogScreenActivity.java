@@ -32,8 +32,18 @@ public class MoreBlogScreenActivity extends AppCompatActivity {
         ListView lv = (ListView) findViewById(R.id.more_blog_list);
 
 
-        naverBlogAdapter = new NaverBlogAdapter(MoreBlogScreenActivity.this, LocationDetailScreenActivity.blogList);
-        lv.setAdapter(naverBlogAdapter);
+        if(getIntent().getExtras().getInt("SELECT") == 0){
+            naverBlogAdapter = new NaverBlogAdapter(MoreBlogScreenActivity.this, LocationDetailScreenActivity.blogList);
+            lv.setAdapter(naverBlogAdapter);
+        }
+
+        if(getIntent().getExtras().getInt("SELECT") == 1){
+            naverBlogAdapter = new NaverBlogAdapter(MoreBlogScreenActivity.this, LocationDetailFromMapScreenActivity.blogList);
+            lv.setAdapter(naverBlogAdapter);
+        }
+
+
+
 
     }
 }

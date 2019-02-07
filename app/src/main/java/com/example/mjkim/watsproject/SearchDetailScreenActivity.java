@@ -155,7 +155,7 @@ public class SearchDetailScreenActivity extends AppCompatActivity {
                         naverLocationAdapter = new NaverLocationAdapter(SearchDetailScreenActivity.this, naverLocationLists, save);
                         list.setAdapter(naverLocationAdapter);
                     }
-                }, 1000);
+                }, 1500);
 
 
 

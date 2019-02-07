@@ -151,7 +151,8 @@ public class NaverLocationAdapter extends BaseAdapter{
 
 
         title.setText(arr.get(position).getName());
-        category.setText(shortCategory);
+//        category.setText(shortCategory);
+        category.setText(arr.get(position).getCategory());
         road_address.setText(arr.get(position).getAddress());
         telephone.setText(arr.get(position).getTelephone());
 

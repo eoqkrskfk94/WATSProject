@@ -16,7 +16,6 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 
-import com.example.mjkim.watsproject.Review.CategoryAdapter;
 import com.example.mjkim.watsproject.Review.ReviewList;
 import com.example.mjkim.watsproject.Review.UserReviewAdapter;
 import com.google.firebase.auth.FirebaseAuth;
@@ -41,7 +40,7 @@ public class MyReviewScreenActivity extends AppCompatActivity {
     static public int totalLocationCount;
     private UserReviewAdapter reviewAdapter;
 
-    private String locationName, key, reviewerName, reviewDate, reviewDescription, locationNumber, userEmail, userName, locationCategory, locationAddress;
+    private String locationName, key, reviewerName, reviewDate, reviewDescription, locationNumber, userEmail, userName, userNickName, locationCategory, shortCategory, locationAddress;
     private Boolean tag1, tag2, tag3, tag4, tag5, tag6;
     private String imageUrl1, imageUrl2, imageUrl3, imageUrl4, imageUrl5, imageUrl6, imageUrl7, imageUrl8, imageUrl9;
     private double mapx, mapy;
@@ -113,7 +112,9 @@ public class MyReviewScreenActivity extends AppCompatActivity {
                         reviewDescription = myreview.getReview_description();
                         locationNumber = myreview.getPhone_number();
                         locationCategory = myreview.getLocation_category();
+                        shortCategory = locationCategory.substring(locationCategory.lastIndexOf(">")+1);
                         locationAddress = myreview.getLocation_address();
+                        userNickName = myreview.getUserNickName();
                         mapx = myreview.getMapx();
                         mapy = myreview.getMapy();
                         userEmail = myreview.getUserEmail();
@@ -127,8 +128,8 @@ public class MyReviewScreenActivity extends AppCompatActivity {
                         imageUrl8 = myreview.getImageUrl8();
                         imageUrl9 = myreview.getImageUrl9();
 
-                        reviewList = new ReviewList(locationName, locationAddress, locationNumber, locationCategory, reviewDescription, mapx, mapy,
-                                tag1, tag2, tag3, tag4, tag5, tag6, reviewDate, userName, key, imageUrl1, imageUrl2, imageUrl3, imageUrl4, imageUrl5, imageUrl6, imageUrl7, imageUrl8, imageUrl9);
+                        reviewList = new ReviewList(locationName, locationAddress, locationNumber, locationCategory, shortCategory, reviewDescription, mapx, mapy,
+                                tag1, tag2, tag3, tag4, tag5, tag6, reviewDate, userName, userNickName, key, imageUrl1, imageUrl2, imageUrl3, imageUrl4, imageUrl5, imageUrl6, imageUrl7, imageUrl8, imageUrl9);
 
                         reviewList.setUserName(myreview.getUserName());
 

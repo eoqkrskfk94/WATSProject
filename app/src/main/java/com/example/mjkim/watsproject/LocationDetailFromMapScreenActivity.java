@@ -1,6 +1,5 @@
 package com.example.mjkim.watsproject;
 
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Color;
@@ -8,14 +7,11 @@ import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.view.ViewPager;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -23,14 +19,11 @@ import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.example.mjkim.watsproject.Convert.GeoTrans;
-import com.example.mjkim.watsproject.Convert.GeoTransPoint;
 import com.example.mjkim.watsproject.Naver.NaverBlogAdapter;
 import com.example.mjkim.watsproject.Naver.NaverBlogList;
 import com.example.mjkim.watsproject.Naver.NaverBlogSearch;
 import com.example.mjkim.watsproject.Review.MapReviewAdapter;
 import com.example.mjkim.watsproject.Review.ReviewAdapter;
-import com.example.mjkim.watsproject.Review.ReviewFirebaseJson;
 import com.example.mjkim.watsproject.Review.ReviewList;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -39,11 +32,6 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.naver.maps.geometry.LatLng;
-import com.naver.maps.map.overlay.Marker;
-
-import org.json.JSONArray;
-import org.json.JSONObject;
 
 import java.util.ArrayList;
 
@@ -67,10 +55,10 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
 
     //리뷰 변수들 선언
     Boolean tag1, tag2, tag3, tag4, tag5, tag6;
-    String locationName, locationCategory, locationAddress, locationNumber, reviewDescription, userEmail, userName, key, reviewDate;
+    String locationName, locationCategory, shortCategory, locationAddress, locationNumber, reviewDescription, userEmail, userName, userNickName, key, reviewDate;
     double locationMapx, locationMapy;
 
-    String location_name, location_category, location_addess, location_number;
+    String location_name, location_category, short_category, location_address, location_number;
     double location_x, location_y;
     String imageUrl1,imageUrl2,imageUrl3,imageUrl4,imageUrl5,imageUrl6,imageUrl7,imageUrl8,imageUrl9;
 
@@ -222,19 +210,20 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
 
         location_name = getIntent().getExtras().getString("NAME");
         location_category = getIntent().getExtras().getString("CATEGORY");
-        location_addess = getIntent().getExtras().getString("ADDRESS");
+        short_category = location_category.substring(location_category.lastIndexOf(">")+1);
+        location_address = getIntent().getExtras().getString("ADDRESS");
         location_number = getIntent().getExtras().getString("TELEPHONE");
         location_x = getIntent().getExtras().getDouble("MAPX");
         location_y = getIntent().getExtras().getDouble("MAPY");
 
-        System.out.println("newmap3 : " + location_addess + "  " + location_x + "  " + location_y);
+        System.out.println("newmap3 : " + location_address + "  " + location_x + "  " + location_y);
 
         int index = location_name.indexOf(" , ");
         String correct_location_name = location_name.substring(0, index);
 
         locationNameText.setText(correct_location_name);
         locationCategoryText.setText(location_category);
-        locationAddressText.setText(location_addess);
+        locationAddressText.setText(location_address);
         locationNumberText.setText(location_number);
 
         // 주소 누르면 지도 뜸
@@ -244,7 +233,7 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
                 Intent intent = new Intent(LocationDetailFromMapScreenActivity.this, WatchLocationActivity.class);
                 intent.putExtra("NAME", location_name);
                 intent.putExtra("CATEGORY", location_category);
-                intent.putExtra("ADDRESS", location_addess);
+                intent.putExtra("ADDRESS", location_address);
                 intent.putExtra("TELEPHONE", location_number);
                 intent.putExtra("MAPX", location_x);
                 intent.putExtra("MAPY", location_y);
@@ -315,7 +304,7 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
                     String new_location_name = location_name.substring(0, index);
                     intent.putExtra("NAME", new_location_name);
                     intent.putExtra("CATEGORY", location_category);
-                    intent.putExtra("ADDRESS", location_addess);
+                    intent.putExtra("ADDRESS", location_address);
                     intent.putExtra("TELEPHONE", location_number);
                     intent.putExtra("MAPX", location_x);
                     intent.putExtra("MAPY", location_y);
@@ -412,8 +401,8 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
 
                         if(intent.getExtras().getString("NAME").equals(nameAndAddress)) {
                             System.out.println("여기는 될까요?????????");
-                            reviewLists.add(num++, new ReviewList(intent.getExtras().getString("NAME"), locationAddress, locationNumber, locationCategory, reviewDescription, locationMapx, locationMapy,
-                                    tag1, tag2, tag3, tag4, tag5, tag6, reviewDate, userName, key,imageUrl1,imageUrl2,imageUrl3,imageUrl4,imageUrl5,imageUrl6,
+                            reviewLists.add(num++, new ReviewList(intent.getExtras().getString("NAME"), locationAddress, locationNumber, locationCategory, shortCategory, reviewDescription, locationMapx, locationMapy,
+                                    tag1, tag2, tag3, tag4, tag5, tag6, reviewDate, userName, userNickName, key,imageUrl1,imageUrl2,imageUrl3,imageUrl4,imageUrl5,imageUrl6,
                                     imageUrl7,imageUrl8,imageUrl9));
 
                         }

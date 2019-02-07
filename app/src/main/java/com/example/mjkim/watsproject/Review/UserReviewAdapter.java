@@ -177,7 +177,7 @@ public class UserReviewAdapter extends BaseAdapter {
 
         intent.putExtra("Email", arr.get(a).getUserEmail());
         intent.putExtra("Name", arr.get(a).getUserName());
-//        intent.putExtra("NickName", arr.get(a).getUserNickName());
+        intent.putExtra("NickName", arr.get(a).getUserNickName());
         intent.putExtra("Review", arr.get(a).getReview_description());
         intent.putExtra("LocationAddress", arr.get(a).getLocation_address());
         intent.putExtra("LocationCategory", arr.get(a).getLocation_category());

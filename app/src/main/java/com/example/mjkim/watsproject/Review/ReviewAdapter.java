@@ -57,6 +57,7 @@ public class ReviewAdapter extends BaseAdapter {
             convertView = mInflater.inflate(res, parent, false);
 
         }
+        System.out.println("count : " + arr.size());
 
         ImageView profilePic = (ImageView) convertView.findViewById(R.id.profile_pic);
         TextView reviewerName = (TextView) convertView.findViewById(R.id.vi_name);
@@ -65,8 +66,8 @@ public class ReviewAdapter extends BaseAdapter {
         LinearLayout layout_view = (LinearLayout) convertView.findViewById(R.id.vi_view);
 
 
-//        reviewerName.setText(arr.get(position).getUserNickName());
-        reviewerName.setText(arr.get(position).getUserName());
+        reviewerName.setText(arr.get(position).getUserNickName());
+//        reviewerName.setText(arr.get(position).getUserName());
         description.setText(arr.get(position).getReview_description());
         postDate.setText(arr.get(position).getDate());
 
@@ -93,8 +94,8 @@ public class ReviewAdapter extends BaseAdapter {
 
 
         intent.putExtra("Email", arr.get(a).getUserEmail());
-//        intent.putExtra("Name", arr.get(a).getUserNickName());
-        intent.putExtra("Name", arr.get(a).getUserName());
+        intent.putExtra("Name", arr.get(a).getUserNickName());
+//        intent.putExtra("Name", arr.get(a).getUserName());
         intent.putExtra("Review", arr.get(a).getReview_description());
         intent.putExtra("Date",arr.get(a).getDate());
         intent.putExtra("Tag1",arr.get(a).getTag1());

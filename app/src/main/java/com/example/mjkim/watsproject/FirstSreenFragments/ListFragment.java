@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ListView;
 
+import com.example.mjkim.watsproject.MainScreenActivity;
 import com.example.mjkim.watsproject.R;
 import com.example.mjkim.watsproject.Review.CategoryAdapter;
 import com.example.mjkim.watsproject.Review.ReviewList;
@@ -42,7 +43,7 @@ public class ListFragment extends Fragment {
     FirebaseAuth auth;
     private DatabaseReference mDatabase;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
-    private String locationName, key, reviewerName, reviewDate, reviewDescription, locationNumber, userEmail, userName, locationCategory, locationAddress;
+    private String categoryName, locationName, key, reviewerName, reviewDate, reviewDescription, locationNumber, userEmail, userName, userNickName, locationCategory, shortCategory, leftCategory, locationAddress;
     private Boolean tag1, tag2, tag3, tag4, tag5, tag6;
     private String imageUrl1, imageUrl2, imageUrl3, imageUrl4, imageUrl5, imageUrl6, imageUrl7, imageUrl8, imageUrl9;
     private double mapx, mapy;
@@ -67,6 +68,10 @@ public class ListFragment extends Fragment {
                              Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.fragment_list, container,false);
 
+        // 카테고리 이름 받아옴
+        MainScreenActivity mainScreenActivity = new MainScreenActivity();
+        categoryName = mainScreenActivity.getCategoryName();
+        System.out.println("blah : " + categoryName);
 
         reviewLists = new ArrayList<ReviewList>();
         totalLocationCount = 0;
@@ -90,6 +95,10 @@ public class ListFragment extends Fragment {
                         key=dataSnapshot.getKey();
                         locationName = myreview.getLocation_name();
                         System.out.println("모든 이름: "+locationName);
+                        locationCategory = myreview.getLocation_category();
+                        // 카테고리 분류용 변수
+                        leftCategory = locationCategory.substring(0, locationCategory.indexOf(">"));
+                        System.out.println("leftcategory : " + leftCategory);
                         reviewDate = myreview.getDate();
                         tag1 = myreview.getTag1();
                         tag2 = myreview.getTag2();
@@ -100,6 +109,7 @@ public class ListFragment extends Fragment {
                         reviewDescription = myreview.getReview_description();
                         locationNumber = myreview.getPhone_number();
                         locationCategory = myreview.getLocation_category();
+                        shortCategory = locationCategory.substring(locationCategory.lastIndexOf(">")+1);
                         locationAddress = myreview.getLocation_address();
                         mapx = myreview.getMapx();
                         mapy = myreview.getMapy();
@@ -113,53 +123,143 @@ public class ListFragment extends Fragment {
                         imageUrl7 = myreview.getImageUrl7();
                         imageUrl8 = myreview.getImageUrl8();
                         imageUrl9 = myreview.getImageUrl9();
+                        userNickName = myreview.getUserNickName();
 
-                        reviewList = new ReviewList(locationName, locationAddress, locationNumber, locationCategory, reviewDescription, mapx, mapy,
-                                tag1, tag2, tag3, tag4, tag5, tag6, reviewDate, userName, key, imageUrl1, imageUrl2, imageUrl3, imageUrl4, imageUrl5, imageUrl6, imageUrl7, imageUrl8, imageUrl9);
+                        reviewList = new ReviewList(locationName, locationAddress, locationNumber, locationCategory, shortCategory, reviewDescription, mapx, mapy,
+                                tag1, tag2, tag3, tag4, tag5, tag6, reviewDate, userName, userNickName, key, imageUrl1, imageUrl2, imageUrl3, imageUrl4, imageUrl5, imageUrl6, imageUrl7, imageUrl8, imageUrl9);
 
                         reviewList.setUserName(myreview.getUserName());
 
+                        // 카테고리 이름이 전체일 때 모든 장소리스트를 다 띄움
+                        if(categoryName.equals("전체")) {
+                            // 겹치는거는 장소 리스트에 안 넣음
+//                            if(totalLocationCount != 0) {
+//                                for(int i = 0; i < totalLocationCount; i++) {
+//                                    if(reviewLists.get(i).getLocation_name().equals(locationName)) { }
+//                                    else {
+//                                        if(i == totalLocationCount-1) {
+//                                            reviewLists.add(totalLocationCount, reviewList);
+//                                            totalLocationCount++;
+//                                        }
+//                                    }
+//                                }
+//                            } else {
+//                                reviewLists.add(totalLocationCount, reviewList);
+//                                totalLocationCount++;
+//                            }
 
-                        if(myreview.getTag1() == true) tag_array[0]  = tag_array[0] +  1;
-                        System.out.println("태그1 : " +  tag_array[0]);
-                        if(myreview.getTag2() == true) tag_array[1]  = tag_array[1] +  1;
-                        System.out.println("태그2 : " +  tag_array[1]);
-                        if(myreview.getTag3() == true) tag_array[2]  = tag_array[2] +  1;
-                        System.out.println("태그3 : " +  tag_array[2]);
-                        if(myreview.getTag4() == true) tag_array[3]  = tag_array[3] +  1;
-                        System.out.println("태그4 : " +  tag_array[3]);
-                        if(myreview.getTag5() == true) tag_array[4]  = tag_array[4] +  1;
-                        System.out.println("태그5 : " +  tag_array[4]);
-                        if(myreview.getTag6() == true) tag_array[5]  = tag_array[5] +  1;
-                        System.out.println("태그6 : " +  tag_array[5]);
-                        count++;
+                            if(myreview.getTag1() == true) tag_array[0]  = tag_array[0] +  1;
+                            System.out.println("태그1 : " +  tag_array[0]);
+                            if(myreview.getTag2() == true) tag_array[1]  = tag_array[1] +  1;
+                            System.out.println("태그2 : " +  tag_array[1]);
+                            if(myreview.getTag3() == true) tag_array[2]  = tag_array[2] +  1;
+                            System.out.println("태그3 : " +  tag_array[2]);
+                            if(myreview.getTag4() == true) tag_array[3]  = tag_array[3] +  1;
+                            System.out.println("태그4 : " +  tag_array[3]);
+                            if(myreview.getTag5() == true) tag_array[4]  = tag_array[4] +  1;
+                            System.out.println("태그5 : " +  tag_array[4]);
+                            if(myreview.getTag6() == true) tag_array[5]  = tag_array[5] +  1;
+                            System.out.println("태그6 : " +  tag_array[5]);
+                            count++;
 
-                        if(count == length){
+                            if(count == length){
 
-                            if(tag_array[0] > length/2 &&  tag_array[0] != 0) reviewList.setAverageTag1(true);
-                            else reviewList.setAverageTag1(false);
+                                if(tag_array[0] > length/2 &&  tag_array[0] != 0) reviewList.setAverageTag1(true);
+                                else reviewList.setAverageTag1(false);
 
-                            if(tag_array[1] > length/2 &&  tag_array[1] != 0) reviewList.setAverageTag2(true);
-                            else reviewList.setAverageTag2(false);
+                                if(tag_array[1] > length/2 &&  tag_array[1] != 0) reviewList.setAverageTag2(true);
+                                else reviewList.setAverageTag2(false);
 
-                            if(tag_array[2] > length/2 &&  tag_array[2] != 0) reviewList.setAverageTag3(true);
-                            else reviewList.setAverageTag3(false);
+                                if(tag_array[2] > length/2 &&  tag_array[2] != 0) reviewList.setAverageTag3(true);
+                                else reviewList.setAverageTag3(false);
 
-                            if(tag_array[3] > length/2 &&  tag_array[3] != 0) reviewList.setAverageTag4(true);
-                            else reviewList.setAverageTag4(false);
+                                if(tag_array[3] > length/2 &&  tag_array[3] != 0) reviewList.setAverageTag4(true);
+                                else reviewList.setAverageTag4(false);
 
-                            if(tag_array[4] > length/2 &&  tag_array[4] != 0) reviewList.setAverageTag5(true);
-                            else reviewList.setAverageTag5(false);
+                                if(tag_array[4] > length/2 &&  tag_array[4] != 0) reviewList.setAverageTag5(true);
+                                else reviewList.setAverageTag5(false);
 
-                            if(tag_array[5] > length/2 &&  tag_array[5] != 0) reviewList.setAverageTag6(true);
-                            else reviewList.setAverageTag6(false);
+                                if(tag_array[5] > length/2 &&  tag_array[5] != 0) reviewList.setAverageTag6(true);
+                                else reviewList.setAverageTag6(false);
 
-                            reviewLists.add(totalLocationCount, reviewList);
-                            totalLocationCount++;
+                                reviewLists.add(totalLocationCount, reviewList);
+                                totalLocationCount++;
+
+                            }
 
 
 
+
+
+
+                         // 카테고리 이름이 전체가 아니면 카테고리에 맞춰서 장소리스트 띄움
+                        } else {
+                            // 카테고리 이름과 왼쪽 카테고리가 같을 떄만 리뷰리스트 저장
+                            if(leftCategory.equals(categoryName)) {
+                                // 이미 넣은거는 장소 리스트에 안 넣음
+//                                if(totalLocationCount != 0) {
+//                                    for(int i = 0; i < totalLocationCount; i++) {
+//                                        if(reviewLists.get(i).getLocation_name().equals(locationName)) { }
+//                                        else {
+//                                            if(i == totalLocationCount-1) {
+//                                                reviewLists.add(totalLocationCount, myreview);
+//                                                totalLocationCount++;
+//                                            }
+//                                        }
+//                                    }
+//                                } else {
+//                                    reviewLists.add(totalLocationCount, myreview);
+//                                    totalLocationCount++;
+//                                }
+
+                                if(myreview.getTag1() == true) tag_array[0]  = tag_array[0] +  1;
+                                System.out.println("태그1 : " +  tag_array[0]);
+                                if(myreview.getTag2() == true) tag_array[1]  = tag_array[1] +  1;
+                                System.out.println("태그2 : " +  tag_array[1]);
+                                if(myreview.getTag3() == true) tag_array[2]  = tag_array[2] +  1;
+                                System.out.println("태그3 : " +  tag_array[2]);
+                                if(myreview.getTag4() == true) tag_array[3]  = tag_array[3] +  1;
+                                System.out.println("태그4 : " +  tag_array[3]);
+                                if(myreview.getTag5() == true) tag_array[4]  = tag_array[4] +  1;
+                                System.out.println("태그5 : " +  tag_array[4]);
+                                if(myreview.getTag6() == true) tag_array[5]  = tag_array[5] +  1;
+                                System.out.println("태그6 : " +  tag_array[5]);
+                                count++;
+
+                                if(count == length){
+
+                                    if(tag_array[0] > length/2 &&  tag_array[0] != 0) reviewList.setAverageTag1(true);
+                                    else reviewList.setAverageTag1(false);
+
+                                    if(tag_array[1] > length/2 &&  tag_array[1] != 0) reviewList.setAverageTag2(true);
+                                    else reviewList.setAverageTag2(false);
+
+                                    if(tag_array[2] > length/2 &&  tag_array[2] != 0) reviewList.setAverageTag3(true);
+                                    else reviewList.setAverageTag3(false);
+
+                                    if(tag_array[3] > length/2 &&  tag_array[3] != 0) reviewList.setAverageTag4(true);
+                                    else reviewList.setAverageTag4(false);
+
+                                    if(tag_array[4] > length/2 &&  tag_array[4] != 0) reviewList.setAverageTag5(true);
+                                    else reviewList.setAverageTag5(false);
+
+                                    if(tag_array[5] > length/2 &&  tag_array[5] != 0) reviewList.setAverageTag6(true);
+                                    else reviewList.setAverageTag6(false);
+
+                                    reviewLists.add(totalLocationCount, reviewList);
+                                    totalLocationCount++;
+
+
+
+                                }
+                            }
                         }
+
+
+
+
+
+
 
                         // 겹치는거는 장소 리스트에 안 넣음
 /*                        if(totalLocationCount != 0) {

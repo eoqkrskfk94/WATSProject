@@ -12,6 +12,7 @@ public class ReviewList {
     private Boolean averageTag1,averageTag2,averageTag3,averageTag4,averageTag5,averageTag6;
     private String location_name;
     private String location_category;
+    private String short_category;
     private String location_address;
     private String phone_number;
     private String review_description;
@@ -20,7 +21,7 @@ public class ReviewList {
     private double mapy;
     private String date;
     private String userName;
-//    private String userNickName;
+    private String userNickName;
     private String imageUrl1;
     private String imageUrl2;
     private String imageUrl3;
@@ -113,13 +114,17 @@ public class ReviewList {
         this.date = date;
     }
 
-//    public String getUserNickName() {
-//        return userNickName;
-//    }
-//
-//    public void setUserNickName(String userNickName) {
-//        this.userNickName = userNickName;
-//    }
+    public String getUserNickName() {
+        return userNickName;
+    }
+
+    public void setUserNickName(String userNickName) {
+        this.userNickName = userNickName;
+    }
+
+    public String getShort_category() { return short_category; }
+
+    public void setShort_category(String short_category) { this.short_category = short_category; }
 
     public String getUserName() { return userName; }
 
@@ -295,15 +300,16 @@ public class ReviewList {
 
     public ReviewList(){};
 
-    public ReviewList (String location_name, String location_address, String phone_number, String location_category, String review_description,
-                       double mapx, double mapy, Boolean tag1, Boolean tag2, Boolean tag3, Boolean tag4, Boolean tag5, Boolean tag6, String date, String userName, String key,
+    public ReviewList (String locationName, String locationAddress, String phoneNumber, String locationCategory, String shortCategory, String reviewDescription,
+                       double mapx, double mapy, Boolean tag1, Boolean tag2, Boolean tag3, Boolean tag4, Boolean tag5, Boolean tag6, String date, String userName, String userNickName, String key,
                        String imageUrl1, String imageUrl2,String imageUrl3,String imageUrl4,String imageUrl5,String imageUrl6,String imageUrl7,String imageUrl8,String imageUrl9){
 
-        this.location_name = location_name;
-        this.location_address = location_address;
-        this.phone_number = phone_number;
-        this.location_category = location_category;
-        this.review_description = review_description;
+        this.location_name = locationName;
+        this.location_address = locationAddress;
+        this.phone_number = phoneNumber;
+        this.location_category = locationCategory;
+        this.short_category = shortCategory;
+        this.review_description = reviewDescription;
         this.mapx = mapx;
         this.mapy = mapy;
         this.tag1 = tag1;
@@ -313,8 +319,8 @@ public class ReviewList {
         this.tag5 = tag5;
         this.tag6 = tag6;
         this.date = date;
-//        this.userNickName = userNickName;
         this.userName = userName;
+        this.userNickName = userNickName;
         this.key = key;
         this.imageUrl1=imageUrl1;
         this.imageUrl2=imageUrl2;
@@ -327,14 +333,15 @@ public class ReviewList {
         this.imageUrl9=imageUrl9;
 
     }
-    public ReviewList (String location_name, String location_address, String phone_number, String location_category, String review_description,
-                       double mapx, double mapy, Boolean tag1, Boolean tag2, Boolean tag3, Boolean tag4, Boolean tag5, Boolean tag6, String date, String userName, String key){
+    public ReviewList (String locationName, String locationAddress, String phoneNumber, String locationCategory, String shortCategory, String reviewDescription,
+                       double mapx, double mapy, Boolean tag1, Boolean tag2, Boolean tag3, Boolean tag4, Boolean tag5, Boolean tag6, String date, String userName, String userNickName, String key){
 
-        this.location_name = location_name;
-        this.location_address = location_address;
-        this.phone_number = phone_number;
-        this.location_category = location_category;
-        this.review_description = review_description;
+        this.location_name = locationName;
+        this.location_address = locationAddress;
+        this.phone_number = phoneNumber;
+        this.location_category = locationCategory;
+        this.short_category = shortCategory;
+        this.review_description = reviewDescription;
         this.mapx = mapx;
         this.mapy = mapy;
         this.tag1 = tag1;
@@ -345,7 +352,7 @@ public class ReviewList {
         this.tag6 = tag6;
         this.date = date;
         this.userName = userName;
-//        this.userNickName = userNickName;
+        this.userNickName = userNickName;
         this.key = key;
     }
 

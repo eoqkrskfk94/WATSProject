@@ -26,6 +26,14 @@
             android:imeOptions="actionSearch"
             android:inputType="text" />
 
+        <Button
+            android:id="@+id/search_button"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/search_icon" />
+
         <TextView
             android:id="@+id/main_menu"
             android:layout_width="0dp"

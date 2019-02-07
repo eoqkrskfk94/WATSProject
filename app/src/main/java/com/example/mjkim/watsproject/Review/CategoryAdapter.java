@@ -108,7 +108,7 @@ public class CategoryAdapter extends BaseAdapter {
 
 
         locationNameTextView.setText(correctionLocationName);
-        locationCategoryTextView.setText(arr.get(position).getLocation_category());
+        locationCategoryTextView.setText(arr.get(position).getShort_category());
         locationAddressTextView.setText(arr.get(position).getLocation_address());
         locationPhoneTextView.setText(arr.get(position).getPhone_number());
 

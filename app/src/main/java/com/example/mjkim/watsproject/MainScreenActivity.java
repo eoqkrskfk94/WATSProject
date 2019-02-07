@@ -138,6 +138,16 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         mainMenu.setText("지도");
 
 
+        searchButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view){
+                finish();
+                Intent intent = new Intent(MainScreenActivity.this, SearchDetailScreenActivity.class);
+                intent.putExtra("SEARCH", editText.getText().toString());
+                startActivity(intent);
+            }
+        });
+
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
             public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {

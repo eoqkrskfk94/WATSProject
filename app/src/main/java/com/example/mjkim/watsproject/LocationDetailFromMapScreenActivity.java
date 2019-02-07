@@ -379,6 +379,7 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
                         locationMapx = myreview.getMapx();
                         locationMapy = myreview.getMapy();
                         userName = myreview.getUserName();
+                        reviewDate = myreview.getDate();
                         tag1 = myreview.getTag1();
                         tag2 = myreview.getTag2();
                         tag3 = myreview.getTag3();

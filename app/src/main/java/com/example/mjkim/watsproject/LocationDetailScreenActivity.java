@@ -69,7 +69,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
         // 제일 위부터 보기
         scrollView = new ScrollView(this);
         scrollView.findViewById(R.id.scroll_view);
-        scrollView.scrollTo(0,600);
+        scrollView.scrollTo(0,0);
 
 
         myDialog = new Dialog(this); //팝업 변수 선언

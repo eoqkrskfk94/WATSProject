@@ -1,30 +1,59 @@
 package com.example.mjkim.watsproject.FirstSreenFragments;
 
 
+import android.Manifest;
+import android.app.Dialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.Color;
+import android.graphics.drawable.ColorDrawable;
+import android.media.ExifInterface;
+import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
+import android.support.v4.content.ContextCompat;
+import android.support.v4.content.CursorLoader;
 import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mjkim.watsproject.ChangeInfoScreenActivity;
+import com.example.mjkim.watsproject.CreateReviewScreenActivity;
 import com.example.mjkim.watsproject.LoginScreenActivity;
+import com.example.mjkim.watsproject.MainScreenActivity;
 import com.example.mjkim.watsproject.MyReviewScreenActivity;
 import com.example.mjkim.watsproject.R;
+import com.example.mjkim.watsproject.Review.ReviewList;
 import com.example.mjkim.watsproject.User.UserInformation;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
+
+import java.io.File;
+import java.io.IOException;
+
+import static android.app.Activity.RESULT_OK;
 
 /**
  * A simple {@link Fragment} subclass.
@@ -33,7 +62,14 @@ public class MypageFragment extends Fragment {
     private FirebaseAuth auth;
     private DatabaseReference mDatabase;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
-
+    public final int MY_PERMISSIONS_REQUEST_READ_CONTACTS = 1;
+    public final int MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE = 2;
+    Dialog myDialog;
+    ImageView profile;
+    private FirebaseStorage storage;
+    private static final int pick_from_album = 1; // 갤러리 불러올때 요청 상수.
+    public String imagePath1="";
+    StorageReference storageRef;
     public UserInformation userInformation=new UserInformation();
 
     public MypageFragment() {
@@ -49,13 +85,105 @@ public class MypageFragment extends Fragment {
         final String userEmail = new String(auth.getCurrentUser().getEmail()); //Useremail이 현재 사용자 이메일이다.
         mDatabase = database.getReference();
         final DatabaseReference myreview = database.getReference();
-
+        storage= FirebaseStorage.getInstance();
+        storageRef = storage.getReference();
         View v = inflater.inflate(R.layout.fragment_mypage, container,false);
 
         Button logout=(Button) v.findViewById(R.id.log_out_button);
         Button informationButton=(Button)v.findViewById(R.id.see_information_button);
         Button myreviewButton=(Button)v.findViewById(R.id.see_review_button);
         Button changeButton=(Button)v.findViewById(R.id.change_info_button);
+        profile=(ImageView)v.findViewById(R.id.profile_imageview);
+
+
+        //갤러리 사용 권한 체크
+        if (ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.READ_CONTACTS)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.READ_CONTACTS)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.READ_CONTACTS},
+                        MY_PERMISSIONS_REQUEST_READ_CONTACTS);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+
+        if (ContextCompat.checkSelfPermission(getActivity(),
+                Manifest.permission.READ_EXTERNAL_STORAGE)
+                != PackageManager.PERMISSION_GRANTED) {
+
+            // Should we show an explanation?
+            if (ActivityCompat.shouldShowRequestPermissionRationale(getActivity(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE)) {
+
+                // Show an explanation to the user *asynchronously* -- don't block
+                // this thread waiting for the user's response! After the user
+                // sees the explanation, try again to request the permission.
+
+            } else {
+                // No explanation needed, we can request the permission.
+                ActivityCompat.requestPermissions(getActivity(),
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
+                        MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE);
+
+                // MY_PERMISSIONS_REQUEST_READ_CONTACTS is an
+                // app-defined int constant. The callback method gets the
+                // result of the request.
+            }
+        }
+
+        //프로필을 클릭했을때
+        profile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+
+
+                myDialog = new Dialog(getActivity()); //팝업 변수 선언
+                myDialog.setContentView(R.layout.profile_popup);
+                myDialog.setCancelable(false);
+
+                Button galleryButton = (Button) myDialog.findViewById(R.id.gallery_button);
+                Button cancelButton = (Button) myDialog.findViewById(R.id.cancel_button);
+                //갤러리 버튼을 눌렀을때
+                galleryButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                       // getActivity().finish();
+                        Toast.makeText(getActivity(),"준비중입니다.",Toast.LENGTH_LONG).show();
+                        // doTakeAlbumAction();
+                        myDialog.dismiss();//앨범에서 사진 가져오기 메소드
+
+                    }
+                });
+
+                //닫기 버튼을 눌렀을때
+                cancelButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        // 취소버튼을 누르면 사진삭제
+                        myDialog.dismiss();
+                    }
+                });
+                myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+                myDialog.show(); //팝업창.
+
+            }
+
+        });
 
 
 
@@ -172,8 +300,96 @@ public class MypageFragment extends Fragment {
 
 
     }
+    //앨범에서 이미지 가져오기
+    public void doTakeAlbumAction(){
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, pick_from_album );
+    }
+    public String getPath(Uri uri){
+        String [] proj={MediaStore.Images.Media.DATA};
+        CursorLoader cursorLoader=new CursorLoader(getActivity(),uri,proj,null,null,null);
+        Cursor cursor=cursorLoader.loadInBackground();
+        int index=cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(index);
+    }
 
+    //카메라 권한받는 메소드
+    @Override
+    public void onRequestPermissionsResult(int requestCode,@NonNull String[] permissions,@NonNull int[] grantResults){
+        if(requestCode==0){
+            if(grantResults[0]==0){ Toast.makeText(getActivity(),"카메라 권한 승인", Toast.LENGTH_SHORT).show(); }
+            else{ Toast.makeText(getActivity(),"권한 승인이 거절되었습니다. 카메라를 이용하려면 권한을 승인해야 합니다.",Toast.LENGTH_SHORT).show(); }
+        }
 
+        switch (requestCode) {
+            case MY_PERMISSIONS_REQUEST_READ_CONTACTS: {
+                // If request is cancelled, the result arrays are empty.
+                if (grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 
+                    // permission was granted, yay! Do the
+                    // contacts-related task you need to do.
 
+                } else {
+
+                    // permission denied, boo! Disable the
+                    // functionality that depends on this permission.
+                }
+            }
+            case MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE: {
+                if(grantResults.length > 0
+                        && grantResults[0] == PackageManager.PERMISSION_GRANTED){
+
+                }
+                else{
+                    Toast.makeText(getActivity(), "Permission Denied", Toast.LENGTH_SHORT).show();
+                }
+
+            }
+
+            return;
+        }
+
+        // other 'case' lines to check for other
+        // permissions this app might request
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
+        System.out.println("들어왔어??");
+            if (requestCode == pick_from_album) {
+                    if (data != null) {
+                        imagePath1 = getPath(data.getData());
+                        Uri file = Uri.fromFile(new File(imagePath1));
+                        StorageReference riverRef=storageRef.child("images/"+file.getLastPathSegment());
+                        UploadTask uploadTask = riverRef.putFile(file);
+                        final Uri finalFile = file;
+                        System.out.println("들어왔어");
+
+                        uploadTask.addOnFailureListener(new OnFailureListener() {
+                            @Override
+                            public void onFailure(@NonNull Exception e) {
+                                System.out.println("실패1");
+                            }
+                        }).addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                            @Override
+                            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                                System.out.println("업로드 성공");
+                                userInformation.setProfileUri(finalFile.getLastPathSegment());
+                                Intent intent1 =new Intent(getActivity(), MainScreenActivity.class);
+                                startActivity(intent1);
+//                                reviewList.setImageUrl1(finalFile.getLastPathSegment());
+//                                reviewData.saveData(nameAndAdress, reviewList);
+                            }
+                        });
+
+                      }
+             }
+        }
+    }
 }

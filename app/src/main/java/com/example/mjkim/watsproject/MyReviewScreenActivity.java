@@ -100,7 +100,6 @@ public class MyReviewScreenActivity extends AppCompatActivity {
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
                         key=dataSnapshot.getKey();
-                        System.out.println("삭제삭제"+key);
                         locationName = myreview.getLocation_name();
                         reviewDate = myreview.getDate();
                         tag1 = myreview.getTag1();

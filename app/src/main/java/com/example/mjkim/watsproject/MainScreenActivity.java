@@ -414,8 +414,8 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                             marker.setHideCollidedSymbols(true);
 //                        marker.setIcon(OverlayImage.fromResource(R.drawable.logo));
                             marker.setCaptionText(location_name);
-                            marker.setCaptionColor(Color.parseColor("#1502F8"));
-//                            marker.setCaptionColor(Color.parseColor("#FF921A"));
+                            //marker.setCaptionColor(Color.parseColor("#1502F8"));
+                            marker.setCaptionColor(Color.parseColor("#FF921A"));
 //                            marker.setMap(naverMap);
                             markers.add(markerCount++, marker);
                             System.out.println("working0 : " + marker.getCaptionText() + marker.getPosition().toString());
@@ -427,6 +427,15 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                                 marker.setMap(null);
                             }
 
+                            if(shortCategory.equals("건강,의료")) shortCategory = "병원,의원";
+                            if(shortCategory.equals("관람,체험")) shortCategory = "여행,명소";
+                            if(shortCategory.equals("양식") || shortCategory.equals("중식") || shortCategory.equals("한식") ||
+                                    shortCategory.equals("일식")) shortCategory = "음식점";
+                            if(shortCategory.equals("종합도소매") || shortCategory.equals("생활,편")) shortCategory = "쇼핑,유통";
+                            if(shortCategory.equals("초등학교")) shortCategory = "교육,학문";
+
+
+
                             if(shortCategory.equals(categoryName)) {
                                 markerCount = 0;
                                 marker = new Marker(new LatLng(oGeo.getY(), oGeo.getX()));
@@ -435,7 +444,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                                 marker.setHideCollidedSymbols(true);
 //                        marker.setIcon(OverlayImage.fromResource(R.drawable.logo));
                                 marker.setCaptionText(location_name);
-                                marker.setCaptionColor(Color.parseColor("#1502F8"));
+                                marker.setCaptionColor(Color.parseColor("#FF921A"));
 //                                marker.setMap(naverMap);
                                 markers.add(markerCount++, marker);
                                 System.out.println("working : " + marker.getCaptionText() + marker.getPosition().toString());
@@ -465,6 +474,14 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                             location_nameTextView = (TextView)reviewDialog.findViewById(R.id.vi_name);
                             location_phoneTextView = (TextView)reviewDialog.findViewById(R.id.vi_telephone);
                             LinearLayout locationBox = (LinearLayout)reviewDialog.findViewById(R.id.location_view);
+
+                            Button closeButton = (Button) reviewDialog.findViewById(R.id.close_button);
+                            closeButton.setOnClickListener(new View.OnClickListener() {
+                                @Override
+                                public void onClick(View view){
+                                    reviewDialog.dismiss();
+                                }
+                            });
 
 //                            String shortCategory = myreview.getLocation_category().substring(myreview.getLocation_category().lastIndexOf(">")+1);
                             location_categoryTextView.setText(locationCategory);

@@ -183,6 +183,12 @@ public class ListFragment extends Fragment {
                         }
                        else {
                             // 카테고리 이름과 왼쪽 카테고리가 같을 떄만 리뷰리스트 저장
+                            if(leftCategory.equals("건강,의료")) leftCategory = "병원,의원";
+                            if(leftCategory.equals("관람,체험")) leftCategory = "여행,명소";
+                            if(leftCategory.equals("양식") || leftCategory.equals("중식") || leftCategory.equals("한식") ||
+                                    leftCategory.equals("일식")) leftCategory = "음식점";
+                            if(leftCategory.equals("종합도소매") || leftCategory.equals("생활,편")) leftCategory = "쇼핑,유통";
+                            if(leftCategory.equals("초등학교")) leftCategory = "교육,학문";
                             if(leftCategory.equals(categoryName)) {
                                 // 이미 넣은거는 장소 리스트에 안 넣음
 
@@ -277,7 +283,7 @@ public class ListFragment extends Fragment {
                 myDialog.dismiss();
                 timer2.cancel(); //this will cancel the timer of the system
             }
-        }, 2500); // the timer will count 2.4 seconds....
+        }, 1500); // the timer will count 2.4 seconds....
 
 
 
@@ -289,7 +295,7 @@ public class ListFragment extends Fragment {
                 categoryAdapter = new CategoryAdapter(getActivity(), reviewLists, context, getActivity(), totalLocationCount);
                 reviewListView.setAdapter(categoryAdapter);
             }
-        }, 2500);
+        }, 1500);
 
 
         return v;

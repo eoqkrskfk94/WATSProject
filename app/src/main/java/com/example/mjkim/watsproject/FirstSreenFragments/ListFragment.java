@@ -48,7 +48,6 @@ public class ListFragment extends Fragment {
     private String imageUrl1, imageUrl2, imageUrl3, imageUrl4, imageUrl5, imageUrl6, imageUrl7, imageUrl8, imageUrl9;
     private double mapx, mapy;
     static public int totalLocationCount;
-    int count;
 
     final Context context;
 
@@ -86,11 +85,12 @@ public class ListFragment extends Fragment {
 
                 long length = dataSnapshot.getChildrenCount();
                 int[] tag_array = {0,0,0,0,0,0};
-                count = 0;
+                int[] count = {0};
 
                 mymyreview.child("review lists").child(dataSnapshot.getKey()).addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
                         ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
                         key=dataSnapshot.getKey();
                         locationName = myreview.getLocation_name();
@@ -130,39 +130,26 @@ public class ListFragment extends Fragment {
 
                         reviewList.setUserName(myreview.getUserName());
 
+                        if(myreview.getTag1() == true) tag_array[0]  = tag_array[0] +  1;
+                        System.out.println("태그1 : " +  tag_array[0]);
+                        if(myreview.getTag2() == true) tag_array[1]  = tag_array[1] +  1;
+                        System.out.println("태그2 : " +  tag_array[1]);
+                        if(myreview.getTag3() == true) tag_array[2]  = tag_array[2] +  1;
+                        System.out.println("태그3 : " +  tag_array[2]);
+                        if(myreview.getTag4() == true) tag_array[3]  = tag_array[3] +  1;
+                        System.out.println("태그4 : " +  tag_array[3]);
+                        if(myreview.getTag5() == true) tag_array[4]  = tag_array[4] +  1;
+                        System.out.println("태그5 : " +  tag_array[4]);
+                        if(myreview.getTag6() == true) tag_array[5]  = tag_array[5] +  1;
+                        System.out.println("태그6 : " +  tag_array[5]);
+                        count[0]++;
+                        System.out.println("\n첫번째는: " + count[0] + "   두번째는: " + length);
+
                         // 카테고리 이름이 전체일 때 모든 장소리스트를 다 띄움
                         if(categoryName.equals("전체")) {
+
                             // 겹치는거는 장소 리스트에 안 넣음
-//                            if(totalLocationCount != 0) {
-//                                for(int i = 0; i < totalLocationCount; i++) {
-//                                    if(reviewLists.get(i).getLocation_name().equals(locationName)) { }
-//                                    else {
-//                                        if(i == totalLocationCount-1) {
-//                                            reviewLists.add(totalLocationCount, reviewList);
-//                                            totalLocationCount++;
-//                                        }
-//                                    }
-//                                }
-//                            } else {
-//                                reviewLists.add(totalLocationCount, reviewList);
-//                                totalLocationCount++;
-//                            }
-
-                            if(myreview.getTag1() == true) tag_array[0]  = tag_array[0] +  1;
-                            System.out.println("태그1 : " +  tag_array[0]);
-                            if(myreview.getTag2() == true) tag_array[1]  = tag_array[1] +  1;
-                            System.out.println("태그2 : " +  tag_array[1]);
-                            if(myreview.getTag3() == true) tag_array[2]  = tag_array[2] +  1;
-                            System.out.println("태그3 : " +  tag_array[2]);
-                            if(myreview.getTag4() == true) tag_array[3]  = tag_array[3] +  1;
-                            System.out.println("태그4 : " +  tag_array[3]);
-                            if(myreview.getTag5() == true) tag_array[4]  = tag_array[4] +  1;
-                            System.out.println("태그5 : " +  tag_array[4]);
-                            if(myreview.getTag6() == true) tag_array[5]  = tag_array[5] +  1;
-                            System.out.println("태그6 : " +  tag_array[5]);
-                            count++;
-
-                            if(count == length){
+                            if(count[0] == length){
 
                                 if(tag_array[0] > length/2 &&  tag_array[0] != 0) reviewList.setAverageTag1(true);
                                 else reviewList.setAverageTag1(false);
@@ -193,40 +180,13 @@ public class ListFragment extends Fragment {
 
 
                          // 카테고리 이름이 전체가 아니면 카테고리에 맞춰서 장소리스트 띄움
-                        } else {
+                        }
+                       else {
                             // 카테고리 이름과 왼쪽 카테고리가 같을 떄만 리뷰리스트 저장
                             if(leftCategory.equals(categoryName)) {
                                 // 이미 넣은거는 장소 리스트에 안 넣음
-//                                if(totalLocationCount != 0) {
-//                                    for(int i = 0; i < totalLocationCount; i++) {
-//                                        if(reviewLists.get(i).getLocation_name().equals(locationName)) { }
-//                                        else {
-//                                            if(i == totalLocationCount-1) {
-//                                                reviewLists.add(totalLocationCount, myreview);
-//                                                totalLocationCount++;
-//                                            }
-//                                        }
-//                                    }
-//                                } else {
-//                                    reviewLists.add(totalLocationCount, myreview);
-//                                    totalLocationCount++;
-//                                }
 
-                                if(myreview.getTag1() == true) tag_array[0]  = tag_array[0] +  1;
-                                System.out.println("태그1 : " +  tag_array[0]);
-                                if(myreview.getTag2() == true) tag_array[1]  = tag_array[1] +  1;
-                                System.out.println("태그2 : " +  tag_array[1]);
-                                if(myreview.getTag3() == true) tag_array[2]  = tag_array[2] +  1;
-                                System.out.println("태그3 : " +  tag_array[2]);
-                                if(myreview.getTag4() == true) tag_array[3]  = tag_array[3] +  1;
-                                System.out.println("태그4 : " +  tag_array[3]);
-                                if(myreview.getTag5() == true) tag_array[4]  = tag_array[4] +  1;
-                                System.out.println("태그5 : " +  tag_array[4]);
-                                if(myreview.getTag6() == true) tag_array[5]  = tag_array[5] +  1;
-                                System.out.println("태그6 : " +  tag_array[5]);
-                                count++;
-
-                                if(count == length){
+                                if(count[0] == length){
 
                                     if(tag_array[0] > length/2 &&  tag_array[0] != 0) reviewList.setAverageTag1(true);
                                     else reviewList.setAverageTag1(false);
@@ -254,28 +214,6 @@ public class ListFragment extends Fragment {
                                 }
                             }
                         }
-
-
-
-
-
-
-
-                        // 겹치는거는 장소 리스트에 안 넣음
-/*                        if(totalLocationCount != 0) {
-                            for(int i = 0; i < totalLocationCount; i++) {
-                                if(reviewLists.get(i).getLocation_name().equals(locationName)) { }
-                                else {
-                                    if(i == totalLocationCount-1) {
-                                        reviewLists.add(totalLocationCount, reviewList);
-                                        totalLocationCount++;
-                                    }
-                                }
-                            }
-                        } else {
-                            reviewLists.add(totalLocationCount, reviewList);
-                            totalLocationCount++;
-                        }*/
 
                     }
 
@@ -339,7 +277,7 @@ public class ListFragment extends Fragment {
                 myDialog.dismiss();
                 timer2.cancel(); //this will cancel the timer of the system
             }
-        }, 2400); // the timer will count 2.4 seconds....
+        }, 2500); // the timer will count 2.4 seconds....
 
 
 
@@ -351,7 +289,7 @@ public class ListFragment extends Fragment {
                 categoryAdapter = new CategoryAdapter(getActivity(), reviewLists, context, getActivity(), totalLocationCount);
                 reviewListView.setAdapter(categoryAdapter);
             }
-        }, 2300);
+        }, 2500);
 
 
         return v;

@@ -26,11 +26,20 @@
             android:imeOptions="actionSearch"
             android:inputType="text" />
 
+        <Button
+            android:id="@+id/search_button"
+            android:layout_width="35dp"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginTop="1dp"
+            android:background="@drawable/search_icon" />
+
         <TextView
             android:id="@+id/main_menu"
             android:layout_width="0dp"
             android:layout_height="0dp"
-            android:visibility="invisible" />
+            android:visibility="visible"
+            tools:text="지도" />
 
     </LinearLayout>
 
@@ -43,10 +52,11 @@
 
         <Button
             android:id="@+id/category_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="카테고리"
-            />
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/orange_box"
+            android:text="카테고리" />
 
     </FrameLayout>
 

@@ -792,7 +792,14 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                 ,imagePath1,imagePath2,imagePath3,imagePath4,imagePath5,imagePath6,imagePath7,imagePath8,imagePath9);
 
         nameAndAdress = locationName + " , " + locationAddress;
-    //    Array nameAdressAray=nameAndAdress;
+
+        //파이어베이스에는 특수문자가 들어가면 안되서 바꿔준다.
+        if(nameAndAdress.contains("."))
+         nameAndAdress = nameAndAdress.replace(".", "");
+        if(nameAndAdress.contains("#"))
+            nameAndAdress = nameAndAdress.replace("#", "");
+        if(nameAndAdress.contains("_"))
+            nameAndAdress = nameAndAdress.replace("_", " ");
 
         if(pic1 !=0 || pic2 !=0 || pic3 !=0 || pic4 !=0 || pic5 !=0 || pic6 !=0 || pic7 !=0 || pic8!=0 || pic9!=0 ) {  // 사진이 하나라도 있으면.
             upload();
@@ -806,8 +813,6 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
 
         Button closeButton = (Button) myDialog.findViewById(R.id.ok_button);
 
-
-
         //닫기 버튼을 눌렀을때
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -820,8 +825,6 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
         myDialog.show();
     }
-
-
 
     @Override
     public void onBackPressed() {

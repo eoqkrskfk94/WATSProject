@@ -166,11 +166,10 @@ public class MypageFragment extends Fragment {
                         Toast.makeText(getActivity(),"준비중입니다.",Toast.LENGTH_LONG).show();
                         // doTakeAlbumAction();
                         myDialog.dismiss();//앨범에서 사진 가져오기 메소드
-
                     }
                 });
 
-                
+
                 //닫기 버튼을 눌렀을때
                 cancelButton.setOnClickListener(new View.OnClickListener() {
                     @Override
@@ -185,8 +184,6 @@ public class MypageFragment extends Fragment {
             }
 
         });
-
-
 
         final TextView textId=(TextView)v.findViewById(R.id.textView_id);
 

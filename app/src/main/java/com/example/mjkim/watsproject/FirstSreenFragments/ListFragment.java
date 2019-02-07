@@ -119,22 +119,6 @@ public class ListFragment extends Fragment {
 
                         reviewList.setUserName(myreview.getUserName());
 
-                        // 겹치는거는 장소 리스트에 안 넣음
-                        if(totalLocationCount != 0) {
-                            for(int i = 0; i < totalLocationCount; i++) {
-                                if(reviewLists.get(i).getLocation_name().equals(locationName)) { }
-                                else {
-                                    if(i == totalLocationCount-1) {
-                                        reviewLists.add(totalLocationCount, reviewList);
-                                        totalLocationCount++;
-                                    }
-                                }
-                            }
-                        } else {
-                            reviewLists.add(totalLocationCount, reviewList);
-                            totalLocationCount++;
-                        }
-
 
                         if(myreview.getTag1() == true) tag_array[0]  = tag_array[0] +  1;
                         System.out.println("태그1 : " +  tag_array[0]);
@@ -152,7 +136,46 @@ public class ListFragment extends Fragment {
 
                         if(count == length){
 
+                            if(tag_array[0] > length/2 &&  tag_array[0] != 0) reviewList.setAverageTag1(true);
+                            else reviewList.setAverageTag1(false);
+
+                            if(tag_array[1] > length/2 &&  tag_array[1] != 0) reviewList.setAverageTag2(true);
+                            else reviewList.setAverageTag2(false);
+
+                            if(tag_array[2] > length/2 &&  tag_array[2] != 0) reviewList.setAverageTag3(true);
+                            else reviewList.setAverageTag3(false);
+
+                            if(tag_array[3] > length/2 &&  tag_array[3] != 0) reviewList.setAverageTag4(true);
+                            else reviewList.setAverageTag4(false);
+
+                            if(tag_array[4] > length/2 &&  tag_array[4] != 0) reviewList.setAverageTag5(true);
+                            else reviewList.setAverageTag5(false);
+
+                            if(tag_array[5] > length/2 &&  tag_array[5] != 0) reviewList.setAverageTag6(true);
+                            else reviewList.setAverageTag6(false);
+
+                            reviewLists.add(totalLocationCount, reviewList);
+                            totalLocationCount++;
+
+
+
                         }
+
+                        // 겹치는거는 장소 리스트에 안 넣음
+/*                        if(totalLocationCount != 0) {
+                            for(int i = 0; i < totalLocationCount; i++) {
+                                if(reviewLists.get(i).getLocation_name().equals(locationName)) { }
+                                else {
+                                    if(i == totalLocationCount-1) {
+                                        reviewLists.add(totalLocationCount, reviewList);
+                                        totalLocationCount++;
+                                    }
+                                }
+                            }
+                        } else {
+                            reviewLists.add(totalLocationCount, reviewList);
+                            totalLocationCount++;
+                        }*/
 
                     }
 

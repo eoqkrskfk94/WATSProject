@@ -10,34 +10,21 @@
     <LinearLayout
         android:id="@+id/menu"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="60dp"
         android:background="#ff9571"
         android:gravity="center"
         android:orientation="horizontal">
 
-        <Button
-            android:layout_width="35dp"
-            android:layout_height="match_parent"
-            android:layout_margin="10dp"
-            android:visibility="invisible" />
-
-        <TextView
-            android:id="@+id/main_text"
-            android:layout_width="260dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
+        <EditText
+            android:id="@+id/editSearch"
+            android:layout_width="300dp"
+            android:layout_height="40dp"
+            android:background="@drawable/gray_search_box"
+            android:ems="10"
             android:gravity="center"
-            android:text="지도"
-            android:textColor="@android:color/background_light"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-
-        <Button
-            android:id="@+id/search_button"
-            android:layout_width="35dp"
-            android:layout_height="match_parent"
-            android:layout_margin="12dp"
-            android:background="@drawable/search_icon" />
+            android:hint="장소, 주소 검색"
+            android:imeOptions="actionSearch"
+            android:inputType="text" />
 
     </LinearLayout>
 

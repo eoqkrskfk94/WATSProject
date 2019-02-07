@@ -20,11 +20,14 @@ import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Gravity;
+import android.view.KeyEvent;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -125,17 +128,31 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         totalLocationCount = 0;
         backPressCloseHandler = new BackPressCloseHandler(this);
 
-        TextView mainText = (TextView)findViewById(R.id.main_text);
+        //TextView mainText = (TextView)findViewById(R.id.main_text);
 
-        Button searchButton = (Button)findViewById(R.id.search_button);
+        //Button searchButton = (Button)findViewById(R.id.search_button);
+        EditText editText = (EditText) findViewById(R.id.editSearch);
 
         //검색하기 버튼을 눌렀을때
-        searchButton.setOnClickListener(new View.OnClickListener() {
+ /*       searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 finish();
                 Intent intent=new Intent(MainScreenActivity.this,SearchDetailScreenActivity.class);
+                intent.putExtra("SEARCH", editText.getText().toString());
                 startActivity(intent);
+            }
+        });*/
+
+        editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
+            @Override
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                if(EditorInfo.IME_ACTION_SEARCH == actionId){
+                    Intent intent=new Intent(MainScreenActivity.this,SearchDetailScreenActivity.class);
+                    intent.putExtra("SEARCH", editText.getText().toString());
+                    startActivity(intent);
+                }
+                return false;
             }
         });
 
@@ -184,13 +201,13 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                 switch (item.getItemId()) {
 
                     case R.id.nav_map:
-                        mainText.setText("지도");
+                        //mainText.setText("지도");
                         check = 0;
                         setMapFragment();
                         return true;
 
                     case R.id.nav_list:
-                        mainText.setText("장소 리스트");
+                        //mainText.setText("장소 리스트");
                         setFragment(listFragment);
                         return true;
 
@@ -225,7 +242,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                         }
                         else {
                             setFragment(mypageFragment);
-                            mainText.setText("마이 페이지");
+                            //mainText.setText("마이 페이지");
                         }
                         return true;
 
@@ -321,7 +338,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                         marker.setWidth(80);
 //                        marker.setIcon(OverlayImage.fromResource(R.drawable.logo));
                         marker.setCaptionText(location_name);
-                        marker.setCaptionColor(Color.parseColor("#1502F8"));
+                        marker.setCaptionColor(Color.parseColor("#FF921A"));
                         marker.setMap(naverMap);
                         System.out.println("working : " + marker.getCaptionText() + marker.getPosition().toString());
 

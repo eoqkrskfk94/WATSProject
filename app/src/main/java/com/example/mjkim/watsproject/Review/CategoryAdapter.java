@@ -81,6 +81,24 @@ public class CategoryAdapter extends BaseAdapter {
         tagShow5 = (ImageView) convertView.findViewById(R.id.tag_done_5);
         tagShow6 = (ImageView) convertView.findViewById(R.id.tag_done_6);
 
+        if(arr.get(position).getAverageTag1() == true) tagShow1.setImageResource(R.drawable.restroom);
+        else tagShow1.setImageResource(R.drawable.restroom_dimmed);
+
+        if(arr.get(position).getAverageTag2() == true) {tagShow2.setImageResource(R.drawable.parking); System.out.println("너는 누구인가? ");}
+        else tagShow2.setImageResource(R.drawable.parking_dimmed);
+
+        if(arr.get(position).getAverageTag3() == true) tagShow3.setImageResource(R.drawable.elevator);
+        else tagShow3.setImageResource(R.drawable.elevator_dimmed);
+
+        if(arr.get(position).getAverageTag4() == true) tagShow4.setImageResource(R.drawable.slope);
+        else tagShow4.setImageResource(R.drawable.slope_dimmed);
+
+        if(arr.get(position).getAverageTag5() == true) tagShow5.setImageResource(R.drawable.table);
+        else tagShow5.setImageResource(R.drawable.table_dimmed);
+
+        if(arr.get(position).getAverageTag6() == true) tagShow6.setImageResource(R.drawable.assistant);
+        else tagShow6.setImageResource(R.drawable.assistant_dimmed);
+
 
 
         //주소 빼고 이름만 사용
@@ -153,12 +171,12 @@ public class CategoryAdapter extends BaseAdapter {
         intent.putExtra("MAPY", arr.get(a).getMapy());
         intent.putExtra("ReviewDescription", arr.get(a).getReview_description());
         intent.putExtra("Date",arr.get(a).getDate());
-        intent.putExtra("TAG1",arr.get(a).getTag1());
-        intent.putExtra("TAG2",arr.get(a).getTag2());
-        intent.putExtra("TAG3",arr.get(a).getTag3());
-        intent.putExtra("TAG4",arr.get(a).getTag4());
-        intent.putExtra("TAG5",arr.get(a).getTag5());
-        intent.putExtra("TAG6",arr.get(a).getTag6());
+        intent.putExtra("TAG1",arr.get(a).getAverageTag1());
+        intent.putExtra("TAG2",arr.get(a).getAverageTag2());
+        intent.putExtra("TAG3",arr.get(a).getAverageTag3());
+        intent.putExtra("TAG4",arr.get(a).getAverageTag4());
+        intent.putExtra("TAG5",arr.get(a).getAverageTag5());
+        intent.putExtra("TAG6",arr.get(a).getAverageTag6());
 
         // 장소리스트에서 후기 볼 때만 뒤로가기 누르면 다시 액티비티 시작하게 함
         intent.putExtra("Check", 1);

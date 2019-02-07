@@ -170,6 +170,7 @@ public class MypageFragment extends Fragment {
                     }
                 });
 
+                
                 //닫기 버튼을 눌렀을때
                 cancelButton.setOnClickListener(new View.OnClickListener() {
                     @Override

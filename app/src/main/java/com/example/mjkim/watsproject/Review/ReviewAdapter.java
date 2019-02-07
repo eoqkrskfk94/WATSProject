@@ -94,8 +94,8 @@ public class ReviewAdapter extends BaseAdapter {
 
 
         intent.putExtra("Email", arr.get(a).getUserEmail());
-        intent.putExtra("Name", arr.get(a).getUserNickName());
-//        intent.putExtra("Name", arr.get(a).getUserName());
+        intent.putExtra("NickName", arr.get(a).getUserNickName());
+        intent.putExtra("Name", arr.get(a).getUserName());
         intent.putExtra("Review", arr.get(a).getReview_description());
         intent.putExtra("Date",arr.get(a).getDate());
         intent.putExtra("Tag1",arr.get(a).getTag1());

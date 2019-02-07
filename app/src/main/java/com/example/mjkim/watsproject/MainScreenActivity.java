@@ -135,20 +135,8 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         Button searchButton = (Button)findViewById(R.id.search_button);
 
         // 메인텍스트 기본 세팅
-
         mainMenu.setText("지도");
-        System.out.println("mainmenu : " + mainMenu.getText());
 
-        //검색하기 버튼을 눌렀을때
- /*       searchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                finish();
-                Intent intent=new Intent(MainScreenActivity.this,SearchDetailScreenActivity.class);
-                intent.putExtra("SEARCH", editText.getText().toString());
-                startActivity(intent);
-            }
-        });*/
 
         editText.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
@@ -167,67 +155,47 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         categoryName = "전체";
         categoryButton.setText(categoryName);
 
-        // 지도에 있을 때
-        if(mainMenu.getText().equals("지도")) {
-            categoryButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // 버튼 클릭시 팝업 메뉴가 나오게 하기
-                    PopupMenu p = new PopupMenu(
-                            getApplicationContext(), // 현재 화면의 제어권자
-                            v); // anchor : 팝업을 띄울 기준될 위젯
-                    getMenuInflater().inflate(R.menu.category_menu, p.getMenu());
-                    // 이벤트 처리
-                    p.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            categoryName = item.getTitle().toString();
-                            System.out.println("categoryName : " + categoryName);
-                            categoryButton.setText(categoryName);
 
-                            System.out.println("themap");
-                            // 카테고리 누르면 해당 마커 뜸
+
+
+
+        categoryButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // 버튼 클릭시 팝업 메뉴가 나오게 하기
+                PopupMenu p = new PopupMenu(
+                        getApplicationContext(), // 현재 화면의 제어권자
+                        v); // anchor : 팝업을 띄울 기준될 위젯
+                getMenuInflater().inflate(R.menu.category_menu, p.getMenu());
+                // 이벤트 처리
+                p.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem item) {
+                        categoryName = item.getTitle().toString();
+                        System.out.println("categoryName : " + categoryName);
+                        categoryButton.setText(categoryName);
+
+                        System.out.println("여기는 어떨까요? 님??: " + mainMenu.getText());
+                        // 카테고리 누르면 해당 마커 뜸
+
+                        if(mainMenu.getText().toString().equals("지도")){
                             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                             fragmentTransaction.detach(mapFragment).commit();
                             setMapFragment();
-
-                            return false;
                         }
-                    });
-                    p.show(); // 메뉴를 띄우기
-                }
-            });
-        }
-        // 장소 리스트에 있을 때
-        else {
-            System.out.println("themap22");
-            categoryButton.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    // 버튼 클릭시 팝업 메뉴가 나오게 하기
-                    PopupMenu p = new PopupMenu(
-                            getApplicationContext(), // 현재 화면의 제어권자
-                            v); // anchor : 팝업을 띄울 기준될 위젯
-                    getMenuInflater().inflate(R.menu.category_menu, p.getMenu());
-                    // 이벤트 처리
-                    p.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                        @Override
-                        public boolean onMenuItemClick(MenuItem item) {
-                            categoryName = item.getTitle().toString();
-                            System.out.println("categoryName : " + categoryName);
-                            categoryButton.setText(categoryName);
-
-                            System.out.println("themap2");
-                            // 카테고리 누르면 해당 장소 뜸
+                        else{
                             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                             fragmentTransaction.detach(listFragment).attach(listFragment).commit();
                             return false;
                         }
-                    });
-                    p.show(); // 메뉴를 띄우기
-                }
-            });
-        }
+
+                        return false;
+                    }
+                });
+                p.show(); // 메뉴를 띄우기
+            }
+        });
+
 
         MapFragment mapFragment = (MapFragment)getSupportFragmentManager().findFragmentById(R.id.main_frame);
 

@@ -44,10 +44,11 @@
 
         <Button
             android:id="@+id/category_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="카테고리"
-            />
+            android:layout_width="100dp"
+            android:layout_height="50dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/orange_box"
+            android:text="카테고리" />
 
     </FrameLayout>
 

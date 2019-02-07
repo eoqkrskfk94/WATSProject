@@ -484,7 +484,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                             });
 
 //                            String shortCategory = myreview.getLocation_category().substring(myreview.getLocation_category().lastIndexOf(">")+1);
-                            location_categoryTextView.setText(locationCategory);
+                            location_categoryTextView.setText(myreview.getShort_category());
                             location_nameTextView.setText(location_name);
                             location_phoneTextView.setText(myreview.getPhone_number());
                             location_addressTextView.setText(myreview.getLocation_address());

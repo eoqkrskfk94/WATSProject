@@ -145,6 +145,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                     Intent intent=new Intent(MainScreenActivity.this,SearchDetailScreenActivity.class);
                     intent.putExtra("SEARCH", editText.getText().toString());
                     startActivity(intent);
+                    finish();
                 }
                 return false;
             }

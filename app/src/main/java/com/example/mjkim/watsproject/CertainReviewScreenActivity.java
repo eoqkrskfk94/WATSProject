@@ -52,11 +52,11 @@ public class CertainReviewScreenActivity extends AppCompatActivity {
         });
 
 
-        TextView userName = (TextView) findViewById(R.id.vi_name);
+        TextView userNickName = (TextView) findViewById(R.id.vi_name);
         TextView reviewDate = (TextView) findViewById(R.id.vi_date);
         TextView reviewDescription = (TextView) findViewById(R.id.vi_description);
 
-        userName.setText(getIntent().getExtras().getString("Name"));
+        userNickName.setText(getIntent().getExtras().getString("NickName"));
         reviewDate.setText(getIntent().getExtras().getString("Date"));
         reviewDescription.setText(getIntent().getExtras().getString("Review"));
 

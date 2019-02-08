@@ -119,13 +119,13 @@ public class UserReviewAdapter extends BaseAdapter {
             public void onClick(View view){ GoCorrectionScreen(position); }});
 
 
-//        userName.setText(arr.get(position).getUserNickName());
+        userName.setText(arr.get(position).getUserNickName());
         int index = arr.get(position).getLocation_name().indexOf(" , ");
         String location_name = arr.get(position).getLocation_name().substring(0, index);
         locationName.setText(location_name);
         String shortCategory = arr.get(position).getLocation_category().substring(arr.get(position).getLocation_category().lastIndexOf(">")+1);
         locationCategory.setText(shortCategory);
-        userName.setText(arr.get(position).getUserName());
+//        userName.setText(arr.get(position).getUserName());
         reviewDescription.setText(arr.get(position).getReview_description());
         postDate.setText(arr.get(position).getDate());
 
@@ -216,7 +216,7 @@ public class UserReviewAdapter extends BaseAdapter {
         intent.putExtra("LOCATIONNAME", arr.get(a).getLocation_name());
         intent.putExtra("EMAIL", arr.get(a).getUserEmail());
         intent.putExtra("NAME", arr.get(a).getUserName());
-        //        intent.putExtra("NickName", arr.get(a).getUserNickName());
+        intent.putExtra("NickName", arr.get(a).getUserNickName());
         intent.putExtra("REVIEW", arr.get(a).getReview_description());
         intent.putExtra("ADDRESS", arr.get(a).getLocation_address());
         intent.putExtra("CATEGORY", arr.get(a).getLocation_category());

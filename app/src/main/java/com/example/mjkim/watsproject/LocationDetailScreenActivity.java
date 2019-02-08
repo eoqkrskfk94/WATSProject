@@ -459,7 +459,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
                 reviewListView.setAdapter(reviewAdapter);
 
             }
-        }, 2000);
+        }, 1000);
 
         Button moreReviewButton = (Button)findViewById(R.id.see_more_review);  //리뷰 전체보기 버튼
         moreReviewButton.setOnClickListener(new View.OnClickListener() {

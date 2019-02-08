@@ -12,12 +12,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mjkim.watsproject.Naver.NaverBlogAdapter;
 import com.example.mjkim.watsproject.Naver.NaverBlogList;
@@ -75,7 +77,17 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
         // 제일 위부터 보기
         scrollView = new ScrollView(this);
         scrollView.findViewById(R.id.scroll_view);
-        scrollView.scrollTo(0,600);
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.scrollTo(0, 0);
+                scrollView.pageScroll(View.FOCUS_UP);
+                scrollView.smoothScrollTo(0,0);
+            }
+        });
+
+//        scrollView.fullScroll(ScrollView.FOCUS_UP);
+//        scrollView.scrollTo(0,600);
 
 
         myDialog = new Dialog(this); //팝업 변수 선언
@@ -97,6 +109,16 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
         ImageView tagShow4 = (ImageView)findViewById(R.id.tag_done_4);
         ImageView tagShow5 = (ImageView)findViewById(R.id.tag_done_5);
         ImageView tagShow6 = (ImageView)findViewById(R.id.tag_done_6);
+
+        Button shareButton = (Button)findViewById(R.id.share_button);
+
+        // 공유하기 준비중
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(LocationDetailFromMapScreenActivity.this, "준비중입니다", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         tagShow1.setOnClickListener(new View.OnClickListener() {
             @Override

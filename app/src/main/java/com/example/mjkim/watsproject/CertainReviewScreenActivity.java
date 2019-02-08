@@ -201,7 +201,6 @@ public class CertainReviewScreenActivity extends AppCompatActivity {
         temp.add(ContextCompat.getDrawable(CertainReviewScreenActivity.this,R.drawable.restroom));
         temp.add(ContextCompat.getDrawable(CertainReviewScreenActivity.this,R.drawable.restroom));
 
-        System.out.println("신지현바보1"+image2);
         refList=new ArrayList<>();
         if(!image1.equals(""))
             refList.add(ref);

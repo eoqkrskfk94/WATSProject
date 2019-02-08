@@ -456,14 +456,19 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                     BitmapFactory.Options options=new BitmapFactory.Options();
                     options.inSampleSize=4;
                     Bitmap bitmap = BitmapFactory.decodeFile(imagePath1,options);
-                    Bitmap resize = Bitmap.createScaledBitmap(bitmap,300,400,true);
+                    Bitmap resize = Bitmap.createScaledBitmap(bitmap,500,500,true);
+
 
 
                     ExifInterface exif = null;
                     try { exif = new ExifInterface(imagePath1); } catch (IOException e) { e.printStackTrace(); }
                     if (exif != null) { exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
                         exifDegree = exifOrientationToDegrees(exifOrientation); } else { exifDegree = 0; }
+                    //picture1.setMaxWidth(45);
+                    //picture1.setMaxHeight(45);
+                    picture1.setAdjustViewBounds(true);
                     picture1.setImageBitmap(rotate(resize, exifDegree));
+
                     pic1=2; //카메라 찍기면 2 앨범에서 불러오면 1
                 }
                 if(id_view == R.id.Imagebutton2){
@@ -474,6 +479,8 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                         exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
                         exifDegree = exifOrientationToDegrees(exifOrientation);
                     } else { exifDegree = 0; }
+                    picture2.setAdjustViewBounds(true);
+
                     picture2.setImageBitmap(rotate(bitmap, exifDegree));
                     pic2=2;
                 }
@@ -487,6 +494,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                     } else {
                         exifDegree = 0;
                     }
+                    picture3.setAdjustViewBounds(true);
                     picture3.setImageBitmap(rotate(bitmap, exifDegree));
                     pic3=2;
                 }
@@ -498,6 +506,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                         exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
                         exifDegree = exifOrientationToDegrees(exifOrientation);
                     } else { exifDegree = 0; }
+                    picture4.setAdjustViewBounds(true);
                     picture4.setImageBitmap(rotate(bitmap, exifDegree));
                     pic4=2;
                 }
@@ -509,6 +518,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                         exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
                         exifDegree = exifOrientationToDegrees(exifOrientation);
                     } else { exifDegree = 0; }
+                    picture5.setAdjustViewBounds(true);
                     picture5.setImageBitmap(rotate(bitmap, exifDegree));
                     pic5=2;
                 }
@@ -519,6 +529,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                     if (exif != null) {
                         exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
                         exifDegree = exifOrientationToDegrees(exifOrientation); } else { exifDegree = 0; }
+                    picture6.setAdjustViewBounds(true);
                     picture6.setImageBitmap(rotate(bitmap, exifDegree));
                     pic6=2;
                 }
@@ -529,6 +540,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                     if (exif != null) {
                         exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
                         exifDegree = exifOrientationToDegrees(exifOrientation); } else { exifDegree = 0; }
+                    picture7.setAdjustViewBounds(true);
                     picture7.setImageBitmap(rotate(bitmap, exifDegree));
                     pic7=2;
                 }
@@ -539,6 +551,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                     if (exif != null) {
                         exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
                         exifDegree = exifOrientationToDegrees(exifOrientation); } else { exifDegree = 0; }
+                    picture8.setAdjustViewBounds(true);
                     picture8.setImageBitmap(rotate(bitmap, exifDegree));
                     pic8=2;
                 }
@@ -549,6 +562,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                     if (exif != null) {
                         exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
                         exifDegree = exifOrientationToDegrees(exifOrientation); } else { exifDegree = 0; }
+                    picture9.setAdjustViewBounds(true);
                     picture9.setImageBitmap(rotate(bitmap, exifDegree));
                     pic9=2;
                 }
@@ -561,6 +575,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                     System.out.println("들어왔어??22");
                     imagePath1 = getPath(data.getData());
                     File f1 = new File(imagePath1);
+                    picture1.setAdjustViewBounds(true);
                     picture1.setImageURI(Uri.fromFile(f1));
                     pic1 = 1;
                 }
@@ -569,6 +584,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                 if(data!=null) {
                     imagePath2 = getPath(data.getData());
                     File f2 = new File(imagePath2);
+                    picture2.setAdjustViewBounds(true);
                     picture2.setImageURI(Uri.fromFile(f2));
                     pic2 = 1;
                 }
@@ -577,6 +593,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                 if(data!=null) {
                     imagePath3 = getPath(data.getData());
                     File f3 = new File(imagePath3);
+                    picture3.setAdjustViewBounds(true);
                     picture3.setImageURI(Uri.fromFile(f3));
                     pic3 = 1;
                 }
@@ -585,6 +602,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                 if(data!=null) {
                     imagePath4 = getPath(data.getData());
                     File f4 = new File(imagePath4);
+                    picture4.setAdjustViewBounds(true);
                     picture4.setImageURI(Uri.fromFile(f4));
                     pic4 = 1;
                 }
@@ -593,6 +611,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                 if(data!=null) {
                     imagePath5 = getPath(data.getData());
                     File f5 = new File(imagePath5);
+                    picture5.setAdjustViewBounds(true);
                     picture5.setImageURI(Uri.fromFile(f5));
                     pic5 = 1;
                 }
@@ -601,6 +620,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                 if(data!=null) {
                     imagePath6 = getPath(data.getData());
                     File f6 = new File(imagePath6);
+                    picture6.setAdjustViewBounds(true);
                     picture6.setImageURI(Uri.fromFile(f6));
                     pic6 = 1;
                 }
@@ -609,6 +629,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                 if(data!=null) {
                     imagePath7 = getPath(data.getData());
                     File f7 = new File(imagePath7);
+                    picture7.setAdjustViewBounds(true);
                     picture7.setImageURI(Uri.fromFile(f7));
                     pic7 = 1;
                 }
@@ -617,6 +638,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                 if(data!=null) {
                     imagePath8 = getPath(data.getData());
                     File f8 = new File(imagePath8);
+                    picture8.setAdjustViewBounds(true);
                     picture8.setImageURI(Uri.fromFile(f8));
                     pic8 = 1;
                 }
@@ -625,6 +647,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                 if(data!=null) {
                     imagePath9 = getPath(data.getData());
                     File f9 = new File(imagePath9);
+                    picture9.setAdjustViewBounds(true);
                     picture9.setImageURI(Uri.fromFile(f9));
                     pic9 = 1;
                 }
@@ -792,7 +815,14 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                 ,imagePath1,imagePath2,imagePath3,imagePath4,imagePath5,imagePath6,imagePath7,imagePath8,imagePath9);
 
         nameAndAdress = locationName + " , " + locationAddress;
-    //    Array nameAdressAray=nameAndAdress;
+
+        //파이어베이스에는 특수문자가 들어가면 안되서 바꿔준다.
+        if(nameAndAdress.contains("."))
+         nameAndAdress = nameAndAdress.replace(".", "");
+        if(nameAndAdress.contains("#"))
+            nameAndAdress = nameAndAdress.replace("#", "");
+        if(nameAndAdress.contains("_"))
+            nameAndAdress = nameAndAdress.replace("_", " ");
 
         if(pic1 !=0 || pic2 !=0 || pic3 !=0 || pic4 !=0 || pic5 !=0 || pic6 !=0 || pic7 !=0 || pic8!=0 || pic9!=0 ) {  // 사진이 하나라도 있으면.
             upload();
@@ -806,8 +836,6 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
 
         Button closeButton = (Button) myDialog.findViewById(R.id.ok_button);
 
-
-
         //닫기 버튼을 눌렀을때
         closeButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -820,8 +848,6 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
         myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
         myDialog.show();
     }
-
-
 
     @Override
     public void onBackPressed() {

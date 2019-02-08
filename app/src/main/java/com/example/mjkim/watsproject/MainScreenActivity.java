@@ -395,7 +395,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
 
                         //주소 빼고 이름만 사용
                         int nameIndex = myreview.getLocation_name().indexOf(" , ");
-                        String location_name = myreview.getLocation_name().substring(0, nameIndex);
+                        String location_name = myreview.getLocation_name().substring(0, nameIndex+1);
                         locationCategory = myreview.getLocation_category();
                         int categoryIndex = locationCategory.indexOf(">");
                         shortCategory = locationCategory.substring(0, categoryIndex);
@@ -412,11 +412,11 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                             marker.setHeight(110);
                             marker.setWidth(80);
                             marker.setHideCollidedSymbols(true);
-//                        marker.setIcon(OverlayImage.fromResource(R.drawable.logo));
+//                            marker.setIcon(OverlayImage.fromResource(R.drawable.logo));
                             marker.setCaptionText(location_name);
-                            //marker.setCaptionColor(Color.parseColor("#1502F8"));
-                            marker.setCaptionColor(Color.parseColor("#FF921A"));
-//                            marker.setMap(naverMap);
+                            marker.setCaptionTextSize(16);
+                            marker.setCaptionColor(Color.parseColor("#1502F8"));
+//                            marker.setCaptionColor(Color.parseColor("#FF921A"));
                             markers.add(markerCount++, marker);
                             System.out.println("working0 : " + marker.getCaptionText() + marker.getPosition().toString());
                         }
@@ -442,9 +442,11 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                                 marker.setHeight(110);
                                 marker.setWidth(80);
                                 marker.setHideCollidedSymbols(true);
-//                        marker.setIcon(OverlayImage.fromResource(R.drawable.logo));
+//                                marker.setIcon(OverlayImage.fromResource(R.drawable.logo));
                                 marker.setCaptionText(location_name);
-                                marker.setCaptionColor(Color.parseColor("#FF921A"));
+                                marker.setCaptionTextSize(16);
+                                marker.setCaptionColor(Color.parseColor("#1502F8"));
+//                                marker.setCaptionColor(Color.parseColor("#FF921A"));
 //                                marker.setMap(naverMap);
                                 markers.add(markerCount++, marker);
                                 System.out.println("working : " + marker.getCaptionText() + marker.getPosition().toString());
@@ -484,7 +486,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                             });
 
 //                            String shortCategory = myreview.getLocation_category().substring(myreview.getLocation_category().lastIndexOf(">")+1);
-                            location_categoryTextView.setText(myreview.getShort_category());
+                            location_categoryTextView.setText(myreview.getLocation_category());
                             location_nameTextView.setText(location_name);
                             location_phoneTextView.setText(myreview.getPhone_number());
                             location_addressTextView.setText(myreview.getLocation_address());

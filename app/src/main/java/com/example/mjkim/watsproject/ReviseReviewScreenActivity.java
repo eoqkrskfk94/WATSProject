@@ -89,6 +89,7 @@ public class ReviseReviewScreenActivity extends AppCompatActivity {
     String imagePath7="";
     String imagePath8="";
     String imagePath9="";
+
     String nameAndAdress = ""; //이름이랑 주소 같이 나오는 스트
     String image1, image2, image3, image4, image5, image6, image7, image8, image9;
     StorageReference ref,ref2,ref3,ref4,ref5,ref6,ref7,ref8,ref9;

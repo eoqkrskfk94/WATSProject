@@ -778,7 +778,7 @@ public class ReviseReviewScreenActivity extends AppCompatActivity {
         if(!imagePath9.equals(""))
             reviewList.setImageUrl9(file9.getLastPathSegment());
 
-        reviewData.saveData(nameAndAdress,reviewList);
+        reviewData.saveData(location_name,reviewList);
 
         StorageReference riverRef1=storageRef.child("images/"+file1.getLastPathSegment());
         UploadTask uploadTask = riverRef1.putFile(file1);
@@ -867,13 +867,13 @@ public class ReviseReviewScreenActivity extends AppCompatActivity {
         reviewList = new ReviewList(location_name, locationAddress, locationNumber, locationCategory, shortCategory, review_description, location_x, location_y, tag1, tag2, tag3, tag4, tag5, tag6, mTime, userName, userNickName, key
                 ,imagePath1,imagePath2,imagePath3,imagePath4,imagePath5,imagePath6,imagePath7,imagePath8,imagePath9);
 
-        nameAndAdress = location_name + " , " + locationAddress;
+        //nameAndAdress = location_name + " , " + locationAddress;
 
         if(pic1 !=0 || pic2 !=0 || pic3 !=0 || pic4 !=0 || pic5 !=0 || pic6 !=0 || pic7 !=0 || pic8!=0 || pic9!=0 ) {  // 사진이 하나라도 있으면.
             upload();
         }
         else{
-            reviewData.saveData(nameAndAdress, reviewList);  //사진 없을때
+            reviewData.saveData(location_name, reviewList);  //사진 없을때
         }
 
         myDialog.setContentView(R.layout.revise_popup);

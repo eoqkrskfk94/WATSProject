@@ -44,7 +44,7 @@ public class WatchLocationActivity extends Activity implements OnMapReadyCallbac
         location_name = getIntent().getExtras().getString("NAME");
         System.out.println("tired : " + location_name);
         int nameIndex = location_name.indexOf(" ,");
-        shortLocationName = location_name.substring(0, nameIndex);
+        shortLocationName = location_name.substring(0, nameIndex+1);
         location_category = getIntent().getExtras().getString("CATEGORY");
         location_address = getIntent().getExtras().getString("ADDRESS");
         location_number = getIntent().getExtras().getString("TELEPHONE");

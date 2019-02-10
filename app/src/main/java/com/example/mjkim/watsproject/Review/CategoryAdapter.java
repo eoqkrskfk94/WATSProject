@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.mjkim.watsproject.LocationDetailFromMapScreenActivity;
 import com.example.mjkim.watsproject.LocationDetailScreenActivity;
+import com.example.mjkim.watsproject.MainScreenActivity;
 import com.example.mjkim.watsproject.MyReviewScreenActivity;
 import com.example.mjkim.watsproject.R;
 import com.google.firebase.database.DatabaseReference;

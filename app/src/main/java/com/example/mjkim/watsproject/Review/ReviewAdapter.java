@@ -86,6 +86,9 @@ public class ReviewAdapter extends BaseAdapter {
         reviewerName.setText(arr.get(position).getUserNickName());
 //        reviewerName.setText(arr.get(position).getUserName());
         description.setText(arr.get(position).getReview_description());
+        if(description.getText().toString().isEmpty()) {
+            description.setHint("글 내용이 없습니다. ");
+        }
         postDate.setText(arr.get(position).getDate());
         image1 = arr.get(position).getImageUrl1();
         image2 = arr.get(position).getImageUrl2();

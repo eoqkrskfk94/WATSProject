@@ -87,6 +87,10 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
 
     String nameAndAdress = ""; //이름이랑 주소 같이 나오는 스트
     private double location_x, location_y;
+    //리뷰가 작성된 날짜
+    static SimpleDateFormat simpleDateFormat;
+    static Date currentTime;
+    static String mTime;
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     int pic1=0;
@@ -122,11 +126,18 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
         final String userEmail = new String(auth.getCurrentUser().getEmail()); //Useremail이 현재 사용자 이메일이다.
         final DatabaseReference myreview = database.getReference();
         final TextView textId=(TextView)findViewById(R.id.id_name);
+        final TextView textDate = (TextView) findViewById(R.id.vi_date);
 
         location_x = getIntent().getExtras().getDouble("MAPX");
         location_y = getIntent().getExtras().getDouble("MAPY");
         System.out.println("newmap9 : " + locationName + "  "  + "  " + location_x + "  " + location_y);
 
+
+        //리뷰가 작성된 날짜
+        simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.KOREA);
+        currentTime = new Date();
+        mTime = simpleDateFormat.format(currentTime);
+        textDate.setText(mTime);
 
         //돌아가기 버튼 선언, 돌아가기 버튼 눌렀을때 전 화면을 돌아간다
         Button backButton = (Button)findViewById(R.id.back_button);
@@ -783,10 +794,6 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
     public void RegisterButton (View view){
 
         //리뷰 저장 부분
-        //리뷰가 작성된 날짜
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.KOREA);
-        Date currentTime = new Date();
-        String mTime = simpleDateFormat.format(currentTime);
 
 
         Intent reviewIntent = getIntent();

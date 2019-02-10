@@ -201,7 +201,7 @@ public class MyReviewScreenActivity extends AppCompatActivity {
 
 
             }
-        }, 2300);
+        }, 2000);
 
     }
 

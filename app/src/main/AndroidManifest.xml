@@ -55,6 +55,7 @@
         <activity android:name=".MoreReviewScreenActivity" />
         <activity android:name=".MyReviewScreenActivity" />
         <activity android:name=".ReviseReviewScreenActivity" />
+        <activity android:name=".OtherClasses.ImageBigShowActivity"></activity>
     </application>
 
 </manifest>

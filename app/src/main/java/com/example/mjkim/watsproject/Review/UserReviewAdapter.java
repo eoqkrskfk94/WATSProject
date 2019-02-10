@@ -18,6 +18,7 @@ import android.widget.TextView;
 import com.bumptech.glide.Glide;
 import com.example.mjkim.watsproject.CertainReviewScreenActivity;
 import com.example.mjkim.watsproject.MyReviewScreenActivity;
+import com.example.mjkim.watsproject.OtherClasses.ImageBigShowActivity;
 import com.example.mjkim.watsproject.R;
 import com.example.mjkim.watsproject.ReviseReviewScreenActivity;
 import com.google.firebase.database.DatabaseReference;
@@ -148,7 +149,7 @@ public class UserReviewAdapter extends BaseAdapter {
         layout_view.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View v){
-
+           //     GoImageReview(position);
                 GoReview(position);
 
             }
@@ -243,5 +244,20 @@ public class UserReviewAdapter extends BaseAdapter {
 
         m_activity.startActivity(intent);
     }
+    public void GoImageReview(int a){
 
+        Intent intent = new Intent(m_activity, ImageBigShowActivity.class);
+        intent.putExtra("IMAGE1", arr.get(a).getImageUrl1());
+        intent.putExtra("IMAGE2", arr.get(a).getImageUrl2());
+        intent.putExtra("IMAGE3", arr.get(a).getImageUrl3());
+        intent.putExtra("IMAGE4", arr.get(a).getImageUrl4());
+        intent.putExtra("IMAGE5", arr.get(a).getImageUrl5());
+        intent.putExtra("IMAGE6", arr.get(a).getImageUrl6());
+        intent.putExtra("IMAGE7", arr.get(a).getImageUrl7());
+        intent.putExtra("IMAGE8", arr.get(a).getImageUrl8());
+        intent.putExtra("IMAGE9", arr.get(a).getImageUrl9());
+
+
+
+    }
 }

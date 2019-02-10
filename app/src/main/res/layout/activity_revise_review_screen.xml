@@ -290,7 +290,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="장애인 화장실" />
+                           />
                     </LinearLayout>
 
                     <LinearLayout
@@ -310,7 +310,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="장애인 주차장" />
+                   />
                     </LinearLayout>
 
                     <LinearLayout
@@ -330,7 +330,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="장애인 승강기" />
+                          />
                     </LinearLayout>
 
                     <LinearLayout
@@ -351,7 +351,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:text="경사로" />
+                           />
                     </LinearLayout>
 
                     <LinearLayout
@@ -372,7 +372,7 @@
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:text="입식테이블" />
+                        />
                     </LinearLayout>
 
                     <LinearLayout
@@ -392,7 +392,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="동반지 필요" />
+                        />
                     </LinearLayout>
 
                     <LinearLayout

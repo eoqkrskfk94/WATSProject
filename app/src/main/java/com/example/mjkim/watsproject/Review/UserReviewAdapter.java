@@ -11,15 +11,20 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.mjkim.watsproject.CertainReviewScreenActivity;
 import com.example.mjkim.watsproject.MyReviewScreenActivity;
 import com.example.mjkim.watsproject.R;
 import com.example.mjkim.watsproject.ReviseReviewScreenActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
 
 
@@ -113,6 +118,7 @@ public class UserReviewAdapter extends BaseAdapter {
         LinearLayout layout_view =  (LinearLayout)convertView.findViewById(R.id.vi_view);
 
 
+
         // 수정 버튼
         reviseButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -128,6 +134,8 @@ public class UserReviewAdapter extends BaseAdapter {
 //        userName.setText(arr.get(position).getUserName());
         reviewDescription.setText(arr.get(position).getReview_description());
         postDate.setText(arr.get(position).getDate());
+
+
 
         /*  버튼에 이벤트처리를 하기위해선 setTag를 이용해서 사용할 수 있습니다.
 

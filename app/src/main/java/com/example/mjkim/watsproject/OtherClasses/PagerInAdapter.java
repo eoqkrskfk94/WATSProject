@@ -17,6 +17,7 @@ import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.RequestManager;
+import com.bumptech.glide.request.RequestOptions;
 import com.example.mjkim.watsproject.CertainReviewScreenActivity;
 import com.example.mjkim.watsproject.R;
 import com.google.firebase.storage.FirebaseStorage;
@@ -59,6 +60,7 @@ public class PagerInAdapter extends PagerAdapter {
         // 사진 띄우기
             Glide.with(context)
                     .load(obref.get(position))
+                    .apply(new RequestOptions().centerCrop())
                     .into(imageView);
         ((ViewPager) container).addView(imageView, 0);
         return imageView;

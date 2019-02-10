@@ -276,10 +276,13 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/photos_viewpager"
                 android:layout_gravity="center"
-                android:layout_width="170dp"
+                android:layout_width="350dp"
                 android:layout_height="0dp"
                 android:layout_weight="1"
-                android:background="@drawable/no_image">
+                android:background="@drawable/no_image"
+                android:onClick="onClick"
+
+                >
             </android.support.v4.view.ViewPager>
 
             <android.support.design.widget.TabLayout
@@ -291,25 +294,20 @@
                 android:id="@+id/tab_layout" />
 
 
-
-
-
-
-
             <TextView
                 android:id="@+id/vi_description"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
-                android:layout_marginLeft="20dp"
-                android:layout_marginRight="20dp"
-                android:layout_marginTop="20dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginTop="15dp"
                 android:ellipsize="end"
                 android:paddingBottom="1dp"
                 android:paddingLeft="5dp"
                 android:paddingTop="1dp"
                 android:text="이 화면은 블로그 검색 결과 테스트 화면입니다. 이 화면은 블로그 검색 결과 테스트입니다. 이 화면은 블로그 검색 결과 화면입니다."
                 android:textColor="#4e4e4e"
-                android:textSize="13sp"
+                android:textSize="16sp"
                 android:typeface="monospace" />
 
         </LinearLayout>

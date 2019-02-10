@@ -515,7 +515,7 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
                 reviewListView.setAdapter(mapReviewAdapter);
                 System.out.println("리스트 길이3: " + reviewLists.size());
             }
-        }, 900);
+        }, 1000);
 
         Button moreReviewButton = (Button)findViewById(R.id.see_more_review);  //리뷰 전체보기 버튼
         moreReviewButton.setOnClickListener(new View.OnClickListener() {

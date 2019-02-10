@@ -430,9 +430,10 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                             if(shortCategory.equals("건강,의료")) shortCategory = "병원,의원";
                             if(shortCategory.equals("관람,체험")) shortCategory = "여행,명소";
                             if(shortCategory.equals("양식") || shortCategory.equals("중식") || shortCategory.equals("한식") ||
-                                    shortCategory.equals("일식")) shortCategory = "음식점";
-                            if(shortCategory.equals("종합도소매") || shortCategory.equals("생활,편")) shortCategory = "쇼핑,유통";
+                                    shortCategory.equals("일식") || shortCategory.equals("술집")) shortCategory = "음식점";
+                            if(shortCategory.equals("종합도소매") || shortCategory.equals("생활,편의")) shortCategory = "쇼핑,유통";
                             if(shortCategory.equals("초등학교")) shortCategory = "교육,학문";
+                            if(shortCategory.equals("숙박시설")) shortCategory = "숙박";
 
 
 

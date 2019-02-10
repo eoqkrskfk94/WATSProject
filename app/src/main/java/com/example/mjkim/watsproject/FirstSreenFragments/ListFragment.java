@@ -186,9 +186,10 @@ public class ListFragment extends Fragment {
                             if(leftCategory.equals("건강,의료")) leftCategory = "병원,의원";
                             if(leftCategory.equals("관람,체험")) leftCategory = "여행,명소";
                             if(leftCategory.equals("양식") || leftCategory.equals("중식") || leftCategory.equals("한식") ||
-                                    leftCategory.equals("일식")) leftCategory = "음식점";
-                            if(leftCategory.equals("종합도소매") || leftCategory.equals("생활,편")) leftCategory = "쇼핑,유통";
+                                    leftCategory.equals("일식") || leftCategory.equals("술집")) leftCategory = "음식점";
+                            if(leftCategory.equals("종합도소매") || leftCategory.equals("생활,편의")) leftCategory = "쇼핑,유통";
                             if(leftCategory.equals("초등학교")) leftCategory = "교육,학문";
+                            if(leftCategory.equals("숙박시설")) leftCategory = "숙박";
                             if(leftCategory.equals(categoryName)) {
                                 // 이미 넣은거는 장소 리스트에 안 넣음
 

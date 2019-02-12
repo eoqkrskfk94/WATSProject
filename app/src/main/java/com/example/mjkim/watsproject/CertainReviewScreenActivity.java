@@ -62,6 +62,9 @@ public class CertainReviewScreenActivity extends AppCompatActivity {
         userNickName.setText(getIntent().getExtras().getString("NickName"));
         reviewDate.setText(getIntent().getExtras().getString("Date"));
         reviewDescription.setText(getIntent().getExtras().getString("Review"));
+        if(reviewDescription.getText().toString().isEmpty()) {
+            reviewDescription.setHint("글 내용이 없습니다. ");
+        }
 
         ImageView tagShow1 = (ImageView)findViewById(R.id.tag_done_1); //태그 이미지 선언
         ImageView tagShow2 = (ImageView)findViewById(R.id.tag_done_2);

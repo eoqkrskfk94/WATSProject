@@ -59,7 +59,6 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
     Boolean tag1, tag2, tag3, tag4, tag5, tag6;
     String locationName, locationCategory, shortCategory, locationAddress, locationNumber, reviewDescription, userEmail, userName, userNickName, key, reviewDate;
     double locationMapx, locationMapy;
-
     String location_name, location_category, short_category, location_address, location_number;
     double location_x, location_y;
     String imageUrl1,imageUrl2,imageUrl3,imageUrl4,imageUrl5,imageUrl6,imageUrl7,imageUrl8,imageUrl9;
@@ -85,10 +84,6 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
                 scrollView.smoothScrollTo(0,0);
             }
         });
-
-//        scrollView.fullScroll(ScrollView.FOCUS_UP);
-//        scrollView.scrollTo(0,600);
-
 
         myDialog = new Dialog(this); //팝업 변수 선언
         Intent intent = getIntent();

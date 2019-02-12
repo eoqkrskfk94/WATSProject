@@ -76,12 +76,27 @@
                     android:layout_margin="10dp"
                     app:srcCompat="@drawable/profile_pic" />
 
-                <TextView
-                    android:id="@+id/id_name"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="김천사" />
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/id_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="김천사" />
+
+                    <TextView
+                        android:id="@+id/vi_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="2018.11.05"
+                        android:textSize="10sp" />
+                </LinearLayout>
             </LinearLayout>
 
             <EditText
@@ -271,6 +286,22 @@
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:orientation="horizontal">
+
+                    <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="vertical">
+
+                        <Button
+                            android:id="@+id/Multi_Album_Button"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_gravity="center"
+                            android:onClick="onClick"
+                            android:text="멀티앨범" />
+
+                    </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="100dp"

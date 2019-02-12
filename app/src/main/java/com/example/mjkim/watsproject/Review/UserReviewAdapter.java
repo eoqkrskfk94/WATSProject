@@ -128,7 +128,7 @@ public class UserReviewAdapter extends BaseAdapter {
 
         userName.setText(arr.get(position).getUserNickName());
         int index = arr.get(position).getLocation_name().indexOf(" , ");
-        String location_name = arr.get(position).getLocation_name().substring(0, index);
+        String location_name = arr.get(position).getLocation_name().substring(0, index+1);
         locationName.setText(location_name);
         String shortCategory = arr.get(position).getLocation_category().substring(arr.get(position).getLocation_category().lastIndexOf(">")+1);
         locationCategory.setText(shortCategory);

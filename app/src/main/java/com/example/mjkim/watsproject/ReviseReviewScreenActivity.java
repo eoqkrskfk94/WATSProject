@@ -130,8 +130,13 @@ public class ReviseReviewScreenActivity extends AppCompatActivity {
         final String userEmail = new String(auth.getCurrentUser().getEmail()); //Useremail이 현재 사용자 이메일이다.
         final DatabaseReference myreview = database.getReference();
         final TextView textId=(TextView)findViewById(R.id.id_name);
+        final TextView textDate = (TextView) findViewById(R.id.vi_date);
         location_x = getIntent().getExtras().getDouble("MAPX");
         location_y = getIntent().getExtras().getDouble("MAPY");
+
+        // 마지막 수정 날짜
+        textDate.setText(getIntent().getExtras().getString("Date"));
+        System.out.println("해야3 : " + textDate.getText().toString() +  "  " + location_x);
 
         //돌아가기 버튼 선언, 돌아가기 버튼 눌렀을때 전 화면을 돌아간다
         Button backButton = (Button)findViewById(R.id.back_button);
@@ -548,7 +553,7 @@ public class ReviseReviewScreenActivity extends AppCompatActivity {
                     BitmapFactory.Options options=new BitmapFactory.Options();
                     options.inSampleSize=4;
                     Bitmap bitmap = BitmapFactory.decodeFile(imagePath1,options);
-                    Bitmap resize = Bitmap.createScaledBitmap(bitmap,300,400,true);
+                    Bitmap resize = Bitmap.createScaledBitmap(bitmap,500,500,true);
 
 
                     ExifInterface exif = null;

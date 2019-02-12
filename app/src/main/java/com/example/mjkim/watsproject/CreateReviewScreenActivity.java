@@ -2,6 +2,7 @@ package com.example.mjkim.watsproject;
 
 import android.Manifest;
 import android.app.Dialog;
+import android.content.ClipData;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -24,6 +25,7 @@ import android.support.v4.content.ContextCompat;
 import android.support.v4.content.CursorLoader;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -51,10 +53,12 @@ import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Array;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Locale;
 
 public class CreateReviewScreenActivity extends AppCompatActivity {
+    ArrayList<Uri> imageListUri=new ArrayList();
 
     public ReviewList reviewList = new ReviewList();
     Dialog myDialog;
@@ -74,7 +78,10 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
     private int id_view;
     private static final int pick_from_camera = 0;
     private static final int pick_from_album = 1; // 갤러리 불러올때 요청 상수.
+    private static final int pick_from_Multi_album =999; // 갤러리 불러올때 요청 상수.
     private static final int REQUEST_IMAGE_CAPTURE = 672;
+    BitmapFactory.Options options = new BitmapFactory.Options();
+
     String imagePath1="";
     String imagePath2="";
     String imagePath3="";
@@ -84,9 +91,15 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
     String imagePath7="";
     String imagePath8="";
     String imagePath9="";
+    Bitmap bitmap;
+    Bitmap resize;
 
     String nameAndAdress = ""; //이름이랑 주소 같이 나오는 스트
     private double location_x, location_y;
+    //리뷰가 작성된 날짜
+    static SimpleDateFormat simpleDateFormat;
+    static Date currentTime;
+    static String mTime;
 
     ByteArrayOutputStream baos = new ByteArrayOutputStream();
     int pic1=0;
@@ -122,11 +135,26 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
         final String userEmail = new String(auth.getCurrentUser().getEmail()); //Useremail이 현재 사용자 이메일이다.
         final DatabaseReference myreview = database.getReference();
         final TextView textId=(TextView)findViewById(R.id.id_name);
+        final TextView textDate = (TextView) findViewById(R.id.vi_date);
 
         location_x = getIntent().getExtras().getDouble("MAPX");
         location_y = getIntent().getExtras().getDouble("MAPY");
         System.out.println("newmap9 : " + locationName + "  "  + "  " + location_x + "  " + location_y);
 
+
+        //리뷰가 작성된 날짜
+        simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.KOREA);
+        currentTime = new Date();
+        mTime = simpleDateFormat.format(currentTime);
+        textDate.setText(mTime);
+        Button Multi_Album_Button=(Button)findViewById(R.id.Multi_Album_Button);
+
+        Multi_Album_Button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                doTakeMultiAlbumAction();
+            }
+        });
 
         //돌아가기 버튼 선언, 돌아가기 버튼 눌렀을때 전 화면을 돌아간다
         Button backButton = (Button)findViewById(R.id.back_button);
@@ -165,7 +193,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
         });
 
 
-        //사진 변수선
+        //사진 변수선언
         picture1 = (ImageView)findViewById(R.id.Imagebutton1);
         picture2 = (ImageView)findViewById(R.id.Imagebutton2);
         picture3 = (ImageView)findViewById(R.id.Imagebutton3);
@@ -229,8 +257,6 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                 // result of the request.
             }
         }
-
-
         //유저 별명 불러오기
         mDatabase.child("user lists").addChildEventListener(new ChildEventListener() {
             @Override
@@ -245,7 +271,6 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                         userNickName = userInformation.getUserNickname();
                         userName = userInformation.getUserName();
                     }
-
                     @Override
                     public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
                     @Override
@@ -256,7 +281,6 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                     public void onCancelled(@NonNull DatabaseError databaseError) { }
                 });
             }
-
             @Override
             public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) { }
             @Override
@@ -266,11 +290,8 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) { }
         });
-
         reviewText = (EditText) findViewById(R.id.review_text); //후기 작성 부분
     }
-
-
 
     //사진등록 밑에있는 사진중 하나를 클릭했을때.
     public void onClick(final View view) {
@@ -294,7 +315,8 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
             cameraButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
-                    doTakePhotoAction();
+                    Toast.makeText(CreateReviewScreenActivity.this,"준비중입니다.",Toast.LENGTH_LONG).show();
+                    //doTakePhotoAction();
                     myDialog.dismiss();//카메라에서 사진 가져오기 메소드
                 }
             });
@@ -323,15 +345,15 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                 public void onClick(View view) {
                     // 취소버튼을 누르면 사진삭제
 
-                    if(id_view==R.id.Imagebutton1) picture1.setImageResource(R.drawable.sample_pic);
-                    if(id_view==R.id.Imagebutton2) picture2.setImageResource(R.drawable.sample_pic);
-                    if(id_view==R.id.Imagebutton3) picture3.setImageResource(R.drawable.sample_pic);
-                    if(id_view==R.id.Imagebutton4) picture4.setImageResource(R.drawable.sample_pic);
-                    if(id_view==R.id.Imagebutton5) picture5.setImageResource(R.drawable.sample_pic);
-                    if(id_view==R.id.Imagebutton6) picture6.setImageResource(R.drawable.sample_pic);
-                    if(id_view==R.id.Imagebutton7) picture7.setImageResource(R.drawable.sample_pic);
-                    if(id_view==R.id.Imagebutton8) picture8.setImageResource(R.drawable.sample_pic);
-                    if(id_view==R.id.Imagebutton9) picture9.setImageResource(R.drawable.sample_pic);
+                    if(id_view==R.id.Imagebutton1){ picture1.setImageResource(R.drawable.sample_pic); pic1=0;  imagePath1="";}
+                    if(id_view==R.id.Imagebutton2){ picture2.setImageResource(R.drawable.sample_pic); pic2=0;  imagePath2="";}
+                    if(id_view==R.id.Imagebutton3){ picture3.setImageResource(R.drawable.sample_pic); pic3=0;  imagePath3="";}
+                    if(id_view==R.id.Imagebutton4){ picture4.setImageResource(R.drawable.sample_pic); pic4=0;  imagePath4="";}
+                    if(id_view==R.id.Imagebutton5){ picture5.setImageResource(R.drawable.sample_pic); pic5=0;  imagePath5="";}
+                    if(id_view==R.id.Imagebutton6){picture6.setImageResource(R.drawable.sample_pic); pic6=0;  imagePath6="";}
+                    if(id_view==R.id.Imagebutton7){picture7.setImageResource(R.drawable.sample_pic); pic7=0;  imagePath7="";}
+                    if(id_view==R.id.Imagebutton8){ picture8.setImageResource(R.drawable.sample_pic); pic8=0;  imagePath8="";}
+                    if(id_view==R.id.Imagebutton9){ picture9.setImageResource(R.drawable.sample_pic); pic9=0;  imagePath9="";}
                     myDialog.dismiss();
                 }
             });
@@ -427,6 +449,14 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
         bitmap = BitmapFactory.decodeStream(isBm, null, null);
         return Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
     }
+    //앨범에서 멀티 이미지 가져오기
+    public void doTakeMultiAlbumAction(){
+        Intent intent = new Intent(Intent.ACTION_PICK);
+        intent.setType(MediaStore.Images.Media.CONTENT_TYPE);
+        intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE,true);
+        intent.setData(MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+        startActivityForResult(intent, pick_from_Multi_album );
+    }
     //앨범에서 이미지 가져오기
     public void doTakeAlbumAction(){
         Intent intent = new Intent(Intent.ACTION_PICK);
@@ -444,50 +474,70 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
         return cursor.getString(index);
     }
     @Override
-    protected  void onActivityResult(int requestCode, int resultCode, Intent data){
-        super.onActivityResult(requestCode,resultCode,data);
-        if(resultCode == RESULT_OK){
-
-            System.out.println("들어왔어??11");
+    protected  void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) {
             //카메라 찍기에서 일어나는 메소드
-            if(requestCode == REQUEST_IMAGE_CAPTURE){
+            if (requestCode == REQUEST_IMAGE_CAPTURE) {
                 //첫번째 버튼일 경우
-                if(id_view == R.id.Imagebutton1){
-                    BitmapFactory.Options options=new BitmapFactory.Options();
-                    options.inSampleSize=4;
-                    Bitmap bitmap = BitmapFactory.decodeFile(imagePath1,options);
-                    Bitmap resize = Bitmap.createScaledBitmap(bitmap,500,500,true);
-
+                if (id_view == R.id.Imagebutton1) {
+                    options.inSampleSize = 4;
+                    bitmap = BitmapFactory.decodeFile(imagePath1, options);
+                    resize = Bitmap.createScaledBitmap(bitmap, 500, 500, true);
+                    Log.i("로그 1번째 들어옴 -->",imagePath1);
+                    Log.i("로그 1번째 들어옴 -->",resize.toString());
 
 
                     ExifInterface exif = null;
-                    try { exif = new ExifInterface(imagePath1); } catch (IOException e) { e.printStackTrace(); }
-                    if (exif != null) { exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-                        exifDegree = exifOrientationToDegrees(exifOrientation); } else { exifDegree = 0; }
-                    //picture1.setMaxWidth(45);
-                    //picture1.setMaxHeight(45);
-                    picture1.setAdjustViewBounds(true);
-                    picture1.setImageBitmap(rotate(resize, exifDegree));
-
-                    pic1=2; //카메라 찍기면 2 앨범에서 불러오면 1
-                }
-                if(id_view == R.id.Imagebutton2){
-                    Bitmap bitmap = BitmapFactory.decodeFile(imagePath2);
-                    ExifInterface exif = null;
-                    try { exif = new ExifInterface(imagePath2); } catch (IOException e) { e.printStackTrace(); }
+                    try {
+                        exif = new ExifInterface(imagePath1);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     if (exif != null) {
                         exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
                         exifDegree = exifOrientationToDegrees(exifOrientation);
-                    } else { exifDegree = 0; }
-                    picture2.setAdjustViewBounds(true);
+                    } else {
+                        exifDegree = 0;
+                    }
+                    picture1.setAdjustViewBounds(true);
+                    picture1.setImageBitmap(rotate(resize, exifDegree));
 
-                    picture2.setImageBitmap(rotate(bitmap, exifDegree));
-                    pic2=2;
+                    pic1 = 2; //카메라 찍기면 2 앨범에서 불러오면 1
                 }
-                if(id_view == R.id.Imagebutton3){
-                    Bitmap bitmap = BitmapFactory.decodeFile(imagePath3);
+                if (id_view == R.id.Imagebutton2) {
+                    options.inSampleSize = 4;
+                    bitmap = BitmapFactory.decodeFile(imagePath2, options);
+                    resize = Bitmap.createScaledBitmap(bitmap, 500, 500, true);
+                    Log.i("로그 2번째 들어옴 -->",imagePath2);
+                    Log.i("로그 2번째 들어옴 -->",resize.toString());
                     ExifInterface exif = null;
-                    try { exif = new ExifInterface(imagePath3); } catch (IOException e) { e.printStackTrace(); }
+                    try {
+                        exif = new ExifInterface(imagePath2);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    if (exif != null) {
+                        exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
+                        exifDegree = exifOrientationToDegrees(exifOrientation);
+                    } else {
+                        exifDegree = 0;
+                    }
+                    picture2.setAdjustViewBounds(true);
+                    picture2.setImageBitmap(rotate(resize, exifDegree));
+                    pic2 = 2;
+                }
+                if (id_view == R.id.Imagebutton3) {
+                    options.inSampleSize = 4;
+                    bitmap = BitmapFactory.decodeFile(imagePath3, options);
+                    resize = Bitmap.createScaledBitmap(bitmap, 500, 500, true);
+                    Log.i("로그 3번째 들어옴 -->",bitmap.toString());
+                    ExifInterface exif = null;
+                    try {
+                        exif = new ExifInterface(imagePath3);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     if (exif != null) {
                         exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
                         exifDegree = exifOrientationToDegrees(exifOrientation);
@@ -495,165 +545,348 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                         exifDegree = 0;
                     }
                     picture3.setAdjustViewBounds(true);
-                    picture3.setImageBitmap(rotate(bitmap, exifDegree));
-                    pic3=2;
+                    picture3.setImageBitmap(rotate(resize, exifDegree));
+                    pic3 = 2;
                 }
-                if(id_view == R.id.Imagebutton4){
-                    Bitmap bitmap = BitmapFactory.decodeFile(imagePath4);
+                if (id_view == R.id.Imagebutton4) {
+                    options.inSampleSize = 4;
+                    bitmap = BitmapFactory.decodeFile(imagePath4, options);
+                    resize = Bitmap.createScaledBitmap(bitmap, 500, 500, true);
+                    Log.i("로그 4번째 들어옴 -->",bitmap.toString());
                     ExifInterface exif = null;
-                    try { exif = new ExifInterface(imagePath4); } catch (IOException e) { e.printStackTrace(); }
+                    try {
+                        exif = new ExifInterface(imagePath4);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     if (exif != null) {
                         exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
                         exifDegree = exifOrientationToDegrees(exifOrientation);
-                    } else { exifDegree = 0; }
+                    } else {
+                        exifDegree = 0;
+                    }
                     picture4.setAdjustViewBounds(true);
-                    picture4.setImageBitmap(rotate(bitmap, exifDegree));
-                    pic4=2;
+                    picture4.setImageBitmap(rotate(resize, exifDegree));
+                    pic4 = 2;
                 }
-                if(id_view == R.id.Imagebutton5){
-                    Bitmap bitmap = BitmapFactory.decodeFile(imagePath5);
+                if (id_view == R.id.Imagebutton5) {
+                    options.inSampleSize = 4;
+                    bitmap = BitmapFactory.decodeFile(imagePath5, options);
+                    resize = Bitmap.createScaledBitmap(bitmap, 500, 500, true);
+                    Log.i("로그 5번째 들어옴 -->",bitmap.toString());
+
                     ExifInterface exif = null;
-                    try { exif = new ExifInterface(imagePath5); } catch (IOException e) { e.printStackTrace(); }
+                    try {
+                        exif = new ExifInterface(imagePath5);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     if (exif != null) {
                         exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
                         exifDegree = exifOrientationToDegrees(exifOrientation);
-                    } else { exifDegree = 0; }
+                    } else {
+                        exifDegree = 0;
+                    }
                     picture5.setAdjustViewBounds(true);
-                    picture5.setImageBitmap(rotate(bitmap, exifDegree));
-                    pic5=2;
+                    picture5.setImageBitmap(rotate(resize, exifDegree));
+                    pic5 = 2;
                 }
-                if(id_view == R.id.Imagebutton6){
-                    Bitmap bitmap = BitmapFactory.decodeFile(imagePath6);
+                if (id_view == R.id.Imagebutton6) {
+                    options.inSampleSize = 4;
+                    bitmap = BitmapFactory.decodeFile(imagePath6, options);
+                    resize = Bitmap.createScaledBitmap(bitmap, 500, 500, true);
+                    Log.i("로그 6번째 들어옴 -->",bitmap.toString());
                     ExifInterface exif = null;
-                    try { exif = new ExifInterface(imagePath6); } catch (IOException e) { e.printStackTrace(); }
+                    try {
+                        exif = new ExifInterface(imagePath6);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     if (exif != null) {
                         exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-                        exifDegree = exifOrientationToDegrees(exifOrientation); } else { exifDegree = 0; }
+                        exifDegree = exifOrientationToDegrees(exifOrientation);
+                    } else {
+                        exifDegree = 0;
+                    }
                     picture6.setAdjustViewBounds(true);
-                    picture6.setImageBitmap(rotate(bitmap, exifDegree));
-                    pic6=2;
+                    picture6.setImageBitmap(rotate(resize, exifDegree));
+                    pic6 = 2;
                 }
-                if(id_view == R.id.Imagebutton7){
-                    Bitmap bitmap = BitmapFactory.decodeFile(imagePath7);
+                if (id_view == R.id.Imagebutton7) {
+                    options.inSampleSize = 4;
+                    bitmap = BitmapFactory.decodeFile(imagePath7, options);
+                    resize = Bitmap.createScaledBitmap(bitmap, 500, 500, true);
+                    Log.i("로그 7번째 들어옴 -->",bitmap.toString());
                     ExifInterface exif = null;
-                    try { exif = new ExifInterface(imagePath7); } catch (IOException e) { e.printStackTrace(); }
+                    try {
+                        exif = new ExifInterface(imagePath7);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     if (exif != null) {
                         exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-                        exifDegree = exifOrientationToDegrees(exifOrientation); } else { exifDegree = 0; }
+                        exifDegree = exifOrientationToDegrees(exifOrientation);
+                    } else {
+                        exifDegree = 0;
+                    }
                     picture7.setAdjustViewBounds(true);
-                    picture7.setImageBitmap(rotate(bitmap, exifDegree));
-                    pic7=2;
+                    picture7.setImageBitmap(rotate(resize, exifDegree));
+                    pic7 = 2;
                 }
-                if(id_view == R.id.Imagebutton8){
-                    Bitmap bitmap = BitmapFactory.decodeFile(imagePath8);
+                if (id_view == R.id.Imagebutton8) {
+                    options.inSampleSize = 4;
+                    bitmap = BitmapFactory.decodeFile(imagePath8, options);
+                    resize = Bitmap.createScaledBitmap(bitmap, 500, 500, true);
+                    Log.i("로그 8번째 들어옴 -->",bitmap.toString());
                     ExifInterface exif = null;
-                    try { exif = new ExifInterface(imagePath8); } catch (IOException e) { e.printStackTrace(); }
+                    try {
+                        exif = new ExifInterface(imagePath8);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     if (exif != null) {
                         exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-                        exifDegree = exifOrientationToDegrees(exifOrientation); } else { exifDegree = 0; }
+                        exifDegree = exifOrientationToDegrees(exifOrientation);
+                    } else {
+                        exifDegree = 0;
+                    }
                     picture8.setAdjustViewBounds(true);
-                    picture8.setImageBitmap(rotate(bitmap, exifDegree));
-                    pic8=2;
+                    picture8.setImageBitmap(rotate(resize, exifDegree));
+                    pic8 = 2;
                 }
-                if(id_view == R.id.Imagebutton9){
-                    Bitmap bitmap = BitmapFactory.decodeFile(imagePath9);
+                if (id_view == R.id.Imagebutton9) {
+                    options.inSampleSize = 4;
+                    bitmap = BitmapFactory.decodeFile(imagePath9, options);
+                    resize = Bitmap.createScaledBitmap(bitmap, 500, 500, true);
+                    Log.i("로그 9번째 들어옴 -->",bitmap.toString());
                     ExifInterface exif = null;
-                    try { exif = new ExifInterface(imagePath9); } catch (IOException e) { e.printStackTrace(); }
+                    try {
+                        exif = new ExifInterface(imagePath9);
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     if (exif != null) {
                         exifOrientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL);
-                        exifDegree = exifOrientationToDegrees(exifOrientation); } else { exifDegree = 0; }
+                        exifDegree = exifOrientationToDegrees(exifOrientation);
+                    } else {
+                        exifDegree = 0;
+                    }
                     picture9.setAdjustViewBounds(true);
-                    picture9.setImageBitmap(rotate(bitmap, exifDegree));
-                    pic9=2;
+                    picture9.setImageBitmap(rotate(resize, exifDegree));
+                    pic9 = 2;
                 }
             }
         }
-        if(requestCode==pick_from_album) {
-            if (id_view == R.id.Imagebutton1) {
-                if(data!=null) {
+        if (requestCode == pick_from_Multi_album) {
+            if (data.getClipData() == null) {
+                Toast.makeText(this, "다중선택이 불가한 기기입니다.", Toast.LENGTH_LONG).show();
+            } else {
+                ClipData clipData = data.getClipData();
+                Log.i("clipdata", String.valueOf(clipData.getItemCount()));
 
-                    System.out.println("들어왔어??22");
-                    imagePath1 = getPath(data.getData());
+                if (clipData.getItemCount() > 9) {
+                    Toast.makeText(CreateReviewScreenActivity.this, "사진은 9장까지 선택 가능합니다.", Toast.LENGTH_LONG).show();
+                } else if (clipData.getItemCount() == 1) {
+                    imagePath1 = getPath(clipData.getItemAt(0).getUri());
                     File f1 = new File(imagePath1);
                     picture1.setAdjustViewBounds(true);
                     picture1.setImageURI(Uri.fromFile(f1));
                     pic1 = 1;
+                } else if (clipData.getItemCount() > 1 && clipData.getItemCount() < 9) {
+                    for (int i = 0; i < clipData.getItemCount(); i++) {
+
+                        Log.i("3. single choice", String.valueOf(clipData.getItemAt(i).getUri()));
+                        imageListUri.add(clipData.getItemAt(i).getUri());
+                    }
+                    imagePath1 = getPath(imageListUri.get(0));
+                    File f1 = new File(imagePath1);
+                    picture1.setAdjustViewBounds(true);
+                    picture1.setImageURI(Uri.fromFile(f1));
+                    pic1 = 1;
+
+                    if (clipData.getItemCount() == 2) {
+                        imagePath2 = getPath(imageListUri.get(1));
+                    }
+                    if (clipData.getItemCount() == 3) {
+                        imagePath2 = getPath(imageListUri.get(1));
+                        imagePath3 = getPath(imageListUri.get(2));
+                    }
+                    if (clipData.getItemCount() == 4) {
+                        imagePath2 = getPath(imageListUri.get(1));
+                        imagePath3 = getPath(imageListUri.get(2));
+                        imagePath4 = getPath(imageListUri.get(3));
+                    }
+                    if (clipData.getItemCount() == 5) {
+                        imagePath2 = getPath(imageListUri.get(1));
+                        imagePath3 = getPath(imageListUri.get(2));
+                        imagePath4 = getPath(imageListUri.get(3));
+                        imagePath5 = getPath(imageListUri.get(4));
+                    }
+                    if (clipData.getItemCount() == 6) {
+                        imagePath2 = getPath(imageListUri.get(1));
+                        imagePath3 = getPath(imageListUri.get(2));
+                        imagePath4 = getPath(imageListUri.get(3));
+                        imagePath5 = getPath(imageListUri.get(4));
+                        imagePath6 = getPath(imageListUri.get(5));
+                    }
+                    if (clipData.getItemCount() == 7) {
+                        imagePath2 = getPath(imageListUri.get(1));
+                        imagePath3 = getPath(imageListUri.get(2));
+                        imagePath4 = getPath(imageListUri.get(3));
+                        imagePath5 = getPath(imageListUri.get(4));
+                        imagePath6 = getPath(imageListUri.get(5));
+                        imagePath7 = getPath(imageListUri.get(6));
+                    }
+                    if (clipData.getItemCount() == 8) {
+                        imagePath2 = getPath(imageListUri.get(1));
+                        imagePath3 = getPath(imageListUri.get(2));
+                        imagePath4 = getPath(imageListUri.get(3));
+                        imagePath5 = getPath(imageListUri.get(4));
+                        imagePath6 = getPath(imageListUri.get(5));
+                        imagePath7 = getPath(imageListUri.get(6));
+                        imagePath8 = getPath(imageListUri.get(7));
+                    }
+                    if (clipData.getItemCount() == 9) {
+                        imagePath2 = getPath(imageListUri.get(1));
+                        imagePath3 = getPath(imageListUri.get(2));
+                        imagePath4 = getPath(imageListUri.get(3));
+                        imagePath5 = getPath(imageListUri.get(4));
+                        imagePath6 = getPath(imageListUri.get(5));
+                        imagePath7 = getPath(imageListUri.get(6));
+                        imagePath8 = getPath(imageListUri.get(7));
+                        imagePath9 = getPath(imageListUri.get(8));
+                    }
+
+                    if (!imagePath2.equals("")) {
+                        File f2 = new File(imagePath2);
+                        picture2.setImageURI(Uri.fromFile(f2));
+                        pic2 = 1;
+                    }
+                    if (!imagePath3.equals("")) {
+                        File f3 = new File(imagePath3);
+                        picture3.setImageURI(Uri.fromFile(f3));
+                        pic3 = 1;
+                    }
+                    if (!imagePath4.equals("")) {
+                        File f4 = new File(imagePath4);
+                        picture4.setImageURI(Uri.fromFile(f4));
+                        pic4 = 1;
+                    }
+                    if (!imagePath5.equals("")) {
+                        File f5 = new File(imagePath5);
+                        picture5.setImageURI(Uri.fromFile(f5));
+                        pic5 = 1;
+                    }
+                    if (!imagePath6.equals("")) {
+                        File f6 = new File(imagePath6);
+                        picture6.setImageURI(Uri.fromFile(f6));
+                        pic6 = 1;
+                    }
+                    if (!imagePath7.equals("")) {
+                        File f7 = new File(imagePath7);
+                        picture7.setImageURI(Uri.fromFile(f7));
+                        pic7 = 1;
+                    }
+                    if (!imagePath8.equals("")) {
+                        File f8 = new File(imagePath8);
+                        picture8.setImageURI(Uri.fromFile(f8));
+                        pic8 = 1;
+                    }
+                    if (!imagePath2.equals("")) {
+                        File f9 = new File(imagePath9);
+                        picture9.setImageURI(Uri.fromFile(f9));
+                        pic9 = 1;
+                    }
+
                 }
             }
-            if (id_view == R.id.Imagebutton2) {
-                if(data!=null) {
-                    imagePath2 = getPath(data.getData());
-                    File f2 = new File(imagePath2);
-                    picture2.setAdjustViewBounds(true);
-                    picture2.setImageURI(Uri.fromFile(f2));
-                    pic2 = 1;
-                }
             }
-            if (id_view == R.id.Imagebutton3) {
-                if(data!=null) {
-                    imagePath3 = getPath(data.getData());
-                    File f3 = new File(imagePath3);
-                    picture3.setAdjustViewBounds(true);
-                    picture3.setImageURI(Uri.fromFile(f3));
-                    pic3 = 1;
+            if (requestCode == pick_from_album) {
+                if (id_view == R.id.Imagebutton1) {
+                    if (data != null) {
+
+                        imagePath1 = getPath(data.getData());
+                        File f1 = new File(imagePath1);
+                        picture1.setAdjustViewBounds(true);
+                        picture1.setImageURI(Uri.fromFile(f1));
+                        pic1 = 1;
+                    }
                 }
-            }
-            if (id_view == R.id.Imagebutton4) {
-                if(data!=null) {
-                    imagePath4 = getPath(data.getData());
-                    File f4 = new File(imagePath4);
-                    picture4.setAdjustViewBounds(true);
-                    picture4.setImageURI(Uri.fromFile(f4));
-                    pic4 = 1;
+                if (id_view == R.id.Imagebutton2) {
+                    if (data != null) {
+                        imagePath2 = getPath(data.getData());
+                        File f2 = new File(imagePath2);
+                        picture2.setAdjustViewBounds(true);
+                        picture2.setImageURI(Uri.fromFile(f2));
+                        pic2 = 1;
+                    }
                 }
-            }
-            if (id_view == R.id.Imagebutton5) {
-                if(data!=null) {
-                    imagePath5 = getPath(data.getData());
-                    File f5 = new File(imagePath5);
-                    picture5.setAdjustViewBounds(true);
-                    picture5.setImageURI(Uri.fromFile(f5));
-                    pic5 = 1;
+                if (id_view == R.id.Imagebutton3) {
+                    if (data != null) {
+                        imagePath3 = getPath(data.getData());
+                        File f3 = new File(imagePath3);
+                        picture3.setAdjustViewBounds(true);
+                        picture3.setImageURI(Uri.fromFile(f3));
+                        pic3 = 1;
+                    }
                 }
-            }
-            if (id_view == R.id.Imagebutton6) {
-                if(data!=null) {
-                    imagePath6 = getPath(data.getData());
-                    File f6 = new File(imagePath6);
-                    picture6.setAdjustViewBounds(true);
-                    picture6.setImageURI(Uri.fromFile(f6));
-                    pic6 = 1;
+                if (id_view == R.id.Imagebutton4) {
+                    if (data != null) {
+                        imagePath4 = getPath(data.getData());
+                        File f4 = new File(imagePath4);
+                        picture4.setAdjustViewBounds(true);
+                        picture4.setImageURI(Uri.fromFile(f4));
+                        pic4 = 1;
+                    }
                 }
-            }
-            if (id_view == R.id.Imagebutton7) {
-                if(data!=null) {
-                    imagePath7 = getPath(data.getData());
-                    File f7 = new File(imagePath7);
-                    picture7.setAdjustViewBounds(true);
-                    picture7.setImageURI(Uri.fromFile(f7));
-                    pic7 = 1;
+                if (id_view == R.id.Imagebutton5) {
+                    if (data != null) {
+                        imagePath5 = getPath(data.getData());
+                        File f5 = new File(imagePath5);
+                        picture5.setAdjustViewBounds(true);
+                        picture5.setImageURI(Uri.fromFile(f5));
+                        pic5 = 1;
+                    }
                 }
-            }
-            if (id_view == R.id.Imagebutton8) {
-                if(data!=null) {
-                    imagePath8 = getPath(data.getData());
-                    File f8 = new File(imagePath8);
-                    picture8.setAdjustViewBounds(true);
-                    picture8.setImageURI(Uri.fromFile(f8));
-                    pic8 = 1;
+                if (id_view == R.id.Imagebutton6) {
+                    if (data != null) {
+                        imagePath6 = getPath(data.getData());
+                        File f6 = new File(imagePath6);
+                        picture6.setAdjustViewBounds(true);
+                        picture6.setImageURI(Uri.fromFile(f6));
+                        pic6 = 1;
+                    }
                 }
-            }
-            if (id_view == R.id.Imagebutton9) {
-                if(data!=null) {
-                    imagePath9 = getPath(data.getData());
-                    File f9 = new File(imagePath9);
-                    picture9.setAdjustViewBounds(true);
-                    picture9.setImageURI(Uri.fromFile(f9));
-                    pic9 = 1;
+                if (id_view == R.id.Imagebutton7) {
+                    if (data != null) {
+                        imagePath7 = getPath(data.getData());
+                        File f7 = new File(imagePath7);
+                        picture7.setAdjustViewBounds(true);
+                        picture7.setImageURI(Uri.fromFile(f7));
+                        pic7 = 1;
+                    }
+                }
+                if (id_view == R.id.Imagebutton8) {
+                    if (data != null) {
+                        imagePath8 = getPath(data.getData());
+                        File f8 = new File(imagePath8);
+                        picture8.setAdjustViewBounds(true);
+                        picture8.setImageURI(Uri.fromFile(f8));
+                        pic8 = 1;
+                    }
+                }
+                if (id_view == R.id.Imagebutton9) {
+                    if (data != null) {
+                        imagePath9 = getPath(data.getData());
+                        File f9 = new File(imagePath9);
+                        picture9.setAdjustViewBounds(true);
+                        picture9.setImageURI(Uri.fromFile(f9));
+                        pic9 = 1;
+                    }
                 }
             }
         }
-    }
+
     //이미지가 저장될 파일을 만드는 함수
     private File createImageFile() throws IOException {
         String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
@@ -783,17 +1016,13 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
     public void RegisterButton (View view){
 
         //리뷰 저장 부분
-        //리뷰가 작성된 날짜
-        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.KOREA);
-        Date currentTime = new Date();
-        String mTime = simpleDateFormat.format(currentTime);
 
 
         Intent reviewIntent = getIntent();
 
         locationName = reviewIntent.getExtras().getString("NAME");
- //       int index = location_name.indexOf(" , ");
-  //      location_name = location_name.substring(0, index);
+        //       int index = location_name.indexOf(" , ");
+        //      location_name = location_name.substring(0, index);
         String locationCategory = reviewIntent.getExtras().getString("CATEGORY");
         String shortCategory = locationCategory.substring(locationCategory.lastIndexOf(">")+1);
         String locationAddress = reviewIntent.getExtras().getString("ADDRESS");
@@ -818,7 +1047,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
 
         //파이어베이스에는 특수문자가 들어가면 안되서 바꿔준다.
         if(nameAndAdress.contains("."))
-         nameAndAdress = nameAndAdress.replace(".", "");
+            nameAndAdress = nameAndAdress.replace(".", "");
         if(nameAndAdress.contains("#"))
             nameAndAdress = nameAndAdress.replace("#", "");
         if(nameAndAdress.contains("_"))

@@ -5,13 +5,9 @@ import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
-import android.media.Image;
-import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -84,19 +80,19 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     private BottomNavigationView mMainNav; //하단 메뉴 아이콘
     private FrameLayout mMainFrame, statsFrame;
     private Dialog reviewDialog;
-    private TextView mainMenu, location_categoryTextView, location_nameTextView, location_phoneTextView, location_addressTextView;
+    private TextView location_categoryTextView, location_nameTextView, location_phoneTextView, location_addressTextView;
     private ImageView tagShow1,tagShow2,tagShow3,tagShow4,tagShow5,tagShow6;
 
 
     //화면에서의 fragment들 선언
-    private MapFragment mapFragment; //NaverMapFragment안쓰고 따로 네이버에서 제공하는 클래스 사용하는 것임
+    static private MapFragment mapFragment; //NaverMapFragment안쓰고 따로 네이버에서 제공하는 클래스 사용하는 것임
     private ListFragment listFragment;
     private MypageFragment mypageFragment;
     private StatsFragment statsFragment;
 
     private Marker marker;
     private ArrayList<Marker> markers;
-    static String categoryName;
+    static String menuName, categoryName;
 
     // 리뷰 정보 담을 변수
     private ReviewList reviewList;
@@ -105,6 +101,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     private DatabaseReference mDatabase;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     final Context context;
+
     private String locationName, key, reviewerName, reviewDate, reviewDescription, locationNumber, userEmail, userName, locationCategory, shortCategory, locationAddress;
     private Boolean tag1, tag2, tag3, tag4, tag5, tag6;
     private String imageUrl1, imageUrl2, imageUrl3, imageUrl4, imageUrl5, imageUrl6, imageUrl7, imageUrl8, imageUrl9;
@@ -113,9 +110,6 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     {
         context = this;
     }
-
-
-
 
 
     @Override
@@ -131,12 +125,10 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         backPressCloseHandler = new BackPressCloseHandler(this);
 
         EditText editText = (EditText) findViewById(R.id.editSearch);
-        TextView mainMenu = (TextView)findViewById(R.id.main_menu);
         Button searchButton = (Button)findViewById(R.id.search_button);
 
         // 메인텍스트 기본 세팅
-        mainMenu.setText("지도");
-
+        this.menuName = "지도";
 
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,9 +159,6 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         categoryButton.setText(categoryName);
 
 
-
-
-
         categoryButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -186,10 +175,9 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                         System.out.println("categoryName : " + categoryName);
                         categoryButton.setText(categoryName);
 
-                        System.out.println("여기는 어떨까요? 님??: " + mainMenu.getText());
                         // 카테고리 누르면 해당 마커 뜸
 
-                        if(mainMenu.getText().toString().equals("지도")){
+                        if(MainScreenActivity.this.menuName.equals("지도")){
                             FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
                             fragmentTransaction.detach(mapFragment).commit();
                             setMapFragment();
@@ -207,11 +195,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
             }
         });
 
-
-        MapFragment mapFragment = (MapFragment)getSupportFragmentManager().findFragmentById(R.id.main_frame);
-
         reviewDialog = new Dialog(this); //회원가입 팝업 변수 선언
-
 
         mMainFrame = (FrameLayout) findViewById(R.id.main_frame);
         mMainNav = (BottomNavigationView) findViewById(R.id.main_nav);
@@ -245,6 +229,9 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         setMapFragment();
 
 
+        // 해당 프래그먼트로 돌아감
+//        if()
+
 
         mMainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -256,7 +243,8 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                         categoryName = "전체";
                         categoryButton.setText(categoryName);
                         categoryButton.setVisibility(View.VISIBLE);
-                        mainMenu.setText("지도");
+//                        mainMenu.setText("지도");
+                        MainScreenActivity.this.menuName = "지도";
                         check = 0;
                         setMapFragment();
                         return true;
@@ -265,13 +253,15 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                         categoryName = "전체";
                         categoryButton.setText(categoryName);
                         categoryButton.setVisibility(View.VISIBLE);
-                        mainMenu.setText("장소 리스트");
-                        System.out.println("themap3 : " + mainMenu.getText());
+//                        mainMenu.setText("장소 리스트");
+                        MainScreenActivity.this.menuName = "장소 리스트";
+//                        System.out.println("themap3 : " + mainMenu.getText());
                         setFragment(listFragment);
                         return true;
 
                     case R.id.nav_mypage:
-                        // 카테고리 숨기기
+                        MainScreenActivity.this.menuName = "마이 페이지";
+                       // 카테고리 숨기기
                         categoryButton.setVisibility(View.INVISIBLE);
 
                         if(currentUser == null){
@@ -313,8 +303,6 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                 }
             }
         });
-
-
     }
 
     // 뒤로가기 버튼 두번눌렀을때
@@ -323,7 +311,6 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
 
     // getter
     public String getCategoryName() {
-        System.out.println("blah0 : " + categoryName);
         return categoryName;
     }
 
@@ -554,8 +541,6 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                         if(myreview.getTag5() == true) tag_array[4]  = tag_array[4] +  1;
                         if(myreview.getTag6() == true) tag_array[5]  = tag_array[5] +  1;
                         count++;
-
-
                     }
 
                     @Override
@@ -570,9 +555,6 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                     @Override
                     public void onCancelled(@NonNull DatabaseError databaseError) { }
                 });
-
-
-
             }
 
             @Override
@@ -629,7 +611,6 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                 check ++;
             }
         });
-
     }
 
 
@@ -655,5 +636,24 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    public String getMenuName() {
+        return menuName;
+    }
+
+    public void setMenuName(String menuName) {
+        this.menuName = menuName;
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        mapFragment.onSaveInstanceState(outState);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
     }
 }

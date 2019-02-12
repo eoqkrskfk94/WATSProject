@@ -38,13 +38,6 @@
             android:layout_weight="1"
             android:background="@drawable/search_icon" />
 
-        <TextView
-            android:id="@+id/main_menu"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="visible"
-            tools:text="지도" />
-
     </LinearLayout>
 
     <FrameLayout

@@ -376,8 +376,8 @@
                             android:id="@+id/Imagebutton5"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:onClick="onClick"
                             android:layout_gravity="center"
+                            android:onClick="onClick"
                             app:srcCompat="@drawable/sample_pic" />
 
 
@@ -392,8 +392,8 @@
                             android:id="@+id/Imagebutton6"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:onClick="onClick"
                             android:layout_gravity="center"
+                            android:onClick="onClick"
                             app:srcCompat="@drawable/sample_pic" />
 
                     </LinearLayout>
@@ -445,7 +445,6 @@
 
 
                     </LinearLayout>
-
 
 
                 </LinearLayout>

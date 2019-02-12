@@ -293,6 +293,22 @@
                         android:layout_marginBottom="5dp"
                         android:orientation="vertical">
 
+                        <Button
+                            android:id="@+id/Multi_Album_Button"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_gravity="center"
+                            android:onClick="onClick"
+                            android:text="멀티앨범" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="vertical">
+
                         <ImageView
                             android:id="@+id/Imagebutton1"
                             android:layout_width="100dp"

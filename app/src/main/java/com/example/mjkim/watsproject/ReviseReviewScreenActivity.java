@@ -553,7 +553,7 @@ public class ReviseReviewScreenActivity extends AppCompatActivity {
                     BitmapFactory.Options options=new BitmapFactory.Options();
                     options.inSampleSize=4;
                     Bitmap bitmap = BitmapFactory.decodeFile(imagePath1,options);
-                    Bitmap resize = Bitmap.createScaledBitmap(bitmap,300,400,true);
+                    Bitmap resize = Bitmap.createScaledBitmap(bitmap,500,500,true);
 
 
                     ExifInterface exif = null;

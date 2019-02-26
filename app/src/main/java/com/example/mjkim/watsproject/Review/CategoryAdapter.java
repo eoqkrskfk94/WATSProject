@@ -148,8 +148,6 @@ public class CategoryAdapter extends BaseAdapter {
 
 
     public void GoReview(int a){
-        // 피니시해야 안 꺼짐
-        m_activity.finish();
         Intent intent = new Intent(m_activity, LocationDetailFromMapScreenActivity.class);
         intent.putExtra("IMAGE1", arr.get(a).getImageUrl1());
         intent.putExtra("IMAGE2", arr.get(a).getImageUrl2());

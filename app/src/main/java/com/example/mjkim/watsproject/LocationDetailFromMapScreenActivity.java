@@ -276,8 +276,6 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LocationDetailFromMapScreenActivity.this, MainScreenActivity.class);
-                startActivity(intent);
                 finish();
             }
         });
@@ -544,13 +542,6 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MoreReviewScreenActivity.class);
         intent.putExtra("SELECT", 1);
         startActivity(intent);
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, MainScreenActivity.class);
-        startActivity(intent);
-        super.onBackPressed();
     }
 }
 

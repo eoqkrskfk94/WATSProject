@@ -52,6 +52,7 @@ import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.CameraUpdate;
 import com.naver.maps.map.LocationTrackingMode;
 import com.naver.maps.map.MapFragment;
+import com.naver.maps.map.MapView;
 import com.naver.maps.map.NaverMap;
 import com.naver.maps.map.OnMapReadyCallback;
 import com.naver.maps.map.overlay.LocationOverlay;
@@ -71,6 +72,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
     Dialog myDialog;
+    private MapView mapView;
     private ReviewAdapter reviewAdapter;
 
     static public int totalLocationCount;
@@ -133,7 +135,6 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
-                finish();
                 Intent intent = new Intent(MainScreenActivity.this, SearchDetailScreenActivity.class);
                 intent.putExtra("SEARCH", editText.getText().toString());
                 startActivity(intent);
@@ -275,6 +276,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                             loginButton.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
+                                    finish();
                                     Intent intent=new Intent(MainScreenActivity.this,LoginScreenActivity.class);
                                     startActivity(intent);
                                 }
@@ -303,6 +305,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                 }
             }
         });
+
     }
 
     // 뒤로가기 버튼 두번눌렀을때
@@ -316,6 +319,11 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
 
     // fragment 화면을 출력해주는 함수
     private void setFragment(Fragment fragment) {
+        if (mapFragment == null) {
+            System.out.println("yerim");
+            mapFragment = MapFragment.newInstance();
+        }
+
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_frame, fragment);
         fragmentTransaction.commit();
@@ -510,7 +518,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                             locationBox.setOnClickListener(new View.OnClickListener() {
                                 @Override
                                 public void onClick(View view) {
-                                    finish();
+//                                    finish();
                                     Intent intent=new Intent(MainScreenActivity.this,LocationDetailFromMapScreenActivity.class);
                                     intent.putExtra("NAME", myreview.getLocation_name());
                                     intent.putExtra("CATEGORY", myreview.getLocation_category());
@@ -648,8 +656,8 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
 
     @Override
     protected void onSaveInstanceState(Bundle outState) {
-        mapFragment.onSaveInstanceState(outState);
         super.onSaveInstanceState(outState);
+        mapFragment.onSaveInstanceState(outState);
     }
 
     @Override

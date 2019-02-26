@@ -44,8 +44,7 @@ public class SearchDetailScreenActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent=new Intent(SearchDetailScreenActivity.this,MainScreenActivity.class);
-                startActivity(intent);
+                finish();
             }
 
         });

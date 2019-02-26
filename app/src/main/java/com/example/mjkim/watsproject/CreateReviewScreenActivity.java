@@ -152,6 +152,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
         Multi_Album_Button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+             //   finish();
                 doTakeMultiAlbumAction();
             }
         });
@@ -677,130 +678,135 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                 }
             }
         }
+
         if (requestCode == pick_from_Multi_album) {
-            if (data.getClipData() == null) {
-                Toast.makeText(this, "다중선택이 불가한 기기입니다.", Toast.LENGTH_LONG).show();
+            if (data == null) {
+
             } else {
-                ClipData clipData = data.getClipData();
-                Log.i("clipdata", String.valueOf(clipData.getItemCount()));
+                if (data.getClipData() == null) {
+                    Toast.makeText(this, "다중선택이 불가한 기기입니다.", Toast.LENGTH_LONG).show();
+                } else {
+                    ClipData clipData = data.getClipData();
+                    Log.i("clipdata", String.valueOf(clipData.getItemCount()));
 
-                if (clipData.getItemCount() > 9) {
-                    Toast.makeText(CreateReviewScreenActivity.this, "사진은 9장까지 선택 가능합니다.", Toast.LENGTH_LONG).show();
-                } else if (clipData.getItemCount() == 1) {
-                    imagePath1 = getPath(clipData.getItemAt(0).getUri());
-                    File f1 = new File(imagePath1);
-                    picture1.setAdjustViewBounds(true);
-                    picture1.setImageURI(Uri.fromFile(f1));
-                    pic1 = 1;
-                } else if (clipData.getItemCount() > 1 && clipData.getItemCount() < 9) {
-                    for (int i = 0; i < clipData.getItemCount(); i++) {
+                    if (clipData.getItemCount() > 9) {
+                        Toast.makeText(CreateReviewScreenActivity.this, "사진은 9장까지 선택 가능합니다.", Toast.LENGTH_LONG).show();
+                    } else if (clipData.getItemCount() == 1) {
+                        imagePath1 = getPath(clipData.getItemAt(0).getUri());
+                        File f1 = new File(imagePath1);
+                        picture1.setAdjustViewBounds(true);
+                        picture1.setImageURI(Uri.fromFile(f1));
+                        pic1 = 1;
+                    } else if (clipData.getItemCount() > 1 && clipData.getItemCount() < 9) {
+                        for (int i = 0; i < clipData.getItemCount(); i++) {
 
-                        Log.i("3. single choice", String.valueOf(clipData.getItemAt(i).getUri()));
-                        imageListUri.add(clipData.getItemAt(i).getUri());
-                    }
-                    imagePath1 = getPath(imageListUri.get(0));
-                    File f1 = new File(imagePath1);
-                    picture1.setAdjustViewBounds(true);
-                    picture1.setImageURI(Uri.fromFile(f1));
-                    pic1 = 1;
+                            Log.i("3. single choice", String.valueOf(clipData.getItemAt(i).getUri()));
+                            imageListUri.add(clipData.getItemAt(i).getUri());
+                        }
+                        imagePath1 = getPath(imageListUri.get(0));
+                        File f1 = new File(imagePath1);
+                        picture1.setAdjustViewBounds(true);
+                        picture1.setImageURI(Uri.fromFile(f1));
+                        pic1 = 1;
 
-                    if (clipData.getItemCount() == 2) {
-                        imagePath2 = getPath(imageListUri.get(1));
-                    }
-                    if (clipData.getItemCount() == 3) {
-                        imagePath2 = getPath(imageListUri.get(1));
-                        imagePath3 = getPath(imageListUri.get(2));
-                    }
-                    if (clipData.getItemCount() == 4) {
-                        imagePath2 = getPath(imageListUri.get(1));
-                        imagePath3 = getPath(imageListUri.get(2));
-                        imagePath4 = getPath(imageListUri.get(3));
-                    }
-                    if (clipData.getItemCount() == 5) {
-                        imagePath2 = getPath(imageListUri.get(1));
-                        imagePath3 = getPath(imageListUri.get(2));
-                        imagePath4 = getPath(imageListUri.get(3));
-                        imagePath5 = getPath(imageListUri.get(4));
-                    }
-                    if (clipData.getItemCount() == 6) {
-                        imagePath2 = getPath(imageListUri.get(1));
-                        imagePath3 = getPath(imageListUri.get(2));
-                        imagePath4 = getPath(imageListUri.get(3));
-                        imagePath5 = getPath(imageListUri.get(4));
-                        imagePath6 = getPath(imageListUri.get(5));
-                    }
-                    if (clipData.getItemCount() == 7) {
-                        imagePath2 = getPath(imageListUri.get(1));
-                        imagePath3 = getPath(imageListUri.get(2));
-                        imagePath4 = getPath(imageListUri.get(3));
-                        imagePath5 = getPath(imageListUri.get(4));
-                        imagePath6 = getPath(imageListUri.get(5));
-                        imagePath7 = getPath(imageListUri.get(6));
-                    }
-                    if (clipData.getItemCount() == 8) {
-                        imagePath2 = getPath(imageListUri.get(1));
-                        imagePath3 = getPath(imageListUri.get(2));
-                        imagePath4 = getPath(imageListUri.get(3));
-                        imagePath5 = getPath(imageListUri.get(4));
-                        imagePath6 = getPath(imageListUri.get(5));
-                        imagePath7 = getPath(imageListUri.get(6));
-                        imagePath8 = getPath(imageListUri.get(7));
-                    }
-                    if (clipData.getItemCount() == 9) {
-                        imagePath2 = getPath(imageListUri.get(1));
-                        imagePath3 = getPath(imageListUri.get(2));
-                        imagePath4 = getPath(imageListUri.get(3));
-                        imagePath5 = getPath(imageListUri.get(4));
-                        imagePath6 = getPath(imageListUri.get(5));
-                        imagePath7 = getPath(imageListUri.get(6));
-                        imagePath8 = getPath(imageListUri.get(7));
-                        imagePath9 = getPath(imageListUri.get(8));
-                    }
+                        if (clipData.getItemCount() == 2) {
+                            imagePath2 = getPath(imageListUri.get(1));
+                        }
+                        if (clipData.getItemCount() == 3) {
+                            imagePath2 = getPath(imageListUri.get(1));
+                            imagePath3 = getPath(imageListUri.get(2));
+                        }
+                        if (clipData.getItemCount() == 4) {
+                            imagePath2 = getPath(imageListUri.get(1));
+                            imagePath3 = getPath(imageListUri.get(2));
+                            imagePath4 = getPath(imageListUri.get(3));
+                        }
+                        if (clipData.getItemCount() == 5) {
+                            imagePath2 = getPath(imageListUri.get(1));
+                            imagePath3 = getPath(imageListUri.get(2));
+                            imagePath4 = getPath(imageListUri.get(3));
+                            imagePath5 = getPath(imageListUri.get(4));
+                        }
+                        if (clipData.getItemCount() == 6) {
+                            imagePath2 = getPath(imageListUri.get(1));
+                            imagePath3 = getPath(imageListUri.get(2));
+                            imagePath4 = getPath(imageListUri.get(3));
+                            imagePath5 = getPath(imageListUri.get(4));
+                            imagePath6 = getPath(imageListUri.get(5));
+                        }
+                        if (clipData.getItemCount() == 7) {
+                            imagePath2 = getPath(imageListUri.get(1));
+                            imagePath3 = getPath(imageListUri.get(2));
+                            imagePath4 = getPath(imageListUri.get(3));
+                            imagePath5 = getPath(imageListUri.get(4));
+                            imagePath6 = getPath(imageListUri.get(5));
+                            imagePath7 = getPath(imageListUri.get(6));
+                        }
+                        if (clipData.getItemCount() == 8) {
+                            imagePath2 = getPath(imageListUri.get(1));
+                            imagePath3 = getPath(imageListUri.get(2));
+                            imagePath4 = getPath(imageListUri.get(3));
+                            imagePath5 = getPath(imageListUri.get(4));
+                            imagePath6 = getPath(imageListUri.get(5));
+                            imagePath7 = getPath(imageListUri.get(6));
+                            imagePath8 = getPath(imageListUri.get(7));
+                        }
+                        if (clipData.getItemCount() == 9) {
+                            imagePath2 = getPath(imageListUri.get(1));
+                            imagePath3 = getPath(imageListUri.get(2));
+                            imagePath4 = getPath(imageListUri.get(3));
+                            imagePath5 = getPath(imageListUri.get(4));
+                            imagePath6 = getPath(imageListUri.get(5));
+                            imagePath7 = getPath(imageListUri.get(6));
+                            imagePath8 = getPath(imageListUri.get(7));
+                            imagePath9 = getPath(imageListUri.get(8));
+                        }
 
-                    if (!imagePath2.equals("")) {
-                        File f2 = new File(imagePath2);
-                        picture2.setImageURI(Uri.fromFile(f2));
-                        pic2 = 1;
-                    }
-                    if (!imagePath3.equals("")) {
-                        File f3 = new File(imagePath3);
-                        picture3.setImageURI(Uri.fromFile(f3));
-                        pic3 = 1;
-                    }
-                    if (!imagePath4.equals("")) {
-                        File f4 = new File(imagePath4);
-                        picture4.setImageURI(Uri.fromFile(f4));
-                        pic4 = 1;
-                    }
-                    if (!imagePath5.equals("")) {
-                        File f5 = new File(imagePath5);
-                        picture5.setImageURI(Uri.fromFile(f5));
-                        pic5 = 1;
-                    }
-                    if (!imagePath6.equals("")) {
-                        File f6 = new File(imagePath6);
-                        picture6.setImageURI(Uri.fromFile(f6));
-                        pic6 = 1;
-                    }
-                    if (!imagePath7.equals("")) {
-                        File f7 = new File(imagePath7);
-                        picture7.setImageURI(Uri.fromFile(f7));
-                        pic7 = 1;
-                    }
-                    if (!imagePath8.equals("")) {
-                        File f8 = new File(imagePath8);
-                        picture8.setImageURI(Uri.fromFile(f8));
-                        pic8 = 1;
-                    }
-                    if (!imagePath2.equals("")) {
-                        File f9 = new File(imagePath9);
-                        picture9.setImageURI(Uri.fromFile(f9));
-                        pic9 = 1;
-                    }
+                        if (!imagePath2.equals("")) {
+                            File f2 = new File(imagePath2);
+                            picture2.setImageURI(Uri.fromFile(f2));
+                            pic2 = 1;
+                        }
+                        if (!imagePath3.equals("")) {
+                            File f3 = new File(imagePath3);
+                            picture3.setImageURI(Uri.fromFile(f3));
+                            pic3 = 1;
+                        }
+                        if (!imagePath4.equals("")) {
+                            File f4 = new File(imagePath4);
+                            picture4.setImageURI(Uri.fromFile(f4));
+                            pic4 = 1;
+                        }
+                        if (!imagePath5.equals("")) {
+                            File f5 = new File(imagePath5);
+                            picture5.setImageURI(Uri.fromFile(f5));
+                            pic5 = 1;
+                        }
+                        if (!imagePath6.equals("")) {
+                            File f6 = new File(imagePath6);
+                            picture6.setImageURI(Uri.fromFile(f6));
+                            pic6 = 1;
+                        }
+                        if (!imagePath7.equals("")) {
+                            File f7 = new File(imagePath7);
+                            picture7.setImageURI(Uri.fromFile(f7));
+                            pic7 = 1;
+                        }
+                        if (!imagePath8.equals("")) {
+                            File f8 = new File(imagePath8);
+                            picture8.setImageURI(Uri.fromFile(f8));
+                            pic8 = 1;
+                        }
+                        if (!imagePath2.equals("")) {
+                            File f9 = new File(imagePath9);
+                            picture9.setImageURI(Uri.fromFile(f9));
+                            pic9 = 1;
+                        }
 
+                    }
                 }
             }
-            }
+        }
             if (requestCode == pick_from_album) {
                 if (id_view == R.id.Imagebutton1) {
                     if (data != null) {

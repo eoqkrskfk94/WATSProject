@@ -18,6 +18,7 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.example.mjkim.watsproject.OtherClasses.ImageBigShowActivity;
 import com.example.mjkim.watsproject.OtherClasses.PagerInAdapter;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -29,6 +30,8 @@ public class CertainReviewScreenActivity extends AppCompatActivity {
     Dialog myDialog;
     List<Drawable> temp;
     List<StorageReference> refList;
+
+    List<String> stringList;
     String image1,image2,image3,image4,image5,image6,image7,image8,image9;
     StorageReference ref,ref2,ref3,ref4,ref5,ref6,ref7,ref8,ref9;
     FirebaseStorage storage = FirebaseStorage.getInstance();
@@ -52,13 +55,16 @@ public class CertainReviewScreenActivity extends AppCompatActivity {
         });
 
 
-        TextView userName = (TextView) findViewById(R.id.vi_name);
+        TextView userNickName = (TextView) findViewById(R.id.vi_name);
         TextView reviewDate = (TextView) findViewById(R.id.vi_date);
         TextView reviewDescription = (TextView) findViewById(R.id.vi_description);
 
-        userName.setText(getIntent().getExtras().getString("Name"));
+        userNickName.setText(getIntent().getExtras().getString("NickName"));
         reviewDate.setText(getIntent().getExtras().getString("Date"));
         reviewDescription.setText(getIntent().getExtras().getString("Review"));
+        if(reviewDescription.getText().toString().isEmpty()) {
+            reviewDescription.setHint("글 내용이 없습니다. ");
+        }
 
         ImageView tagShow1 = (ImageView)findViewById(R.id.tag_done_1); //태그 이미지 선언
         ImageView tagShow2 = (ImageView)findViewById(R.id.tag_done_2);
@@ -196,41 +202,57 @@ public class CertainReviewScreenActivity extends AppCompatActivity {
         ref8 = FirebaseStorage.getInstance().getReference("images/"+image8);
         ref9 = FirebaseStorage.getInstance().getReference("images/"+image9);
 
-        temp = new ArrayList<>();
-        temp.add(ContextCompat.getDrawable(CertainReviewScreenActivity.this,R.drawable.restroom));
-        temp.add(ContextCompat.getDrawable(CertainReviewScreenActivity.this,R.drawable.restroom));
-        temp.add(ContextCompat.getDrawable(CertainReviewScreenActivity.this,R.drawable.restroom));
 
-        System.out.println("신지현바보1"+image2);
         refList=new ArrayList<>();
+        stringList=new ArrayList<>();
+
         if(!image1.equals(""))
-            refList.add(ref);
+        {    refList.add(ref);
+            System.out.println("이미지 image1 : "+image1);
+            stringList.add(image1); }
         if(!image2.equals(""))
-         refList.add(ref2);
+        {    refList.add(ref2);   stringList.add(image2);}
         if(!image3.equals(""))
-          refList.add(ref3);
+        {    refList.add(ref3);   stringList.add(image3);}
         if(!image4.equals(""))
-           refList.add(ref4);
+        {    refList.add(ref4);   stringList.add(image4);}
         if(!image5.equals(""))
-           refList.add(ref5);
+        {    refList.add(ref5);   stringList.add(image5);}
         if(!image6.equals(""))
-          refList.add(ref6);
+        {    refList.add(ref6);   stringList.add(image6);}
         if(!image7.equals(""))
-          refList.add(ref7);
+        {    refList.add(ref7);   stringList.add(image7);}
         if(!image8.equals(""))
-           refList.add(ref8);
+        {    refList.add(ref8);   stringList.add(image8);}
         if(!image9.equals(""))
-            refList.add(ref9);
+        {    refList.add(ref9);   stringList.add(image9);}
+//
+//        stringList.add(image1);
+//        stringList.add(image2);
+//        stringList.add(image3);
+//        stringList.add(image4);
+//        stringList.add(image5);
+//        stringList.add(image6);
+//        stringList.add(image7);
+//        stringList.add(image8);
+//        stringList.add(image9);
 
 
-  //      PagerInAdapter adapter=new PagerInAdapter(temp,this);
-       PagerInAdapter adapter=new PagerInAdapter(refList,this);
+
+       PagerInAdapter adapter=new PagerInAdapter(refList,stringList,this);
         final ViewPager viewPager = (ViewPager) findViewById(R.id.photos_viewpager);
-//        PagerInAdapter adapter = new PagerInAdapter(this);
+
+        //사진이 하나라도 있으면 등록된 사진이 없다는 뒷배경을 null로 만들어줌.
+        if(!image1.equals("") || !image2.equals("") || !image3.equals("") || !image4.equals("") || !image5.equals("") || !image6.equals("") || !image7.equals("") || !image8.equals("") ||  !image2.equals("")) {
+            viewPager.setBackground(null);
+        }
+
         viewPager.setAdapter(adapter);
 
-
+        //사진 밑에 동그라미(사진 갯수)
         TabLayout tabLayout = (TabLayout)findViewById(R.id.tab_layout);
         tabLayout.setupWithViewPager(viewPager, true);
+
     }
+
 }

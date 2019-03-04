@@ -12,12 +12,14 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.ViewTreeObserver;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mjkim.watsproject.Naver.NaverBlogAdapter;
 import com.example.mjkim.watsproject.Naver.NaverBlogList;
@@ -57,7 +59,6 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
     Boolean tag1, tag2, tag3, tag4, tag5, tag6;
     String locationName, locationCategory, shortCategory, locationAddress, locationNumber, reviewDescription, userEmail, userName, userNickName, key, reviewDate;
     double locationMapx, locationMapy;
-
     String location_name, location_category, short_category, location_address, location_number;
     double location_x, location_y;
     String imageUrl1,imageUrl2,imageUrl3,imageUrl4,imageUrl5,imageUrl6,imageUrl7,imageUrl8,imageUrl9;
@@ -75,8 +76,14 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
         // 제일 위부터 보기
         scrollView = new ScrollView(this);
         scrollView.findViewById(R.id.scroll_view);
-        scrollView.scrollTo(0,600);
-
+        scrollView.post(new Runnable() {
+            @Override
+            public void run() {
+                scrollView.scrollTo(0, 0);
+                scrollView.pageScroll(View.FOCUS_UP);
+                scrollView.smoothScrollTo(0,0);
+            }
+        });
 
         myDialog = new Dialog(this); //팝업 변수 선언
         Intent intent = getIntent();
@@ -97,6 +104,16 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
         ImageView tagShow4 = (ImageView)findViewById(R.id.tag_done_4);
         ImageView tagShow5 = (ImageView)findViewById(R.id.tag_done_5);
         ImageView tagShow6 = (ImageView)findViewById(R.id.tag_done_6);
+
+        Button shareButton = (Button)findViewById(R.id.share_button);
+
+        // 공유하기 준비중
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(LocationDetailFromMapScreenActivity.this, "준비중입니다", Toast.LENGTH_SHORT).show();
+            }
+        });
 
         tagShow1.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -259,8 +276,6 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LocationDetailFromMapScreenActivity.this, MainScreenActivity.class);
-                startActivity(intent);
                 finish();
             }
         });
@@ -379,6 +394,7 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
                         locationMapx = myreview.getMapx();
                         locationMapy = myreview.getMapy();
                         userName = myreview.getUserName();
+                        userNickName = myreview.getUserNickName();
                         reviewDate = myreview.getDate();
                         tag1 = myreview.getTag1();
                         tag2 = myreview.getTag2();
@@ -492,7 +508,7 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
                 reviewListView.setAdapter(mapReviewAdapter);
                 System.out.println("리스트 길이3: " + reviewLists.size());
             }
-        }, 900);
+        }, 1000);
 
         Button moreReviewButton = (Button)findViewById(R.id.see_more_review);  //리뷰 전체보기 버튼
         moreReviewButton.setOnClickListener(new View.OnClickListener() {
@@ -526,13 +542,6 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MoreReviewScreenActivity.class);
         intent.putExtra("SELECT", 1);
         startActivity(intent);
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, MainScreenActivity.class);
-        startActivity(intent);
-        super.onBackPressed();
     }
 }
 

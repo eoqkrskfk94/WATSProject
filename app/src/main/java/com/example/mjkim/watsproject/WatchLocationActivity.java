@@ -1,6 +1,7 @@
 package com.example.mjkim.watsproject;
 
 import android.app.Activity;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -19,7 +20,7 @@ import com.naver.maps.map.overlay.Marker;
 public class WatchLocationActivity extends Activity implements OnMapReadyCallback{
     private MapView mapView;
     private Button backButton;
-    public static String location_name, location_category, location_address, location_number;
+    public static String shortLocationName, location_name, location_category, location_address, location_number;
     public static double location_x, location_y;
     private Marker marker;
 
@@ -41,6 +42,9 @@ public class WatchLocationActivity extends Activity implements OnMapReadyCallbac
 //        int index = getIntent().getExtras().getString("NAME").indexOf(" , ");
 //        location_name = getIntent().getExtras().getString("NAME").substring(0, index);
         location_name = getIntent().getExtras().getString("NAME");
+        System.out.println("tired : " + location_name);
+        int nameIndex = location_name.indexOf(" ,");
+        shortLocationName = location_name.substring(0, nameIndex+1);
         location_category = getIntent().getExtras().getString("CATEGORY");
         location_address = getIntent().getExtras().getString("ADDRESS");
         location_number = getIntent().getExtras().getString("TELEPHONE");
@@ -112,8 +116,10 @@ public class WatchLocationActivity extends Activity implements OnMapReadyCallbac
         marker = new Marker(new LatLng(oGeo.getY(), oGeo.getX()));
         marker.setHeight(110);
         marker.setWidth(80);
-        marker.setCaptionText(location_name);
+        marker.setCaptionText(shortLocationName);
         marker.setHideCollidedSymbols(true);
+        marker.setCaptionTextSize(16);
+        marker.setCaptionColor(Color.parseColor("#1502F8"));
         marker.setMap(naverMap);
         System.out.println("newmap5 : " + location_x + location_y);
 

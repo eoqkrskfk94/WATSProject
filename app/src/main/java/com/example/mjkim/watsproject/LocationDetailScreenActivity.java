@@ -18,6 +18,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.ScrollView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.mjkim.watsproject.Naver.NaverBlogAdapter;
 import com.example.mjkim.watsproject.Naver.NaverBlogList;
@@ -69,8 +70,8 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
         // 제일 위부터 보기
         scrollView = new ScrollView(this);
         scrollView.findViewById(R.id.scroll_view);
-        scrollView.scrollTo(0,0);
-
+//        scrollView.fullScroll(ScrollView.FOCUS_UP);
+        scrollView.smoothScrollTo(0, 0);
 
         myDialog = new Dialog(this); //팝업 변수 선언
         Intent intent = getIntent();
@@ -199,8 +200,8 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
 
         //장소 정보 화면 출력
-//        String location_name, location_category, location_addess, location_number;
-//        double location_x, location_y;
+        String location_name, location_category, location_addess, location_number;
+        double location_x, location_y;
 
         location_name = getIntent().getExtras().getString("NAME");
         location_category = getIntent().getExtras().getString("CATEGORY");
@@ -245,20 +246,30 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
         Button backButton = (Button)findViewById(R.id.back_button);
         Button createReviewButton = (Button)findViewById(R.id.c_review_button);
+        Button shareButton = (Button)findViewById(R.id.share_button);
 
         //돌아가기 버튼 눌렀을때 전 화면을 돌아간다
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 장소리스트에서 후기 들어왔을 때
-                if(getIntent().getExtras().getInt("Check") == 1) {
-                    Intent intent = new Intent(LocationDetailScreenActivity.this, MainScreenActivity.class);
-                    startActivity(intent);
-                }
-                // 검색에서 후기 들어왔을 때
-                else {
-                    finish();
-                }
+//                // 장소리스트에서 후기 들어왔을 때
+//                if(getIntent().getExtras().getInt("Check") == 1) {
+////                    Intent intent = new Intent(LocationDetailScreenActivity.this, MainScreenActivity.class);
+////                    startActivity(intent);
+//                }
+//                // 검색에서 후기 들어왔을 때
+//                else {
+//                    finish();
+//                }
+                finish();
+            }
+        });
+
+        // 공유하기 준비중
+        shareButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(LocationDetailScreenActivity.this, "준비중입니다", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -326,11 +337,14 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
             blogListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 50));
         }
         else if(blogList.size() == 1) {
-            blogListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 700));
+            blogListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         }
         else if(blogList.size() == 2) {
-            blogListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, 1500));
+            View view = getLayoutInflater().inflate(R.layout.review_list_box, null);
+            View view2 = view.findViewById(R.id.list_size);
+            blogListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, view2.getLayoutParams().height * 2 + 200));
         }
+
 
         naverBlogAdapter = new NaverBlogAdapter(LocationDetailScreenActivity.this, blogList);
         blogListView.setAdapter(naverBlogAdapter);
@@ -444,8 +458,9 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
                 System.out.println("count0 : " + reviewLists.size());
                 reviewAdapter = new ReviewAdapter(LocationDetailScreenActivity.this, reviewLists);
                 reviewListView.setAdapter(reviewAdapter);
+
             }
-        }, 900);
+        }, 1000);
 
         Button moreReviewButton = (Button)findViewById(R.id.see_more_review);  //리뷰 전체보기 버튼
         moreReviewButton.setOnClickListener(new View.OnClickListener() {

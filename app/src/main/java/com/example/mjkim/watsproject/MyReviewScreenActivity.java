@@ -100,7 +100,6 @@ public class MyReviewScreenActivity extends AppCompatActivity {
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                         ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
                         key=dataSnapshot.getKey();
-                        System.out.println("삭제삭제"+key);
                         locationName = myreview.getLocation_name();
                         reviewDate = myreview.getDate();
                         tag1 = myreview.getTag1();
@@ -202,15 +201,8 @@ public class MyReviewScreenActivity extends AppCompatActivity {
 
 
             }
-        }, 2300);
+        }, 2000);
 
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, MainScreenActivity.class);
-        startActivity(intent);
-        super.onBackPressed();
     }
 
 
@@ -218,7 +210,5 @@ public class MyReviewScreenActivity extends AppCompatActivity {
     public void BackButton(View view) {
         System.out.println("cancel");
         finish();
-        Intent intent = new Intent(this, MainScreenActivity.class);
-        startActivity(intent);
     }
 }

@@ -7,6 +7,12 @@ public class UserInformation {
     private String userNickname;
     private String userEmail;
     private String userName;
+    private String profileUri;
+
+
+    public String getProfileUri() { return profileUri; }
+
+    public void setProfileUri(String profileUri) { this.profileUri = profileUri; }
 
     public String getUserName() {
         return userName;
@@ -65,6 +71,15 @@ public class UserInformation {
         this.userMonth=userMonth;
         this.userDay=userDay;
         this.userNickname=userNickname;
-
     }
+    public UserInformation(String userEmail, String userName, String userYear,String userMonth, String userDay, String userNickname,String profileUri){
+        this.userEmail=userEmail;
+        this.userName=userName;
+        this.userYear=userYear;
+        this.userMonth=userMonth;
+        this.userDay=userDay;
+        this.userNickname=userNickname;
+        this.profileUri=profileUri;
+    }
+
 }

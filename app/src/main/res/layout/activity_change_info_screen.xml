@@ -191,7 +191,7 @@
                 android:background="@drawable/insert_box"
                 android:ems="10"
                 android:hint="멋쟁이홍길동"
-                android:inputType="textPersonName|phone"
+                android:inputType="text|textPersonName"
                 android:paddingLeft="15dp"
                 android:selectAllOnFocus="false"
                 android:singleLine="false" />

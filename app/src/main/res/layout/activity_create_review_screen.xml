@@ -76,12 +76,27 @@
                     android:layout_margin="10dp"
                     app:srcCompat="@drawable/profile_pic" />
 
-                <TextView
-                    android:id="@+id/id_name"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="10dp"
-                    android:text="김천사" />
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/id_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="10dp"
+                        android:text="김천사" />
+
+                    <TextView
+                        android:id="@+id/vi_date"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="2018.11.05"
+                        android:textSize="10sp" />
+                </LinearLayout>
             </LinearLayout>
 
             <EditText
@@ -161,6 +176,12 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="장애인 주차장" />
+
+                        <ImageView
+                            android:id="@+id/imageView17"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            app:srcCompat="@drawable/boundary" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -245,12 +266,6 @@
                 </LinearLayout>
             </HorizontalScrollView>
 
-            <ImageView
-                android:id="@+id/imageView17"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:srcCompat="@drawable/boundary" />
-
             <TextView
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
@@ -278,6 +293,22 @@
                         android:layout_marginBottom="5dp"
                         android:orientation="vertical">
 
+                        <Button
+                            android:id="@+id/Multi_Album_Button"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_gravity="center"
+                            android:onClick="onClick"
+                            android:text="멀티앨범" />
+
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="100dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginBottom="5dp"
+                        android:orientation="vertical">
+
                         <ImageView
                             android:id="@+id/Imagebutton1"
                             android:layout_width="100dp"
@@ -286,11 +317,6 @@
                             android:onClick="onClick"
                             app:srcCompat="@drawable/sample_pic" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="장애인 화장실" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -306,11 +332,7 @@
                             android:onClick="onClick"
                             app:srcCompat="@drawable/sample_pic" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="장애인 주차장" />
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -326,11 +348,7 @@
                             android:onClick="onClick"
                             app:srcCompat="@drawable/sample_pic" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="장애인 승강기" />
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -346,12 +364,7 @@
                             android:onClick="onClick"
                             app:srcCompat="@drawable/sample_pic" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:text="경사로" />
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -363,16 +376,11 @@
                             android:id="@+id/Imagebutton5"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:onClick="onClick"
                             android:layout_gravity="center"
+                            android:onClick="onClick"
                             app:srcCompat="@drawable/sample_pic" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:gravity="center"
-                            android:text="입식테이블" />
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -384,15 +392,10 @@
                             android:id="@+id/Imagebutton6"
                             android:layout_width="100dp"
                             android:layout_height="100dp"
-                            android:onClick="onClick"
                             android:layout_gravity="center"
+                            android:onClick="onClick"
                             app:srcCompat="@drawable/sample_pic" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="동반자 필요" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -408,11 +411,7 @@
                             android:onClick="onClick"
                             app:srcCompat="@drawable/sample_pic" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="기타" />
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -428,11 +427,7 @@
                             android:onClick="onClick"
                             app:srcCompat="@drawable/sample_pic" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="기타" />
+
                     </LinearLayout>
 
                     <LinearLayout
@@ -448,13 +443,8 @@
                             android:onClick="onClick"
                             app:srcCompat="@drawable/sample_pic" />
 
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:gravity="center"
-                            android:text="기타" />
-                    </LinearLayout>
 
+                    </LinearLayout>
 
 
                 </LinearLayout>

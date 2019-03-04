@@ -3,22 +3,29 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
     <item
         android:id="@+id/submenu1"
-        android:title="전체" >
-    </item>
+        android:title="전체" />
     <item
         android:id="@+id/submenu2"
-        android:title="음식점" >
-    </item>
+        android:title="음식점" />
+
     <item
         android:id="@+id/submenu3"
         android:title="카페,디저트" />
+
     <item
         android:id="@+id/submenu4"
-        android:title="병원,의원" />
+        android:title="숙박시설" />
+
     <item
         android:id="@+id/submenu5"
-        android:title="교육,학문" />
+        android:title="여행,명소" />
+
     <item
         android:id="@+id/submenu6"
-        android:title="수리,AS" />
+        android:title="병원,의원" />
+
+    <item
+        android:id="@+id/submenu8"
+        android:title="쇼핑,유통" />
+
 </menu>

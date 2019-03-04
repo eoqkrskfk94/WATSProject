@@ -17,8 +17,10 @@
 
         <EditText
             android:id="@+id/editSearch"
-            android:layout_width="300dp"
+            android:layout_width="wrap_content"
             android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1"
             android:background="@drawable/gray_search_box"
             android:ems="10"
             android:gravity="center"
@@ -26,11 +28,15 @@
             android:imeOptions="actionSearch"
             android:inputType="text" />
 
-        <TextView
-            android:id="@+id/main_menu"
-            android:layout_width="0dp"
-            android:layout_height="0dp"
-            android:visibility="invisible" />
+        <Button
+            android:id="@+id/search_button"
+            android:layout_width="wrap_content"
+            android:layout_height="35dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="1dp"
+            android:layout_weight="1"
+            android:background="@drawable/search_icon" />
 
     </LinearLayout>
 
@@ -43,10 +49,13 @@
 
         <Button
             android:id="@+id/category_button"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="카테고리"
-            />
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/category_icon"
+            android:text="전체"
+            android:textColor="@android:color/transparent"
+            tools:text="전체" />
 
     </FrameLayout>
 

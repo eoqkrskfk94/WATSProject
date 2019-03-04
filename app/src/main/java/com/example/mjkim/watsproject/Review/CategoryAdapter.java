@@ -14,6 +14,7 @@ import android.widget.TextView;
 
 import com.example.mjkim.watsproject.LocationDetailFromMapScreenActivity;
 import com.example.mjkim.watsproject.LocationDetailScreenActivity;
+import com.example.mjkim.watsproject.MainScreenActivity;
 import com.example.mjkim.watsproject.MyReviewScreenActivity;
 import com.example.mjkim.watsproject.R;
 import com.google.firebase.database.DatabaseReference;
@@ -108,7 +109,7 @@ public class CategoryAdapter extends BaseAdapter {
 
 
         locationNameTextView.setText(correctionLocationName);
-        locationCategoryTextView.setText(arr.get(position).getLocation_category());
+        locationCategoryTextView.setText(arr.get(position).getShort_category());
         locationAddressTextView.setText(arr.get(position).getLocation_address());
         locationPhoneTextView.setText(arr.get(position).getPhone_number());
 
@@ -147,8 +148,6 @@ public class CategoryAdapter extends BaseAdapter {
 
 
     public void GoReview(int a){
-        // 피니시해야 안 꺼짐
-        m_activity.finish();
         Intent intent = new Intent(m_activity, LocationDetailFromMapScreenActivity.class);
         intent.putExtra("IMAGE1", arr.get(a).getImageUrl1());
         intent.putExtra("IMAGE2", arr.get(a).getImageUrl2());

@@ -11,15 +11,21 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.example.mjkim.watsproject.CertainReviewScreenActivity;
 import com.example.mjkim.watsproject.MyReviewScreenActivity;
+import com.example.mjkim.watsproject.OtherClasses.ImageBigShowActivity;
 import com.example.mjkim.watsproject.R;
 import com.example.mjkim.watsproject.ReviseReviewScreenActivity;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+
 import java.util.ArrayList;
 
 
@@ -113,21 +119,24 @@ public class UserReviewAdapter extends BaseAdapter {
         LinearLayout layout_view =  (LinearLayout)convertView.findViewById(R.id.vi_view);
 
 
+
         // 수정 버튼
         reviseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){ GoCorrectionScreen(position); }});
 
 
-//        userName.setText(arr.get(position).getUserNickName());
+        userName.setText(arr.get(position).getUserNickName());
         int index = arr.get(position).getLocation_name().indexOf(" , ");
-        String location_name = arr.get(position).getLocation_name().substring(0, index);
+        String location_name = arr.get(position).getLocation_name().substring(0, index+1);
         locationName.setText(location_name);
         String shortCategory = arr.get(position).getLocation_category().substring(arr.get(position).getLocation_category().lastIndexOf(">")+1);
         locationCategory.setText(shortCategory);
-        userName.setText(arr.get(position).getUserName());
+//        userName.setText(arr.get(position).getUserName());
         reviewDescription.setText(arr.get(position).getReview_description());
         postDate.setText(arr.get(position).getDate());
+
+
 
         /*  버튼에 이벤트처리를 하기위해선 setTag를 이용해서 사용할 수 있습니다.
 
@@ -140,7 +149,7 @@ public class UserReviewAdapter extends BaseAdapter {
         layout_view.setOnClickListener(new View.OnClickListener(){
 
             public void onClick(View v){
-
+           //     GoImageReview(position);
                 GoReview(position);
 
             }
@@ -216,7 +225,7 @@ public class UserReviewAdapter extends BaseAdapter {
         intent.putExtra("LOCATIONNAME", arr.get(a).getLocation_name());
         intent.putExtra("EMAIL", arr.get(a).getUserEmail());
         intent.putExtra("NAME", arr.get(a).getUserName());
-        //        intent.putExtra("NickName", arr.get(a).getUserNickName());
+        intent.putExtra("NickName", arr.get(a).getUserNickName());
         intent.putExtra("REVIEW", arr.get(a).getReview_description());
         intent.putExtra("ADDRESS", arr.get(a).getLocation_address());
         intent.putExtra("CATEGORY", arr.get(a).getLocation_category());
@@ -235,5 +244,20 @@ public class UserReviewAdapter extends BaseAdapter {
 
         m_activity.startActivity(intent);
     }
+    public void GoImageReview(int a){
 
+        Intent intent = new Intent(m_activity, ImageBigShowActivity.class);
+        intent.putExtra("IMAGE1", arr.get(a).getImageUrl1());
+        intent.putExtra("IMAGE2", arr.get(a).getImageUrl2());
+        intent.putExtra("IMAGE3", arr.get(a).getImageUrl3());
+        intent.putExtra("IMAGE4", arr.get(a).getImageUrl4());
+        intent.putExtra("IMAGE5", arr.get(a).getImageUrl5());
+        intent.putExtra("IMAGE6", arr.get(a).getImageUrl6());
+        intent.putExtra("IMAGE7", arr.get(a).getImageUrl7());
+        intent.putExtra("IMAGE8", arr.get(a).getImageUrl8());
+        intent.putExtra("IMAGE9", arr.get(a).getImageUrl9());
+
+
+
+    }
 }

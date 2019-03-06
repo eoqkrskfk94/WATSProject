@@ -82,23 +82,23 @@ public class CategoryAdapter extends BaseAdapter {
         tagShow5 = (ImageView) convertView.findViewById(R.id.tag_done_5);
         tagShow6 = (ImageView) convertView.findViewById(R.id.tag_done_6);
 
-        if(arr.get(position).getAverageTag1() == true) tagShow1.setImageResource(R.drawable.restroom);
-        else tagShow1.setImageResource(R.drawable.restroom_dimmed);
+        if(arr.get(position).getAverageTag1() == true) tagShow1.setImageResource(R.drawable.restroom_green);
+        else tagShow1.setImageResource(R.drawable.restroom_dimmed_green);
 
-        if(arr.get(position).getAverageTag2() == true) {tagShow2.setImageResource(R.drawable.parking); System.out.println("너는 누구인가? ");}
-        else tagShow2.setImageResource(R.drawable.parking_dimmed);
+        if(arr.get(position).getAverageTag2() == true) tagShow2.setImageResource(R.drawable.parking_green);
+        else tagShow2.setImageResource(R.drawable.parking_dimmed_green);
 
-        if(arr.get(position).getAverageTag3() == true) tagShow3.setImageResource(R.drawable.elevator);
-        else tagShow3.setImageResource(R.drawable.elevator_dimmed);
+        if(arr.get(position).getAverageTag3() == true) tagShow3.setImageResource(R.drawable.elevator_green);
+        else tagShow3.setImageResource(R.drawable.elevator_dimmed_green);
 
-        if(arr.get(position).getAverageTag4() == true) tagShow4.setImageResource(R.drawable.slope);
-        else tagShow4.setImageResource(R.drawable.slope_dimmed);
+        if(arr.get(position).getAverageTag4() == true) tagShow4.setImageResource(R.drawable.slope_green);
+        else tagShow4.setImageResource(R.drawable.slope_dimmed_green);
 
-        if(arr.get(position).getAverageTag5() == true) tagShow5.setImageResource(R.drawable.table);
-        else tagShow5.setImageResource(R.drawable.table_dimmed);
+        if(arr.get(position).getAverageTag5() == true) tagShow5.setImageResource(R.drawable.table_green);
+        else tagShow5.setImageResource(R.drawable.table_dimmed_green);
 
-        if(arr.get(position).getAverageTag6() == true) tagShow6.setImageResource(R.drawable.assistant);
-        else tagShow6.setImageResource(R.drawable.assistant_dimmed);
+        if(arr.get(position).getAverageTag6() == true) tagShow6.setImageResource(R.drawable.assistant_green);
+        else tagShow6.setImageResource(R.drawable.assistant_dimmed_green);
 
 
 
@@ -148,8 +148,6 @@ public class CategoryAdapter extends BaseAdapter {
 
 
     public void GoReview(int a){
-        // 피니시해야 안 꺼짐
-        m_activity.finish();
         Intent intent = new Intent(m_activity, LocationDetailFromMapScreenActivity.class);
         intent.putExtra("IMAGE1", arr.get(a).getImageUrl1());
         intent.putExtra("IMAGE2", arr.get(a).getImageUrl2());

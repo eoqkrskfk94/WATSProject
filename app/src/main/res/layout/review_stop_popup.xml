@@ -17,7 +17,7 @@
         android:layout_marginTop="20dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/delete_icon" />
+        app:srcCompat="@drawable/delete_icon_green" />
 
     <TextView
         android:id="@+id/textView"
@@ -47,7 +47,7 @@
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:background="@drawable/small_yes_button"
+            android:background="@drawable/small_yes_button_green"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

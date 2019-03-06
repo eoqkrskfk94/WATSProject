@@ -14,7 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#ff9571"
+            android:background="#0FC8AE"
             android:orientation="horizontal">
 
             <Button
@@ -24,7 +24,7 @@
                 android:layout_margin="10dp"
                 android:layout_weight="1"
                 android:background="@drawable/back_arrow"
-                android:onClick="BackButton"/>
+                android:onClick="BackButton" />
 
             <TextView
                 android:id="@+id/create_user_text"
@@ -60,7 +60,7 @@
                 android:layout_width="30dp"
                 android:layout_height="30dp"
                 android:layout_marginLeft="10dp"
-                android:src="@drawable/vertical_line_thick" />
+                android:src="@drawable/vertical_line_thick_green" />
 
             <TextView
                 android:id="@+id/text2"
@@ -102,11 +102,11 @@
                 android:id="@+id/edit_name"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/insert_box"
+                android:background="@drawable/insert_box_green"
                 android:ems="10"
+                android:hint="홍길동"
                 android:inputType="textPersonName"
                 android:paddingLeft="15dp"
-                android:hint="홍길동"
                 android:selectAllOnFocus="false"
                 android:singleLine="false" />
         </LinearLayout>
@@ -132,7 +132,7 @@
                 android:layout_width="80dp"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"
-                android:background="@drawable/insert_box"
+                android:background="@drawable/insert_box_green"
                 android:ems="10"
                 android:hint="1988"
                 android:inputType="number"
@@ -146,7 +146,7 @@
                 android:layout_height="wrap_content"
                 android:layout_marginRight="15dp"
                 android:layout_weight="1"
-                android:background="@drawable/insert_box"
+                android:background="@drawable/insert_box_green"
                 android:ems="10"
                 android:hint="01"
                 android:inputType="number"
@@ -159,7 +159,7 @@
                 android:layout_width="50dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:background="@drawable/insert_box"
+                android:background="@drawable/insert_box_green"
                 android:ems="10"
                 android:hint="01"
                 android:inputType="number"
@@ -188,7 +188,7 @@
                 android:id="@+id/edit_nickname"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:background="@drawable/insert_box"
+                android:background="@drawable/insert_box_green"
                 android:ems="10"
                 android:hint="멋쟁이홍길동"
                 android:inputType="text|textPersonName"
@@ -202,7 +202,7 @@
             android:layout_height="50dp"
             android:layout_gravity="center"
             android:layout_margin="40dp"
-            android:background="@drawable/change_button"
+            android:background="@drawable/revise_button_green2"
             android:onClick="ChangeButton" />
 
     </LinearLayout>

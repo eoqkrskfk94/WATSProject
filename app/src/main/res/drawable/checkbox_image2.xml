@@ -3,7 +3,7 @@
     <!-- 체크박스 해제상태 -->
     <!-- 체크박스 선택상태 -->
     <!-- default state -->
-    <item android:state_checked="false" android:drawable="@drawable/parking_dimmed" />
-    <item android:state_checked="true" android:drawable="@drawable/parking" />
-    <item android:drawable="@drawable/parking_dimmed" />
+    <item android:state_checked="false" android:drawable="@drawable/parking_dimmed_green" />
+    <item android:state_checked="true" android:drawable="@drawable/parking_green" />
+    <item android:drawable="@drawable/parking_dimmed_green" />
 </selector>

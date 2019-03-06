@@ -252,15 +252,16 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // 장소리스트에서 후기 들어왔을 때
-                if(getIntent().getExtras().getInt("Check") == 1) {
-                    Intent intent = new Intent(LocationDetailScreenActivity.this, MainScreenActivity.class);
-                    startActivity(intent);
-                }
-                // 검색에서 후기 들어왔을 때
-                else {
-                    finish();
-                }
+//                // 장소리스트에서 후기 들어왔을 때
+//                if(getIntent().getExtras().getInt("Check") == 1) {
+////                    Intent intent = new Intent(LocationDetailScreenActivity.this, MainScreenActivity.class);
+////                    startActivity(intent);
+//                }
+//                // 검색에서 후기 들어왔을 때
+//                else {
+//                    finish();
+//                }
+                finish();
             }
         });
 
@@ -446,7 +447,7 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
             View view = getLayoutInflater().inflate(R.layout.review_list_box, null);
             View view2 = view.findViewById(R.id.list_size);
-            reviewListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, view2.getLayoutParams().height * 2 + 200));
+            reviewListView.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, view2.getLayoutParams().height * 2));
         }
 
 
@@ -470,17 +471,17 @@ public class LocationDetailScreenActivity extends AppCompatActivity {
 
 
         //태그 기준 설정 및 출력
-        if(tag_array[0] > length/2 &&  tag_array[0] != 0) tagShow1.setImageResource(R.drawable.restroom);
+        if(tag_array[0] > length/2 &&  tag_array[0] != 0) tagShow1.setImageResource(R.drawable.restroom_green);
         System.out.println("태그1: " + tag_array[0]);
-        if(tag_array[1] > length/2 &&  tag_array[1] != 0) tagShow2.setImageResource(R.drawable.parking);
+        if(tag_array[1] > length/2 &&  tag_array[1] != 0) tagShow2.setImageResource(R.drawable.parking_green);
         System.out.println("태그2: " + tag_array[1]);
-        if(tag_array[2] > length/2 &&  tag_array[2] != 0) tagShow3.setImageResource(R.drawable.elevator);
+        if(tag_array[2] > length/2 &&  tag_array[2] != 0) tagShow3.setImageResource(R.drawable.elevator_green);
         System.out.println("태그3: " + tag_array[2]);
-        if(tag_array[3] > length/2 &&  tag_array[3] != 0) tagShow4.setImageResource(R.drawable.slope);
+        if(tag_array[3] > length/2 &&  tag_array[3] != 0) tagShow4.setImageResource(R.drawable.slope_green);
         System.out.println("태그4: " + tag_array[3]);
-        if(tag_array[4] > length/2 &&  tag_array[4] != 0) tagShow5.setImageResource(R.drawable.table);
+        if(tag_array[4] > length/2 &&  tag_array[4] != 0) tagShow5.setImageResource(R.drawable.table_green);
         System.out.println("태그5: " + tag_array[4]);
-        if(tag_array[5] > length/2 &&  tag_array[5] != 0) tagShow6.setImageResource(R.drawable.assistant);
+        if(tag_array[5] > length/2 &&  tag_array[5] != 0) tagShow6.setImageResource(R.drawable.assistant_green);
         System.out.println("태그6: " + tag_array[5]);
 
 

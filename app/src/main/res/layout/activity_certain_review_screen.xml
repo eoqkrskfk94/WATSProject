@@ -19,7 +19,7 @@
             android:layout_height="match_parent"
             android:layout_margin="10dp"
             android:layout_weight="1"
-            android:background="@drawable/orange_back_arrow" />
+            android:background="@drawable/green_arrow" />
 
         <TextView
             android:id="@+id/create_user_text"
@@ -69,7 +69,7 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_marginLeft="10dp"
-                    app:srcCompat="@drawable/profile_pic" />
+                    app:srcCompat="@drawable/profile_pic_green" />
 
 
                 <LinearLayout
@@ -275,15 +275,14 @@
 
             <android.support.v4.view.ViewPager
                 android:id="@+id/photos_viewpager"
-                android:layout_gravity="center"
-                android:layout_width="350dp"
+                android:layout_width="300dp"
                 android:layout_height="0dp"
+                android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@drawable/no_image"
                 android:onClick="onClick"
 
-                >
-            </android.support.v4.view.ViewPager>
+                ></android.support.v4.view.ViewPager>
 
             <android.support.design.widget.TabLayout
                 android:layout_width="match_parent"
@@ -303,7 +302,6 @@
                 android:layout_marginTop="15dp"
                 android:ellipsize="end"
                 android:paddingBottom="1dp"
-                android:paddingLeft="5dp"
                 android:paddingTop="1dp"
                 android:text="이 화면은 블로그 검색 결과 테스트 화면입니다. 이 화면은 블로그 검색 결과 테스트입니다. 이 화면은 블로그 검색 결과 화면입니다."
                 android:textColor="#4e4e4e"

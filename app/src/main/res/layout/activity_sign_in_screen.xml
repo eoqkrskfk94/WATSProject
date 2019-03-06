@@ -14,7 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="50dp"
-            android:background="#ff9571"
+            android:background="#0FC8AE"
             android:orientation="horizontal">
 
             <Button
@@ -68,7 +68,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_marginLeft="10dp"
-                        android:src="@drawable/vertical_line_thick" />
+                        android:src="@drawable/vertical_line_thick_green" />
 
                     <TextView
                         android:id="@+id/text1"
@@ -110,7 +110,7 @@
                         android:id="@+id/edit_id"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/insert_box"
+                        android:background="@drawable/insert_box_green"
                         android:ems="10"
                         android:hint="xxxx@naver.com"
                         android:inputType="textPersonName"
@@ -141,7 +141,7 @@
                         android:id="@+id/edit_passw"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/insert_box"
+                        android:background="@drawable/insert_box_green"
                         android:ems="10"
                         android:hint="6자리 이상의 숫자와 영어"
                         android:inputType="textPassword"
@@ -170,7 +170,7 @@
                         android:id="@+id/edit_passw_check"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/insert_box"
+                        android:background="@drawable/insert_box_green"
                         android:ems="10"
                         android:hint="6자리 이상의 숫자와 영어"
                         android:inputType="textPassword"
@@ -190,7 +190,7 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_marginLeft="10dp"
-                        android:src="@drawable/vertical_line_thick" />
+                        android:src="@drawable/vertical_line_thick_green" />
 
                     <TextView
                         android:id="@+id/text2"
@@ -232,7 +232,7 @@
                         android:id="@+id/edit_name"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/insert_box"
+                        android:background="@drawable/insert_box_green"
                         android:ems="10"
                         android:hint="홍길동"
                         android:inputType="textPersonName"
@@ -262,7 +262,7 @@
                         android:layout_width="80dp"
                         android:layout_height="wrap_content"
                         android:layout_marginRight="15dp"
-                        android:background="@drawable/insert_box"
+                        android:background="@drawable/insert_box_green"
                         android:ems="10"
                         android:hint="1988"
                         android:inputType="number"
@@ -276,7 +276,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginRight="15dp"
                         android:layout_weight="1"
-                        android:background="@drawable/insert_box"
+                        android:background="@drawable/insert_box_green"
                         android:ems="10"
                         android:hint="01"
                         android:inputType="number"
@@ -289,7 +289,7 @@
                         android:layout_width="50dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"
-                        android:background="@drawable/insert_box"
+                        android:background="@drawable/insert_box_green"
                         android:ems="10"
                         android:hint="01"
                         android:inputType="number"
@@ -318,7 +318,7 @@
                         android:id="@+id/edit_nickname"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:background="@drawable/insert_box"
+                        android:background="@drawable/insert_box_green"
                         android:ems="10"
                         android:hint="멋쟁이홍길동"
                         android:inputType="textPersonName"

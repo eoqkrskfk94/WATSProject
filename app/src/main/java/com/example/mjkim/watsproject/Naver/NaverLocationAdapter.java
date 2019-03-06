@@ -116,23 +116,23 @@ public class NaverLocationAdapter extends BaseAdapter{
         tagShow5 = (ImageView) convertView.findViewById(R.id.tag_done_5);
         tagShow6 = (ImageView) convertView.findViewById(R.id.tag_done_6);
 
-        if(tag_array[0] > length/2 &&  tag_array[0] != 0) tagShow1.setImageResource(R.drawable.restroom);
-        else tagShow1.setImageResource(R.drawable.restroom_dimmed);
+        if(tag_array[0] > length/2 &&  tag_array[0] != 0) tagShow1.setImageResource(R.drawable.restroom_green);
+        else tagShow1.setImageResource(R.drawable.restroom_dimmed_green);
 
-        if(tag_array[1] > length/2 &&  tag_array[1] != 0) tagShow2.setImageResource(R.drawable.parking);
-        else tagShow2.setImageResource(R.drawable.parking_dimmed);
+        if(tag_array[1] > length/2 &&  tag_array[1] != 0) tagShow2.setImageResource(R.drawable.parking_green);
+        else tagShow2.setImageResource(R.drawable.parking_dimmed_green);
 
-        if(tag_array[2] > length/2 &&  tag_array[2] != 0) tagShow3.setImageResource(R.drawable.elevator);
-        else tagShow3.setImageResource(R.drawable.elevator_dimmed);
+        if(tag_array[2] > length/2 &&  tag_array[2] != 0) tagShow3.setImageResource(R.drawable.elevator_green);
+        else tagShow3.setImageResource(R.drawable.elevator_dimmed_green);
 
-        if(tag_array[3] > length/2 &&  tag_array[3] != 0) tagShow4.setImageResource(R.drawable.slope);
-        else tagShow4.setImageResource(R.drawable.slope_dimmed);
+        if(tag_array[3] > length/2 &&  tag_array[3] != 0) tagShow4.setImageResource(R.drawable.slope_green);
+        else tagShow4.setImageResource(R.drawable.slope_dimmed_green);
 
-        if(tag_array[4] > length/2 &&  tag_array[4] != 0) tagShow5.setImageResource(R.drawable.table);
-        else tagShow5.setImageResource(R.drawable.table_dimmed);
+        if(tag_array[4] > length/2 &&  tag_array[4] != 0) tagShow5.setImageResource(R.drawable.table_green);
+        else tagShow5.setImageResource(R.drawable.table_dimmed_green);
 
-        if(tag_array[5] > length/2 &&  tag_array[5] != 0) tagShow6.setImageResource(R.drawable.assistant);
-        else tagShow6.setImageResource(R.drawable.assistant_dimmed);
+        if(tag_array[5] > length/2 &&  tag_array[5] != 0) tagShow6.setImageResource(R.drawable.assistant_green);
+        else tagShow6.setImageResource(R.drawable.assistant_dimmed_green);
 
         //태그 기준 설정 및 출력 끝
 

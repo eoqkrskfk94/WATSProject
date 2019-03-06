@@ -16,7 +16,7 @@
         android:layout_gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/login_icon" />
+        app:srcCompat="@drawable/login_icon_green" />
 
     <TextView
         android:id="@+id/textView"
@@ -64,7 +64,7 @@
             android:layout_marginRight="5dp"
             android:layout_marginTop="5dp"
             android:layout_weight="1"
-            android:background="@drawable/small_login_button"
+            android:background="@drawable/small_login_button_green"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent" />

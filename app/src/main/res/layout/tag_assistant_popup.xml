@@ -17,12 +17,12 @@
         <ImageView
             android:id="@+id/imageView5"
             android:layout_width="150dp"
-            android:layout_height="150dp"
+            android:layout_height="123dp"
             android:layout_gravity="center"
             android:layout_weight="1"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
-            app:srcCompat="@drawable/assistant" />
+            app:srcCompat="@drawable/assistant_green" />
 
         <ImageView
             android:id="@+id/imageView22"
@@ -72,7 +72,7 @@
         android:layout_height="30dp"
         android:layout_gravity="center"
         android:layout_marginBottom="16dp"
-        android:background="@drawable/close_button"
+        android:background="@drawable/close_button_green"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

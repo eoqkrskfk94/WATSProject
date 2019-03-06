@@ -136,7 +136,6 @@ public class ReviseReviewScreenActivity extends AppCompatActivity {
 
         // 마지막 수정 날짜
         textDate.setText(getIntent().getExtras().getString("Date"));
-        System.out.println("해야3 : " + textDate.getText().toString() +  "  " + location_x);
 
         //돌아가기 버튼 선언, 돌아가기 버튼 눌렀을때 전 화면을 돌아간다
         Button backButton = (Button)findViewById(R.id.back_button);
@@ -934,6 +933,6 @@ public class ReviseReviewScreenActivity extends AppCompatActivity {
     }
 
 
-
-
+    public void BackButton(View view) {
+    }
 }

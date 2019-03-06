@@ -16,7 +16,7 @@
         android:layout_gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/congratulation_icon" />
+        app:srcCompat="@drawable/congratulation_icon_green" />
 
     <TextView
         android:id="@+id/textView"
@@ -38,7 +38,7 @@
         android:layout_gravity="center"
         android:layout_marginBottom="16dp"
         android:layout_marginTop="5dp"
-        android:background="@drawable/close_button"
+        android:background="@drawable/close_button_green"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent" />

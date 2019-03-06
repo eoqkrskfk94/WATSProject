@@ -162,7 +162,6 @@ public class MypageFragment extends Fragment {
                 galleryButton.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                       // getActivity().finish();
                         Toast.makeText(getActivity(),"준비중입니다.",Toast.LENGTH_LONG).show();
                         // doTakeAlbumAction();
                         myDialog.dismiss();//앨범에서 사진 가져오기 메소드
@@ -258,7 +257,6 @@ public class MypageFragment extends Fragment {
         changeButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().finish();
                 Intent intent=new Intent(getActivity(),ChangeInfoScreenActivity.class);
                 startActivity(intent);
             }
@@ -268,7 +266,6 @@ public class MypageFragment extends Fragment {
         myreviewButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                getActivity().finish();
                 System.out.println("프래그맨트 : " + getFragmentManager().getFragments().toString());
 
                 Intent intent=new Intent(getActivity(),MyReviewScreenActivity.class);

@@ -22,7 +22,7 @@
             android:layout_marginRight="10dp"
             android:layout_marginTop="15dp"
             android:layout_weight="1"
-            android:background="@drawable/orange_back_arrow" />
+            android:background="@drawable/green_arrow" />
 
         <TextView
             android:id="@+id/location_text"
@@ -74,7 +74,7 @@
                     android:layout_width="60dp"
                     android:layout_height="60dp"
                     android:layout_margin="10dp"
-                    app:srcCompat="@drawable/profile_pic" />
+                    app:srcCompat="@drawable/profile_pic_green" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -463,7 +463,7 @@
                 android:layout_gravity="center"
                 android:layout_marginBottom="20dp"
                 android:layout_marginTop="20dp"
-                android:background="@drawable/register_long_button"
+                android:background="@drawable/register_long_button_green"
                 android:onClick="RegisterButton" />
         </LinearLayout>
     </ScrollView>

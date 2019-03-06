@@ -276,8 +276,6 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
         backButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(LocationDetailFromMapScreenActivity.this, MainScreenActivity.class);
-                startActivity(intent);
                 finish();
             }
         });
@@ -521,12 +519,12 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
 
 
         //태그 기준 설정 및 출력
-        if(intent.getExtras().getBoolean("TAG1")) tagShow1.setImageResource(R.drawable.restroom);
-        if(intent.getExtras().getBoolean("TAG2")) tagShow2.setImageResource(R.drawable.parking);
-        if(intent.getExtras().getBoolean("TAG3")) tagShow3.setImageResource(R.drawable.elevator);
-        if(intent.getExtras().getBoolean("TAG4")) tagShow4.setImageResource(R.drawable.slope);
-        if(intent.getExtras().getBoolean("TAG5")) tagShow5.setImageResource(R.drawable.table);
-        if(intent.getExtras().getBoolean("TAG6")) tagShow6.setImageResource(R.drawable.assistant);
+        if(intent.getExtras().getBoolean("TAG1")) tagShow1.setImageResource(R.drawable.restroom_green);
+        if(intent.getExtras().getBoolean("TAG2")) tagShow2.setImageResource(R.drawable.parking_green);
+        if(intent.getExtras().getBoolean("TAG3")) tagShow3.setImageResource(R.drawable.elevator_green);
+        if(intent.getExtras().getBoolean("TAG4")) tagShow4.setImageResource(R.drawable.slope_green);
+        if(intent.getExtras().getBoolean("TAG5")) tagShow5.setImageResource(R.drawable.table_green);
+        if(intent.getExtras().getBoolean("TAG6")) tagShow6.setImageResource(R.drawable.assistant_green);
     }
 
     //블로그 전체보기 버튼 기능
@@ -544,13 +542,6 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
         Intent intent = new Intent(this, MoreReviewScreenActivity.class);
         intent.putExtra("SELECT", 1);
         startActivity(intent);
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent intent = new Intent(this, MainScreenActivity.class);
-        startActivity(intent);
-        super.onBackPressed();
     }
 }
 

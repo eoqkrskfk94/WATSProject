@@ -15,7 +15,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#ff9571"
+        android:background="#0FC8AE"
         android:orientation="horizontal">
 
         <Button
@@ -100,7 +100,7 @@
                         android:id="@+id/imageView10"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        app:srcCompat="@drawable/marker_icon" />
+                        app:srcCompat="@drawable/marker_icon_red" />
 
                     <TextView
                         android:id="@+id/location_address"
@@ -109,7 +109,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_weight="1"
                         android:text="포항시 북구 흥해읍 남송리 3번지"
-                        android:textColor="@color/colorAccent" />
+                        android:textColor="@color/colorPrimary" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -124,7 +124,7 @@
                         android:id="@+id/imageView11"
                         android:layout_width="20dp"
                         android:layout_height="15dp"
-                        app:srcCompat="@drawable/phone_icon" />
+                        app:srcCompat="@drawable/phone_icon_red" />
 
                     <TextView
                         android:id="@+id/phone_number"
@@ -233,7 +233,7 @@
                         android:layout_gravity="center"
                         android:layout_marginRight="30dp"
                         android:layout_weight="1"
-                        android:background="@drawable/review_icon" />
+                        android:background="@drawable/review_icon_green" />
 
                     <Button
                         android:id="@+id/share_button"
@@ -242,7 +242,7 @@
                         android:layout_gravity="center"
                         android:layout_marginLeft="30dp"
                         android:layout_weight="1"
-                        android:background="@drawable/share_icon" />
+                        android:background="@drawable/share_icon_green" />
                 </LinearLayout>
 
             </LinearLayout>

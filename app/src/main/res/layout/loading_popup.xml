@@ -16,7 +16,7 @@
         android:layout_gravity="center"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:srcCompat="@drawable/loading_icon" />
+        app:srcCompat="@drawable/loading_icon_green" />
 
     <TextView
         android:id="@+id/textView"

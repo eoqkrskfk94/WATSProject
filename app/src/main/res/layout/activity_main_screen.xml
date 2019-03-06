@@ -11,7 +11,7 @@
         android:id="@+id/menu"
         android:layout_width="match_parent"
         android:layout_height="60dp"
-        android:background="#ff9571"
+        android:background="#0FC8AE"
         android:gravity="center"
         android:orientation="horizontal">
 

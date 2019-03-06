@@ -15,7 +15,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="50dp"
-        android:background="#ff9571"
+        android:background="@color/green"
         android:orientation="horizontal">
 
         <Button
@@ -62,7 +62,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="450dp"
+                android:layout_height="370dp"
                 android:background="@drawable/location_box"
                 android:orientation="vertical">
 
@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
                     android:layout_marginRight="40dp"
-                    android:layout_marginTop="50dp"
+                    android:layout_marginTop="40dp"
                     android:text="교육시설" />
 
                 <TextView
@@ -100,7 +100,7 @@
                         android:id="@+id/imageView10"
                         android:layout_width="20dp"
                         android:layout_height="20dp"
-                        app:srcCompat="@drawable/marker_icon" />
+                        app:srcCompat="@drawable/marker_icon_red" />
 
                     <TextView
                         android:id="@+id/location_address"
@@ -109,7 +109,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_weight="1"
                         android:text="포항시 북구 흥해읍 남송리 3번지"
-                        android:textColor="@color/colorAccent" />
+                        android:textColor="@color/colorPrimary" />
                 </LinearLayout>
 
                 <LinearLayout
@@ -124,7 +124,7 @@
                         android:id="@+id/imageView11"
                         android:layout_width="20dp"
                         android:layout_height="15dp"
-                        app:srcCompat="@drawable/phone_icon" />
+                        app:srcCompat="@drawable/phone_icon_red" />
 
                     <TextView
                         android:id="@+id/phone_number"
@@ -206,25 +206,13 @@
                         app:srcCompat="@drawable/assistant_dimmed" />
                 </LinearLayout>
 
-                <Button
-                    android:id="@+id/see_more_button1"
-                    android:layout_width="60dp"
-                    android:layout_height="20dp"
-                    android:layout_gravity="right"
-                    android:layout_marginRight="40dp"
-                    android:layout_marginTop="10dp"
-                    android:background="@android:color/transparent"
-                    android:text="전체보기"
-                    android:textColor="@android:color/darker_gray"
-                    android:visibility="invisible" />
-
                 <ImageView
                     android:id="@+id/imageView12"
                     android:layout_width="match_parent"
                     android:layout_height="10dp"
                     android:layout_marginLeft="40dp"
                     android:layout_marginRight="40dp"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="10dp"
                     app:srcCompat="@drawable/new_horz_line" />
                 android:layout_marginTop="10dp"
                 app:srcCompat="@drawable/long_horz_line" />
@@ -245,7 +233,7 @@
                         android:layout_gravity="center"
                         android:layout_marginRight="30dp"
                         android:layout_weight="1"
-                        android:background="@drawable/review_icon" />
+                        android:background="@drawable/review_icon_green" />
 
                     <Button
                         android:id="@+id/share_button"
@@ -254,7 +242,7 @@
                         android:layout_gravity="center"
                         android:layout_marginLeft="30dp"
                         android:layout_weight="1"
-                        android:background="@drawable/share_icon" />
+                        android:background="@drawable/share_icon_green" />
                 </LinearLayout>
 
             </LinearLayout>

@@ -66,7 +66,7 @@
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="시설정보"
-                    android:textColor="#f3840d"
+                    android:textColor="#00C5AA"
                     android:textColorLink="@color/colorAccent"
                     android:textSize="15sp" />
             </LinearLayout>
@@ -93,7 +93,7 @@
                     android:layout_width="70dp"
                     android:layout_height="70dp"
                     android:layout_marginLeft="10dp"
-                    app:srcCompat="@drawable/profile_pic" />
+                    app:srcCompat="@drawable/profile_pic_green" />
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -236,7 +236,7 @@
                     android:layout_marginLeft="15dp"
                     android:layout_marginRight="5dp"
                     android:layout_weight="1"
-                    android:background="@drawable/revise_button" />
+                    android:background="@drawable/revise_button_green" />
 
                 <Button
                     android:id="@+id/delete_button"
@@ -245,7 +245,7 @@
                     android:layout_marginLeft="5dp"
                     android:layout_marginRight="15dp"
                     android:layout_weight="1"
-                    android:background="@drawable/delete_button" />
+                    android:background="@drawable/delete_button_green" />
             </LinearLayout>
 
 

@@ -15,7 +15,7 @@
         android:layout_gravity="right"
         android:layout_marginRight="15dp"
         android:layout_marginTop="15dp"
-        android:background="@drawable/cancel_icon"
+        android:background="@drawable/cancel_icon_black"
         android:onClick="BackButton"/>
 
     <LinearLayout

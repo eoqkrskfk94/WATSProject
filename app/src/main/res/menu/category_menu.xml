@@ -21,10 +21,6 @@
         android:title="여행,명소" />
 
     <item
-        android:id="@+id/submenu6"
-        android:title="병원,의원" />
-
-    <item
         android:id="@+id/submenu8"
         android:title="쇼핑,유통" />
 

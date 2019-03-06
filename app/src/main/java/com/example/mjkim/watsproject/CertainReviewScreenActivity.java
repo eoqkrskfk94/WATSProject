@@ -73,12 +73,12 @@ public class CertainReviewScreenActivity extends AppCompatActivity {
         ImageView tagShow5 = (ImageView)findViewById(R.id.tag_done_5);
         ImageView tagShow6 = (ImageView)findViewById(R.id.tag_done_6);
 
-        if(getIntent().getExtras().getBoolean("Tag1") == true) tagShow1.setImageResource(R.drawable.restroom);
-        if(getIntent().getExtras().getBoolean("Tag2") == true) tagShow2.setImageResource(R.drawable.parking);
-        if(getIntent().getExtras().getBoolean("Tag3") == true) tagShow3.setImageResource(R.drawable.elevator);
-        if(getIntent().getExtras().getBoolean("Tag4") == true) tagShow4.setImageResource(R.drawable.slope);
-        if(getIntent().getExtras().getBoolean("Tag5") == true) tagShow5.setImageResource(R.drawable.table);
-        if(getIntent().getExtras().getBoolean("Tag6") == true) tagShow6.setImageResource(R.drawable.assistant);
+        if(getIntent().getExtras().getBoolean("Tag1") == true) tagShow1.setImageResource(R.drawable.restroom_green);
+        if(getIntent().getExtras().getBoolean("Tag2") == true) tagShow2.setImageResource(R.drawable.parking_green);
+        if(getIntent().getExtras().getBoolean("Tag3") == true) tagShow3.setImageResource(R.drawable.elevator_green);
+        if(getIntent().getExtras().getBoolean("Tag4") == true) tagShow4.setImageResource(R.drawable.slope_green);
+        if(getIntent().getExtras().getBoolean("Tag5") == true) tagShow5.setImageResource(R.drawable.table_green);
+        if(getIntent().getExtras().getBoolean("Tag6") == true) tagShow6.setImageResource(R.drawable.assistant_green);
 
         image1 = getIntent().getExtras().getString("IMAGE1");
         image2 = getIntent().getExtras().getString("IMAGE2");

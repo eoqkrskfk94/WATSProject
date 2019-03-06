@@ -496,23 +496,23 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                             tagShow6 = (ImageView) reviewDialog.findViewById(R.id.tag_done_6);
 
 
-                            if(tag_array[0] > length/2 &&  tag_array[0] != 0) {tagShow1.setImageResource(R.drawable.restroom); tag1 = true;}
-                            else {tagShow1.setImageResource(R.drawable.restroom_dimmed); tag1 = false;}
+                            if(tag_array[0] > length/2 &&  tag_array[0] != 0) {tagShow1.setImageResource(R.drawable.restroom_green); tag1 = true;}
+                            else {tagShow1.setImageResource(R.drawable.restroom_dimmed_green); tag1 = false;}
 
-                            if(tag_array[1] > length/2 &&  tag_array[1] != 0) {tagShow2.setImageResource(R.drawable.parking); tag2 = true;}
-                            else {tagShow2.setImageResource(R.drawable.parking_dimmed); tag2 = false;}
+                            if(tag_array[1] > length/2 &&  tag_array[1] != 0) {tagShow2.setImageResource(R.drawable.parking_green); tag2 = true;}
+                            else {tagShow2.setImageResource(R.drawable.parking_dimmed_green); tag2 = false;}
 
-                            if(tag_array[2] > length/2 &&  tag_array[2] != 0) {tagShow3.setImageResource(R.drawable.elevator); tag3 = true;}
-                            else {tagShow3.setImageResource(R.drawable.elevator_dimmed); tag3 = false;}
+                            if(tag_array[2] > length/2 &&  tag_array[2] != 0) {tagShow3.setImageResource(R.drawable.elevator_green); tag3 = true;}
+                            else {tagShow3.setImageResource(R.drawable.elevator_dimmed_green); tag3 = false;}
 
-                            if(tag_array[3] > length/2 &&  tag_array[3] != 0) {tagShow4.setImageResource(R.drawable.slope); tag4 = true;}
-                            else {tagShow4.setImageResource(R.drawable.slope_dimmed); tag4 = false;}
+                            if(tag_array[3] > length/2 &&  tag_array[3] != 0) {tagShow4.setImageResource(R.drawable.slope_green); tag4 = true;}
+                            else {tagShow4.setImageResource(R.drawable.slope_dimmed_green); tag4 = false;}
 
-                            if(tag_array[4] > length/2 &&  tag_array[4] != 0) {tagShow5.setImageResource(R.drawable.table); tag5 = true;}
-                            else {tagShow5.setImageResource(R.drawable.table_dimmed); tag5 = false;}
+                            if(tag_array[4] > length/2 &&  tag_array[4] != 0) {tagShow5.setImageResource(R.drawable.table_green); tag5 = true;}
+                            else {tagShow5.setImageResource(R.drawable.table_dimmed_green); tag5 = false;}
 
-                            if(tag_array[5] > length/2 &&  tag_array[5] != 0) {tagShow6.setImageResource(R.drawable.assistant); tag6 = true;}
-                            else {tagShow6.setImageResource(R.drawable.assistant_dimmed); tag6 = false;}
+                            if(tag_array[5] > length/2 &&  tag_array[5] != 0) {tagShow6.setImageResource(R.drawable.assistant_green); tag6 = true;}
+                            else {tagShow6.setImageResource(R.drawable.assistant_dimmed_green); tag6 = false;}
 
 
                             locationBox.setOnClickListener(new View.OnClickListener() {

@@ -333,7 +333,7 @@
                     android:layout_height="50dp"
                     android:layout_gravity="center"
                     android:layout_margin="40dp"
-                    android:background="@drawable/register_button"
+                    android:background="@drawable/register_button_green2"
                     android:onClick="RegisterButton" />
 
             </LinearLayout>

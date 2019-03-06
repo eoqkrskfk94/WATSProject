@@ -72,7 +72,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="40dp"
                     android:layout_marginRight="40dp"
-                    android:layout_marginTop="40dp"
+                    android:layout_marginTop="35dp"
                     android:text="교육시설" />
 
                 <TextView
@@ -166,44 +166,44 @@
                     <ImageView
                         android:id="@+id/tag_done_1"
                         android:layout_width="15dp"
-                        android:layout_height="50dp"
+                        android:layout_height="45dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/restroom_dimmed" />
+                        app:srcCompat="@drawable/restroom_dimmed_green" />
 
                     <ImageView
                         android:id="@+id/tag_done_2"
                         android:layout_width="15dp"
-                        android:layout_height="50dp"
+                        android:layout_height="45dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/parking_dimmed" />
+                        app:srcCompat="@drawable/parking_dimmed_green" />
 
                     <ImageView
                         android:id="@+id/tag_done_3"
                         android:layout_width="15dp"
-                        android:layout_height="50dp"
+                        android:layout_height="45dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/elevator_dimmed" />
+                        app:srcCompat="@drawable/elevator_dimmed_green" />
 
                     <ImageView
                         android:id="@+id/tag_done_4"
                         android:layout_width="15dp"
-                        android:layout_height="50dp"
+                        android:layout_height="45dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/slope_dimmed" />
+                        app:srcCompat="@drawable/slope_dimmed_green" />
 
                     <ImageView
                         android:id="@+id/tag_done_5"
                         android:layout_width="15dp"
-                        android:layout_height="50dp"
+                        android:layout_height="45dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/table_dimmed" />
+                        app:srcCompat="@drawable/table_dimmed_green" />
 
                     <ImageView
                         android:id="@+id/tag_done_6"
                         android:layout_width="15dp"
-                        android:layout_height="50dp"
+                        android:layout_height="45dp"
                         android:layout_weight="1"
-                        app:srcCompat="@drawable/assistant_dimmed" />
+                        app:srcCompat="@drawable/assistant_dimmed_green" />
                 </LinearLayout>
 
                 <ImageView

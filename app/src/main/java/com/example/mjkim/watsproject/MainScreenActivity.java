@@ -414,6 +414,94 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
 //                            marker.setCaptionColor(Color.parseColor("#FF921A"));
                             markers.add(markerCount++, marker);
                             System.out.println("working0 : " + marker.getCaptionText() + marker.getPosition().toString());
+
+
+
+                            // 마커 누르는 이벤트
+                            marker.setOnClickListener(overlay -> {
+                                reviewDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                                //reviewDialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL, WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+                                reviewDialog.setContentView(R.layout.click_location_box);
+                                reviewDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+                                reviewDialog.getWindow().setGravity(Gravity.BOTTOM);
+
+                                reviewDialog.show();
+                                System.out.println("zico4 : " + location_name);
+                                location_categoryTextView = (TextView)reviewDialog.findViewById(R.id.vi_category);
+                                location_addressTextView = (TextView)reviewDialog.findViewById(R.id.vi_address);
+                                location_nameTextView = (TextView)reviewDialog.findViewById(R.id.vi_name);
+                                location_phoneTextView = (TextView)reviewDialog.findViewById(R.id.vi_telephone);
+                                LinearLayout locationBox = (LinearLayout)reviewDialog.findViewById(R.id.location_view);
+
+                                Button closeButton = (Button) reviewDialog.findViewById(R.id.close_button);
+                                closeButton.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view){
+                                        reviewDialog.dismiss();
+                                    }
+                                });
+
+//                            String shortCategory = myreview.getLocation_category().substring(myreview.getLocation_category().lastIndexOf(">")+1);
+                                location_categoryTextView.setText(myreview.getLocation_category());
+                                location_nameTextView.setText(location_name);
+                                System.out.println("zico2 : " + location_name);
+                                location_phoneTextView.setText(myreview.getPhone_number());
+                                location_addressTextView.setText(myreview.getLocation_address());
+
+
+                                tagShow1 = (ImageView) reviewDialog.findViewById(R.id.tag_done_1);
+                                tagShow2 = (ImageView) reviewDialog.findViewById(R.id.tag_done_2);
+                                tagShow3 = (ImageView) reviewDialog.findViewById(R.id.tag_done_3);
+                                tagShow4 = (ImageView) reviewDialog.findViewById(R.id.tag_done_4);
+                                tagShow5 = (ImageView) reviewDialog.findViewById(R.id.tag_done_5);
+                                tagShow6 = (ImageView) reviewDialog.findViewById(R.id.tag_done_6);
+
+
+                                if(tag_array[0] > length/2 &&  tag_array[0] != 0) {tagShow1.setImageResource(R.drawable.restroom_green); tag1 = true;}
+                                else {tagShow1.setImageResource(R.drawable.restroom_dimmed_green); tag1 = false;}
+
+                                if(tag_array[1] > length/2 &&  tag_array[1] != 0) {tagShow2.setImageResource(R.drawable.parking_green); tag2 = true;}
+                                else {tagShow2.setImageResource(R.drawable.parking_dimmed_green); tag2 = false;}
+
+                                if(tag_array[2] > length/2 &&  tag_array[2] != 0) {tagShow3.setImageResource(R.drawable.elevator_green); tag3 = true;}
+                                else {tagShow3.setImageResource(R.drawable.elevator_dimmed_green); tag3 = false;}
+
+                                if(tag_array[3] > length/2 &&  tag_array[3] != 0) {tagShow4.setImageResource(R.drawable.slope_green); tag4 = true;}
+                                else {tagShow4.setImageResource(R.drawable.slope_dimmed_green); tag4 = false;}
+
+                                if(tag_array[4] > length/2 &&  tag_array[4] != 0) {tagShow5.setImageResource(R.drawable.table_green); tag5 = true;}
+                                else {tagShow5.setImageResource(R.drawable.table_dimmed_green); tag5 = false;}
+
+                                if(tag_array[5] > length/2 &&  tag_array[5] != 0) {tagShow6.setImageResource(R.drawable.assistant_green); tag6 = true;}
+                                else {tagShow6.setImageResource(R.drawable.assistant_dimmed_green); tag6 = false;}
+
+
+                                locationBox.setOnClickListener(new View.OnClickListener() {
+                                    @Override
+                                    public void onClick(View view) {
+//                                    finish();
+                                        Intent intent=new Intent(MainScreenActivity.this,LocationDetailFromMapScreenActivity.class);
+                                        intent.putExtra("NAME", myreview.getLocation_name());
+                                        intent.putExtra("CATEGORY", myreview.getLocation_category());
+                                        intent.putExtra("ADDRESS", myreview.getLocation_address());
+                                        intent.putExtra("TELEPHONE", myreview.getPhone_number());
+                                        intent.putExtra("MAPX", myreview.getMapx());
+                                        intent.putExtra("MAPY", myreview.getMapy());
+                                        intent.putExtra("TAG1", tag1);
+                                        intent.putExtra("TAG2", tag2);
+                                        intent.putExtra("TAG3", tag3);
+                                        intent.putExtra("TAG4", tag4);
+                                        intent.putExtra("TAG5", tag5);
+                                        intent.putExtra("TAG6", tag6);
+
+                                        startActivity(intent);
+                                        reviewDialog.dismiss();
+                                    }
+                                });
+
+
+                                return false;
+                            });
                         }
                         // 아닐때
                         else {
@@ -440,12 +528,99 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                                 marker.setHideCollidedSymbols(true);
 //                                marker.setIcon(OverlayImage.fromResource(R.drawable.logo));
                                 marker.setCaptionText(location_name);
+                                System.out.println("zico1 : " + location_name);
                                 marker.setCaptionTextSize(16);
                                 marker.setCaptionColor(Color.parseColor("#1502F8"));
-//                                marker.setCaptionColor(Color.parseColor("#FF921A"));
-//                                marker.setMap(naverMap);
                                 markers.add(markerCount++, marker);
-                                System.out.println("working : " + marker.getCaptionText() + marker.getPosition().toString());
+
+
+
+
+                                // 마커 누르는 이벤트
+                                marker.setOnClickListener(overlay -> {
+                                    reviewDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
+                                    //reviewDialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL, WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
+                                    reviewDialog.setContentView(R.layout.click_location_box);
+                                    reviewDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+                                    reviewDialog.getWindow().setGravity(Gravity.BOTTOM);
+
+                                    reviewDialog.show();
+                                    System.out.println("zico4 : " + location_name);
+                                    location_categoryTextView = (TextView)reviewDialog.findViewById(R.id.vi_category);
+                                    location_addressTextView = (TextView)reviewDialog.findViewById(R.id.vi_address);
+                                    location_nameTextView = (TextView)reviewDialog.findViewById(R.id.vi_name);
+                                    location_phoneTextView = (TextView)reviewDialog.findViewById(R.id.vi_telephone);
+                                    LinearLayout locationBox = (LinearLayout)reviewDialog.findViewById(R.id.location_view);
+
+                                    Button closeButton = (Button) reviewDialog.findViewById(R.id.close_button);
+                                    closeButton.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view){
+                                            reviewDialog.dismiss();
+                                        }
+                                    });
+
+//                            String shortCategory = myreview.getLocation_category().substring(myreview.getLocation_category().lastIndexOf(">")+1);
+                                    location_categoryTextView.setText(myreview.getLocation_category());
+                                    location_nameTextView.setText(location_name);
+                                    System.out.println("zico2 : " + location_name);
+                                    location_phoneTextView.setText(myreview.getPhone_number());
+                                    location_addressTextView.setText(myreview.getLocation_address());
+
+
+                                    tagShow1 = (ImageView) reviewDialog.findViewById(R.id.tag_done_1);
+                                    tagShow2 = (ImageView) reviewDialog.findViewById(R.id.tag_done_2);
+                                    tagShow3 = (ImageView) reviewDialog.findViewById(R.id.tag_done_3);
+                                    tagShow4 = (ImageView) reviewDialog.findViewById(R.id.tag_done_4);
+                                    tagShow5 = (ImageView) reviewDialog.findViewById(R.id.tag_done_5);
+                                    tagShow6 = (ImageView) reviewDialog.findViewById(R.id.tag_done_6);
+
+
+                                    if(tag_array[0] > length/2 &&  tag_array[0] != 0) {tagShow1.setImageResource(R.drawable.restroom_green); tag1 = true;}
+                                    else {tagShow1.setImageResource(R.drawable.restroom_dimmed_green); tag1 = false;}
+
+                                    if(tag_array[1] > length/2 &&  tag_array[1] != 0) {tagShow2.setImageResource(R.drawable.parking_green); tag2 = true;}
+                                    else {tagShow2.setImageResource(R.drawable.parking_dimmed_green); tag2 = false;}
+
+                                    if(tag_array[2] > length/2 &&  tag_array[2] != 0) {tagShow3.setImageResource(R.drawable.elevator_green); tag3 = true;}
+                                    else {tagShow3.setImageResource(R.drawable.elevator_dimmed_green); tag3 = false;}
+
+                                    if(tag_array[3] > length/2 &&  tag_array[3] != 0) {tagShow4.setImageResource(R.drawable.slope_green); tag4 = true;}
+                                    else {tagShow4.setImageResource(R.drawable.slope_dimmed_green); tag4 = false;}
+
+                                    if(tag_array[4] > length/2 &&  tag_array[4] != 0) {tagShow5.setImageResource(R.drawable.table_green); tag5 = true;}
+                                    else {tagShow5.setImageResource(R.drawable.table_dimmed_green); tag5 = false;}
+
+                                    if(tag_array[5] > length/2 &&  tag_array[5] != 0) {tagShow6.setImageResource(R.drawable.assistant_green); tag6 = true;}
+                                    else {tagShow6.setImageResource(R.drawable.assistant_dimmed_green); tag6 = false;}
+
+
+                                    locationBox.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View view) {
+//                                    finish();
+                                            Intent intent=new Intent(MainScreenActivity.this,LocationDetailFromMapScreenActivity.class);
+                                            intent.putExtra("NAME", myreview.getLocation_name());
+                                            intent.putExtra("CATEGORY", myreview.getLocation_category());
+                                            intent.putExtra("ADDRESS", myreview.getLocation_address());
+                                            intent.putExtra("TELEPHONE", myreview.getPhone_number());
+                                            intent.putExtra("MAPX", myreview.getMapx());
+                                            intent.putExtra("MAPY", myreview.getMapy());
+                                            intent.putExtra("TAG1", tag1);
+                                            intent.putExtra("TAG2", tag2);
+                                            intent.putExtra("TAG3", tag3);
+                                            intent.putExtra("TAG4", tag4);
+                                            intent.putExtra("TAG5", tag5);
+                                            intent.putExtra("TAG6", tag6);
+
+                                            startActivity(intent);
+                                            reviewDialog.dismiss();
+                                        }
+                                    });
+
+
+                                    return false;
+                                });
                             }
                         }
 
@@ -454,93 +629,6 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                             marker.setMap(naverMap);
                         }
 
-
-
-
-                        // 마커 누르는 이벤트
-                        marker.setOnClickListener(overlay -> {
-                            reviewDialog.getWindow().clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND);
-                            //reviewDialog.getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL, WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL);
-                            reviewDialog.setContentView(R.layout.click_location_box);
-                            reviewDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
-                            reviewDialog.getWindow().setGravity(Gravity.BOTTOM);
-
-                            reviewDialog.show();
-
-                            location_categoryTextView = (TextView)reviewDialog.findViewById(R.id.vi_category);
-                            location_addressTextView = (TextView)reviewDialog.findViewById(R.id.vi_address);
-                            location_nameTextView = (TextView)reviewDialog.findViewById(R.id.vi_name);
-                            location_phoneTextView = (TextView)reviewDialog.findViewById(R.id.vi_telephone);
-                            LinearLayout locationBox = (LinearLayout)reviewDialog.findViewById(R.id.location_view);
-
-                            Button closeButton = (Button) reviewDialog.findViewById(R.id.close_button);
-                            closeButton.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view){
-                                    reviewDialog.dismiss();
-                                }
-                            });
-
-//                            String shortCategory = myreview.getLocation_category().substring(myreview.getLocation_category().lastIndexOf(">")+1);
-                            location_categoryTextView.setText(myreview.getLocation_category());
-                            location_nameTextView.setText(location_name);
-                            location_phoneTextView.setText(myreview.getPhone_number());
-                            location_addressTextView.setText(myreview.getLocation_address());
-
-
-                            tagShow1 = (ImageView) reviewDialog.findViewById(R.id.tag_done_1);
-                            tagShow2 = (ImageView) reviewDialog.findViewById(R.id.tag_done_2);
-                            tagShow3 = (ImageView) reviewDialog.findViewById(R.id.tag_done_3);
-                            tagShow4 = (ImageView) reviewDialog.findViewById(R.id.tag_done_4);
-                            tagShow5 = (ImageView) reviewDialog.findViewById(R.id.tag_done_5);
-                            tagShow6 = (ImageView) reviewDialog.findViewById(R.id.tag_done_6);
-
-
-                            if(tag_array[0] > length/2 &&  tag_array[0] != 0) {tagShow1.setImageResource(R.drawable.restroom); tag1 = true;}
-                            else {tagShow1.setImageResource(R.drawable.restroom_dimmed); tag1 = false;}
-
-                            if(tag_array[1] > length/2 &&  tag_array[1] != 0) {tagShow2.setImageResource(R.drawable.parking); tag2 = true;}
-                            else {tagShow2.setImageResource(R.drawable.parking_dimmed); tag2 = false;}
-
-                            if(tag_array[2] > length/2 &&  tag_array[2] != 0) {tagShow3.setImageResource(R.drawable.elevator); tag3 = true;}
-                            else {tagShow3.setImageResource(R.drawable.elevator_dimmed); tag3 = false;}
-
-                            if(tag_array[3] > length/2 &&  tag_array[3] != 0) {tagShow4.setImageResource(R.drawable.slope); tag4 = true;}
-                            else {tagShow4.setImageResource(R.drawable.slope_dimmed); tag4 = false;}
-
-                            if(tag_array[4] > length/2 &&  tag_array[4] != 0) {tagShow5.setImageResource(R.drawable.table); tag5 = true;}
-                            else {tagShow5.setImageResource(R.drawable.table_dimmed); tag5 = false;}
-
-                            if(tag_array[5] > length/2 &&  tag_array[5] != 0) {tagShow6.setImageResource(R.drawable.assistant); tag6 = true;}
-                            else {tagShow6.setImageResource(R.drawable.assistant_dimmed); tag6 = false;}
-
-
-                            locationBox.setOnClickListener(new View.OnClickListener() {
-                                @Override
-                                public void onClick(View view) {
-//                                    finish();
-                                    Intent intent=new Intent(MainScreenActivity.this,LocationDetailFromMapScreenActivity.class);
-                                    intent.putExtra("NAME", myreview.getLocation_name());
-                                    intent.putExtra("CATEGORY", myreview.getLocation_category());
-                                    intent.putExtra("ADDRESS", myreview.getLocation_address());
-                                    intent.putExtra("TELEPHONE", myreview.getPhone_number());
-                                    intent.putExtra("MAPX", myreview.getMapx());
-                                    intent.putExtra("MAPY", myreview.getMapy());
-                                    intent.putExtra("TAG1", tag1);
-                                    intent.putExtra("TAG2", tag2);
-                                    intent.putExtra("TAG3", tag3);
-                                    intent.putExtra("TAG4", tag4);
-                                    intent.putExtra("TAG5", tag5);
-                                    intent.putExtra("TAG6", tag6);
-
-                                    startActivity(intent);
-                                    reviewDialog.dismiss();
-                                }
-                            });
-
-
-                            return false;
-                        });
 
                         if(myreview.getTag1() == true) tag_array[0]  = tag_array[0] +  1;
                         if(myreview.getTag2() == true) tag_array[1]  = tag_array[1] +  1;

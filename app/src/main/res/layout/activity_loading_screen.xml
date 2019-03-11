@@ -15,30 +15,17 @@
         <ImageView
             android:id="@+id/logo"
             android:layout_width="250dp"
-            android:layout_height="130dp"
+            android:layout_height="70dp"
             android:layout_gravity="center"
-            android:layout_marginTop="50dp"
+            android:layout_marginTop="70dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/logo_green" />
+            app:srcCompat="@drawable/wheel_logo" />
 
         <ImageView
-            android:id="@+id/imageView26"
-            android:layout_width="150dp"
-            android:layout_height="40dp"
-            android:layout_gravity="center"
-            app:srcCompat="@drawable/name_logo" />
-
-        <TextView
-            android:id="@+id/Screen_phrase"
-            android:layout_width="255dp"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_weight="1"
-            android:foregroundGravity="center"
-            android:gravity="center"
-            android:text="이 앱은 비장애인과 장애인이 함께 만들어가는 따뜻한 어플입니다."
-            android:textSize="20sp"
-            android:textStyle="bold" />
+            android:id="@+id/imageView15"
+            android:layout_width="match_parent"
+            android:layout_height="95dp"
+            app:srcCompat="@drawable/saying" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -49,15 +36,15 @@
 
             <ImageView
                 android:id="@+id/imageView23"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/bokji_logo" />
 
             <ImageView
                 android:id="@+id/imageView24"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
                 android:layout_weight="1"
@@ -65,8 +52,8 @@
 
             <ImageView
                 android:id="@+id/imageView25"
-                android:layout_width="45dp"
-                android:layout_height="45dp"
+                android:layout_width="35dp"
+                android:layout_height="35dp"
                 android:layout_weight="1"
                 app:srcCompat="@drawable/kt_logo" />
         </LinearLayout>

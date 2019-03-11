@@ -41,6 +41,14 @@
             android:text="0"
             android:textSize="17dp" />
 
+        <ImageView
+            android:id="@+id/medal"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_gravity="left"
+            android:foregroundGravity="left"
+            app:srcCompat="@drawable/medal1" />
+
 
     </LinearLayout>
 

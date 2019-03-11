@@ -140,6 +140,12 @@ public class MyReviewScreenActivity extends AppCompatActivity {
                         TextView review_count = (TextView) findViewById(R.id.review_count);
                         review_count.setText(Integer.toString(totalLocationCount));
 
+                        ImageView medal = (ImageView)findViewById(R.id.medal);
+                        if(totalLocationCount >= 30) medal.setImageResource(R.drawable.medal2);
+                        if(totalLocationCount >= 60) medal.setImageResource(R.drawable.medal3);
+                        if(totalLocationCount >= 120) medal.setImageResource(R.drawable.medal4);
+
+
 
                     }
 
@@ -211,4 +217,7 @@ public class MyReviewScreenActivity extends AppCompatActivity {
         System.out.println("cancel");
         finish();
     }
+
+
+
 }

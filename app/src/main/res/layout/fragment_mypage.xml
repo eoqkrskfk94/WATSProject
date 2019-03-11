@@ -69,7 +69,7 @@
                 android:layout_height="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:src="@drawable/long_horz_line" />
+                android:src="@drawable/new_horz_line" />
 
             <Button
                 android:id="@+id/see_review_button"
@@ -87,7 +87,7 @@
                 android:layout_height="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:src="@drawable/long_horz_line" />
+                android:src="@drawable/new_horz_line" />
 
             <Button
                 android:id="@+id/see_information_button"
@@ -105,7 +105,7 @@
                 android:layout_height="10dp"
                 android:layout_marginLeft="20dp"
                 android:layout_marginRight="20dp"
-                android:src="@drawable/long_horz_line" />
+                android:src="@drawable/new_horz_line" />
         </LinearLayout>
     </ScrollView>
 

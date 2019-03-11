@@ -80,7 +80,7 @@ public class SignInScreenActivity extends AppCompatActivity {
         String str_password=password.getText().toString();
          // 사용자에게 입력받은 값을 변수로 저장
 
-        if(!str_email.equals(""))
+        if(!str_email.equals("") || !str_password.equals(""))
             createUser(str_email,str_password); // 회원가입 함수로 이동.
         else{
             Toast.makeText(SignInScreenActivity.this,"모든 항목을 입력해주세요.",Toast.LENGTH_LONG).show();
@@ -122,7 +122,15 @@ public class SignInScreenActivity extends AppCompatActivity {
         if (!str_password.equals(str_password_check)) {
             Toast.makeText(SignInScreenActivity.this, "비밀번호가 서로 다릅니다. 다시 입력해주세요.", Toast.LENGTH_SHORT).show();
             startActivity(new Intent(SignInScreenActivity.this, SignInScreenActivity.class));
-        } else {
+        }
+        else if(str_name.equals("")){
+            Toast.makeText(SignInScreenActivity.this, "이름을 입력해주세요.", Toast.LENGTH_SHORT).show();
+        }
+        else if(str_nickname.equals("")){
+            Toast.makeText(SignInScreenActivity.this, "별명을 입력해주세요.", Toast.LENGTH_SHORT).show();
+        }
+        else
+         {
             mAuth.createUserWithEmailAndPassword(str_email, str_password)
                     .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                         @Override

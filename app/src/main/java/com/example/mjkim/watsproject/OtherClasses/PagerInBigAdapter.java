@@ -27,12 +27,14 @@ import com.google.firebase.storage.StorageReference;
 import java.util.List;
 import java.util.zip.Inflater;
 
+import uk.co.senab.photoview.PhotoViewAttacher;
+
 public class PagerInBigAdapter extends PagerAdapter {
 
     Context context;
     BitmapFactory.Options options;
     List<StorageReference> obref;
-
+    PhotoViewAttacher mAttacher;
     public PagerInBigAdapter(Context context) {
         this.context = context;
         options = new BitmapFactory.Options();
@@ -61,6 +63,7 @@ public class PagerInBigAdapter extends PagerAdapter {
         ImageView imageView = new ImageView(context);
         imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
+        mAttacher=new PhotoViewAttacher(imageView);
         // 사진 띄우기
         Glide.with(context)
                 .load(obref.get(position))

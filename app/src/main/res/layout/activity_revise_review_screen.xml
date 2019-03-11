@@ -287,6 +287,22 @@
                     android:layout_marginRight="10dp"
                     android:orientation="horizontal">
 
+                    <!--<LinearLayout-->
+                        <!--android:layout_width="100dp"-->
+                        <!--android:layout_height="match_parent"-->
+                        <!--android:layout_marginBottom="5dp"-->
+                        <!--android:orientation="vertical">-->
+
+                        <!--<Button-->
+                            <!--android:id="@+id/Multi_Album_Button"-->
+                            <!--android:layout_width="100dp"-->
+                            <!--android:layout_height="100dp"-->
+                            <!--android:layout_gravity="center"-->
+                            <!--android:onClick="onClick"-->
+                            <!--android:text="사진 여러장" />-->
+
+                    <!--</LinearLayout>-->
+
                     <LinearLayout
                         android:layout_width="100dp"
                         android:layout_height="match_parent"

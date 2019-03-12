@@ -118,6 +118,8 @@ public class LoginScreenActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email=idEdit.getText().toString();
                 String password=passEdit.getText().toString();
+
+
                 loginStart(email,password); // 성공했을때 메인페이지로 보냄.
             }
         });
@@ -284,7 +286,7 @@ public class LoginScreenActivity extends AppCompatActivity {
             }
         }, 1000); // the timer will count 2.4 seconds....
 
-        if(!email.equals("") || !password.equals("")) {
+        if(!email.equals("") && !password.equals("")) {
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
@@ -311,6 +313,9 @@ public class LoginScreenActivity extends AppCompatActivity {
                     }
                 }
             });
+        }
+        else{
+            Toast.makeText(LoginScreenActivity.this, "이메일과 비밀번호를 모두 입력해주세요.", Toast.LENGTH_SHORT).show();
         }
     }
     //    로그아웃 안했으면, 즉 로그인 되어있으면 자동으로 메인페이지로 이동시키기

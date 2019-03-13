@@ -129,6 +129,15 @@ public class SignInScreenActivity extends AppCompatActivity {
         else if(str_nickname.equals("")){
             Toast.makeText(SignInScreenActivity.this, "별명을 입력해주세요.", Toast.LENGTH_SHORT).show();
         }
+        else if(str_year.equals("")){
+            Toast.makeText(SignInScreenActivity.this, "날짜를 모두 입력해주세요.", Toast.LENGTH_SHORT).show();
+        }
+        else if(str_month.equals("")){
+            Toast.makeText(SignInScreenActivity.this, "날짜를 모두 입력해주세요.", Toast.LENGTH_SHORT).show();
+        }
+        else if(str_day.equals("")){
+            Toast.makeText(SignInScreenActivity.this, "날짜를 모두 입력해주세요.", Toast.LENGTH_SHORT).show();
+        }
         else
          {
             mAuth.createUserWithEmailAndPassword(str_email, str_password)

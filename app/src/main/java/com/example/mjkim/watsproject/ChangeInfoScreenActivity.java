@@ -36,6 +36,7 @@ public class ChangeInfoScreenActivity extends AppCompatActivity {
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
     final DatabaseReference userRef=databaseReference.child("user lists");
     public int count=0;
+    static String userEmail;
     String basicName,basicKey;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,6 +49,69 @@ public class ChangeInfoScreenActivity extends AppCompatActivity {
         editDay=(EditText)findViewById(R.id.edit_day);
         editNickname=(EditText)findViewById(R.id.edit_nickname);
 
+        auth = FirebaseAuth.getInstance();
+        userEmail = new String(auth.getCurrentUser().getEmail()); //Useremail이 현재 사용자 이메일이다.
+        mDatabase = database.getReference();
+
+        //닉네임을 보여줌.
+        mDatabase.child("user lists").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                // 데이타베이스에 저장되어있는 이름값(ex: 남준영)의 userEmail값이 사용자와 같을때 아래구문 실행.
+                mDatabase.child("user lists").child(dataSnapshot.getKey()).orderByChild("userEmail").equalTo(userEmail).addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
+                        basicName = userInformation.getUserName();
+                        basicKey = dataSnapshot.getKey();
+
+                        editName.setText(userInformation.getUserName());
+                        editYear.setText(userInformation.getUserYear());
+                        editMonth.setText(userInformation.getUserMonth());
+                        editDay.setText(userInformation.getUserDay());
+                        editNickname.setText(userInformation.getUserNickname());
+                    }
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                    }
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+                    }
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                    }
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
         myDialog = new Dialog(this); //수정하기 팝업 변수 선언
 
     }
@@ -56,17 +120,23 @@ public class ChangeInfoScreenActivity extends AppCompatActivity {
 
         if(editName.getText().toString().equals("")){
             Toast.makeText(ChangeInfoScreenActivity.this,"이름을 등록해주세요",Toast.LENGTH_LONG).show();
+        }else if(editNickname.getText().toString().equals("")){
+            Toast.makeText(ChangeInfoScreenActivity.this, "별명을 입력해주세요.", Toast.LENGTH_SHORT).show();
+        }else if(editYear.getText().toString().equals("")) {
+            Toast.makeText(ChangeInfoScreenActivity.this, "날짜를 모두 입력해주세요.", Toast.LENGTH_SHORT).show();
+        }else if(editMonth.getText().toString().equals("")) {
+            Toast.makeText(ChangeInfoScreenActivity.this, "날짜를 모두 입력해주세요.", Toast.LENGTH_SHORT).show();
+        }else if(editDay.getText().toString().equals("")) {
+            Toast.makeText(ChangeInfoScreenActivity.this, "날짜를 모두 입력해주세요.", Toast.LENGTH_SHORT).show();
         }
         else {
             myDialog.setContentView(R.layout.change_popup);
             myDialog.setCancelable(false);
 
-            auth = FirebaseAuth.getInstance();
-            final String userEmail = new String(auth.getCurrentUser().getEmail()); //Useremail이 현재 사용자 이메일이다.
-            mDatabase = database.getReference();
 
 
-            //닉네입을 보여줌.
+
+            //변경된 내용으로 유저 정보 저장.
             mDatabase.child("user lists").addChildEventListener(new ChildEventListener() {
                 @Override
                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -99,17 +169,14 @@ public class ChangeInfoScreenActivity extends AppCompatActivity {
                         public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
                         }
-
                         @Override
                         public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
 
                         }
-
                         @Override
                         public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
 
                         }
-
                         @Override
                         public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -155,13 +222,11 @@ public class ChangeInfoScreenActivity extends AppCompatActivity {
 
 
         }
-    }
 
+    }
 
     // 뒤로가기 버튼 누르면 메인으로
     public void BackButton(View view) {
         finish();
     }
-
-
 }

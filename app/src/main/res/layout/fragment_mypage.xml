@@ -11,7 +11,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="275dp"
+        android:layout_height="320dp"
         android:background="@drawable/big_box_green"
         android:orientation="vertical">
 
@@ -20,7 +20,7 @@
             android:layout_width="150dp"
             android:layout_height="150dp"
             android:layout_gravity="center"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="60dp"
             android:src="@drawable/sample_pic" />
 
         <TextView
@@ -29,7 +29,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
             android:gravity="center"
-            android:text=" "
+            android:hint="닉네임 없음"
             android:textColor="@android:color/background_light" />
 
         <Button
@@ -97,7 +97,7 @@
                 android:layout_marginTop="35dp"
                 android:background="@android:color/transparent"
                 android:gravity="left|center"
-                android:text="어플 정보" />
+                android:text="개발 정보" />
 
             <ImageView
                 android:id="@+id/imageView22"

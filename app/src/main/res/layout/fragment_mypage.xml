@@ -21,7 +21,7 @@
             android:layout_height="150dp"
             android:layout_gravity="center"
             android:layout_marginTop="60dp"
-            android:src="@drawable/sample_pic" />
+            android:src="@drawable/no_profile" />
 
         <TextView
             android:id="@+id/textView_id"

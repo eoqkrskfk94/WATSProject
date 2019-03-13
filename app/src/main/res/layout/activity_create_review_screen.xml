@@ -315,7 +315,7 @@
                             android:layout_height="100dp"
                             android:layout_gravity="center"
                             android:onClick="onClick"
-                            app:srcCompat="@drawable/sample_pic" />
+                            app:srcCompat="@drawable/plus_pic" />
 
                     </LinearLayout>
 
@@ -330,7 +330,7 @@
                             android:layout_height="100dp"
                             android:layout_gravity="center"
                             android:onClick="onClick"
-                            app:srcCompat="@drawable/sample_pic" />
+                            app:srcCompat="@drawable/plus_pic" />
 
 
                     </LinearLayout>
@@ -346,7 +346,7 @@
                             android:layout_height="100dp"
                             android:layout_gravity="center"
                             android:onClick="onClick"
-                            app:srcCompat="@drawable/sample_pic" />
+                            app:srcCompat="@drawable/plus_pic" />
 
 
                     </LinearLayout>
@@ -362,7 +362,7 @@
                             android:layout_height="100dp"
                             android:layout_gravity="center"
                             android:onClick="onClick"
-                            app:srcCompat="@drawable/sample_pic" />
+                            app:srcCompat="@drawable/plus_pic" />
 
 
                     </LinearLayout>
@@ -378,7 +378,7 @@
                             android:layout_height="100dp"
                             android:layout_gravity="center"
                             android:onClick="onClick"
-                            app:srcCompat="@drawable/sample_pic" />
+                            app:srcCompat="@drawable/plus_pic" />
 
 
                     </LinearLayout>
@@ -394,7 +394,7 @@
                             android:layout_height="100dp"
                             android:layout_gravity="center"
                             android:onClick="onClick"
-                            app:srcCompat="@drawable/sample_pic" />
+                            app:srcCompat="@drawable/plus_pic" />
 
                     </LinearLayout>
 
@@ -409,7 +409,7 @@
                             android:layout_height="100dp"
                             android:layout_gravity="center"
                             android:onClick="onClick"
-                            app:srcCompat="@drawable/sample_pic" />
+                            app:srcCompat="@drawable/plus_pic" />
 
 
                     </LinearLayout>
@@ -425,7 +425,7 @@
                             android:layout_height="100dp"
                             android:layout_gravity="center"
                             android:onClick="onClick"
-                            app:srcCompat="@drawable/sample_pic" />
+                            app:srcCompat="@drawable/plus_pic" />
 
 
                     </LinearLayout>
@@ -441,7 +441,7 @@
                             android:layout_height="100dp"
                             android:layout_gravity="center"
                             android:onClick="onClick"
-                            app:srcCompat="@drawable/sample_pic" />
+                            app:srcCompat="@drawable/plus_pic" />
 
 
                     </LinearLayout>

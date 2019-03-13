@@ -109,7 +109,7 @@
                         android:layout_marginLeft="5dp"
                         android:layout_weight="1"
                         android:text="포항시 북구 흥해읍 남송리 3번지"
-                        android:textColor="@color/colorPrimary" />
+                        android:textColor="#3f56ff" />
                 </LinearLayout>
 
                 <LinearLayout

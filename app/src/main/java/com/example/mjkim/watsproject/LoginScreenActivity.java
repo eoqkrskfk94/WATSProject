@@ -44,6 +44,10 @@ public class LoginScreenActivity extends AppCompatActivity {
     private FirebaseAuth mAuth;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
     Dialog myDialog;
+    String nameString="";
+    String yearString="";
+    String monthString="";
+    String dayString="";
 
 
     @Override
@@ -136,16 +140,24 @@ public class LoginScreenActivity extends AppCompatActivity {
         AlertDialog.Builder aDialog=new AlertDialog.Builder(this);
         aDialog.setView(layout);
 
-        final EditText name=(EditText)layout.findViewById(R.id.edit_id);
+        final EditText name=(EditText)layout.findViewById(R.id.edit_name);
         final EditText year=(EditText)layout.findViewById(R.id.edit_year);
         final EditText month=(EditText)layout.findViewById(R.id.edit_month);
         final EditText day=(EditText)layout.findViewById(R.id.edit_day);
         final DatabaseReference mDatabase = database.getReference();
+
+
+
         aDialog.setPositiveButton("입력",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //항목중에 빈칸이 있을 경우 실행x
-                        if (name.getText().toString().equals("") || year.getText().toString().equals("") || month.getText().toString().equals("") || day.getText().toString().equals("")) {
+                        nameString=name.getText().toString();
+                        yearString=year.getText().toString();
+                        monthString=month.getText().toString();
+                        dayString=day.getText().toString();
+
+                        if (nameString.equals("") || yearString.equals("") || monthString.equals("") || dayString.equals("")) {
                             Toast.makeText(LoginScreenActivity.this, "모든 항목을 입력해주세요.....", Toast.LENGTH_LONG).show(); }
 
                         //모든 항목에 입력 되었을경우

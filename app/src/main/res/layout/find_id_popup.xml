@@ -41,6 +41,7 @@
             android:id="@+id/edit_name"
             android:layout_width="match_parent"
             android:layout_height="40dp"
+            android:text=""
             android:layout_marginBottom="5dp"
             android:background="@drawable/insert_box_green"
             android:ems="10"
@@ -58,6 +59,7 @@
         android:layout_marginBottom="5dp"
         android:gravity="center"
         android:text="생년월일"
+
         android:textColor="@color/colorPrimary"
         android:textSize="18sp" />
 
@@ -72,6 +74,7 @@
         <EditText
             android:id="@+id/edit_year"
             android:layout_width="80dp"
+            android:text=""
             android:layout_height="wrap_content"
             android:layout_marginRight="15dp"
             android:background="@drawable/insert_box_green"
@@ -87,6 +90,7 @@
             android:layout_width="50dp"
             android:layout_height="wrap_content"
             android:layout_marginRight="15dp"
+            android:text=""
             android:layout_weight="1"
             android:background="@drawable/insert_box_green"
             android:ems="10"
@@ -103,6 +107,7 @@
             android:layout_weight="1"
             android:background="@drawable/insert_box_green"
             android:ems="10"
+            android:text=""
             android:hint="01"
             android:inputType="number"
             android:paddingLeft="18dp"

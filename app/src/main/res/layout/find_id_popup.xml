@@ -115,15 +115,4 @@
             android:singleLine="false" />
     </LinearLayout>
 
-    <Button
-        android:id="@+id/ok_button"
-        android:layout_width="150dp"
-        android:layout_height="30dp"
-        android:layout_gravity="center"
-        android:layout_marginBottom="16dp"
-        android:layout_marginTop="5dp"
-        android:background="@drawable/close_button_green"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
 </LinearLayout>

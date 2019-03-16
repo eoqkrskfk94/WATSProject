@@ -50,7 +50,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:background="@drawable/white_box2"
             android:orientation="vertical">
 
@@ -285,23 +285,24 @@
                 ></android.support.v4.view.ViewPager>
 
             <android.support.design.widget.TabLayout
+                android:id="@+id/tab_layout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 app:tabBackground="@drawable/tab_selector"
                 app:tabGravity="center"
-                app:tabIndicatorHeight="0dp"
-                android:id="@+id/tab_layout" />
+                app:tabIndicatorHeight="0dp" />
 
 
             <TextView
                 android:id="@+id/vi_description"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
+                android:layout_marginBottom="15dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="15dp"
                 android:ellipsize="end"
-                android:paddingBottom="1dp"
+                android:paddingBottom="10dp"
                 android:paddingTop="1dp"
                 android:text="이 화면은 블로그 검색 결과 테스트 화면입니다. 이 화면은 블로그 검색 결과 테스트입니다. 이 화면은 블로그 검색 결과 화면입니다."
                 android:textColor="#4e4e4e"

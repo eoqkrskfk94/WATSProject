@@ -27,6 +27,8 @@ import com.google.firebase.storage.StorageReference;
 
 import java.util.List;
 import java.util.zip.Inflater;
+import uk.co.senab.photoview.PhotoViewAttacher;
+
 
 public class PagerInAdapter extends PagerAdapter {
 
@@ -34,6 +36,7 @@ public class PagerInAdapter extends PagerAdapter {
     BitmapFactory.Options options;
     List<StorageReference> obref;
     List<String> imageString;
+    PhotoViewAttacher mAttacher;
 
     public PagerInAdapter(Context context) {
         this.context = context;

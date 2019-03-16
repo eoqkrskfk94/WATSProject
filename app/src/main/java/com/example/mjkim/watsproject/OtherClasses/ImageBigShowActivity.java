@@ -46,12 +46,6 @@ public class ImageBigShowActivity extends AppCompatActivity {
         ref9 = FirebaseStorage.getInstance().getReference("images/"+image9);
 
 
-        System.out.println("이미지 포지션dll 1 " +position+" "+image1+"\n");
-        System.out.println("이미지 포지션dll 2 " +position+" "+image2+"\n");
-        System.out.println("이미지 포지션dll 3 " +position+" "+image3+"\n");
-        System.out.println("이미지 포지션dll 4 " +position+" "+image4+"\n");
-
-
         refList=new ArrayList<>();
         if(position<=1)
             refList.add(ref);

@@ -74,6 +74,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     Dialog myDialog;
     private MapView mapView;
     private ReviewAdapter reviewAdapter;
+    LinearLayout menuLinearLayout;
 
     static public int totalLocationCount;
     private int check = 0, i = 0;
@@ -128,6 +129,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
 
         EditText editText = (EditText) findViewById(R.id.editSearch);
         Button searchButton = (Button)findViewById(R.id.search_button);
+        menuLinearLayout = (LinearLayout)findViewById(R.id.menu);
 
         // 메인텍스트 기본 세팅
         this.menuName = "지도";
@@ -244,6 +246,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                         categoryName = "전체";
                         categoryButton.setText(categoryName);
                         categoryButton.setVisibility(View.VISIBLE);
+                        menuLinearLayout.setVisibility(View.VISIBLE);
 //                        mainMenu.setText("지도");
                         MainScreenActivity.this.menuName = "지도";
                         check = 0;
@@ -254,6 +257,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                         categoryName = "전체";
                         categoryButton.setText(categoryName);
                         categoryButton.setVisibility(View.VISIBLE);
+                        menuLinearLayout.setVisibility(View.VISIBLE);
 //                        mainMenu.setText("장소 리스트");
                         MainScreenActivity.this.menuName = "장소 리스트";
 //                        System.out.println("themap3 : " + mainMenu.getText());
@@ -263,7 +267,8 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                     case R.id.nav_mypage:
                         MainScreenActivity.this.menuName = "마이 페이지";
                        // 카테고리 숨기기
-                        categoryButton.setVisibility(View.INVISIBLE);
+                        categoryButton.setVisibility(View.GONE);
+                        menuLinearLayout.setVisibility(View.GONE);
 
                         if(currentUser == null){
                             myDialog.setContentView(R.layout.login_popup);
@@ -410,8 +415,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
 //                            marker.setIcon(OverlayImage.fromResource(R.drawable.logo));
                             marker.setCaptionText(location_name);
                             marker.setCaptionTextSize(16);
-                            marker.setCaptionColor(Color.parseColor("#1502F8"));
-//                            marker.setCaptionColor(Color.parseColor("#FF921A"));
+//                            marker.setCaptionColor(Color.parseColor("#1502F8"));
                             markers.add(markerCount++, marker);
                             System.out.println("working0 : " + marker.getCaptionText() + marker.getPosition().toString());
 
@@ -530,7 +534,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                                 marker.setCaptionText(location_name);
                                 System.out.println("zico1 : " + location_name);
                                 marker.setCaptionTextSize(16);
-                                marker.setCaptionColor(Color.parseColor("#1502F8"));
+//                                marker.setCaptionColor(Color.parseColor("#1502F8"));
                                 markers.add(markerCount++, marker);
 
 

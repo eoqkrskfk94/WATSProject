@@ -51,7 +51,7 @@
                 android:layout_marginLeft="5dp"
                 android:layout_marginRight="5dp"
                 android:layout_weight="4"
-                android:orientation="horizontal"
+                android:orientation="vertical"
                 android:paddingLeft="5dp"
                 android:paddingTop="10dp">
 
@@ -59,7 +59,8 @@
                     android:id="@+id/vi_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_margin="5dp"
+                    android:layout_marginLeft="5dp"
+                    android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:ellipsize="end"
                     android:lines="1"
@@ -73,6 +74,8 @@
                     android:id="@+id/vi_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginRight="13dp"
                     android:layout_weight="1"
                     android:gravity="right"

@@ -147,15 +147,15 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
         currentTime = new Date();
         mTime = simpleDateFormat.format(currentTime);
         textDate.setText(mTime);
-        Button Multi_Album_Button=(Button)findViewById(R.id.Multi_Album_Button);
+  //      Button Multi_Album_Button=(Button)findViewById(R.id.Multi_Album_Button);
 
-        Multi_Album_Button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-             //   finish();
-                doTakeMultiAlbumAction();
-            }
-        });
+//        Multi_Album_Button.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//             //   finish();
+//                doTakeMultiAlbumAction();
+//            }
+//        });
 
         //돌아가기 버튼 선언, 돌아가기 버튼 눌렀을때 전 화면을 돌아간다
         Button backButton = (Button)findViewById(R.id.back_button);
@@ -485,9 +485,6 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
                     options.inSampleSize = 4;
                     bitmap = BitmapFactory.decodeFile(imagePath1, options);
                     resize = Bitmap.createScaledBitmap(bitmap, 500, 500, true);
-                    Log.i("로그 1번째 들어옴 -->",imagePath1);
-                    Log.i("로그 1번째 들어옴 -->",resize.toString());
-
 
                     ExifInterface exif = null;
                     try {
@@ -805,7 +802,7 @@ public class CreateReviewScreenActivity extends AppCompatActivity {
 
                     }
                 }
-            }
+           }
         }
             if (requestCode == pick_from_album) {
                 if (id_view == R.id.Imagebutton1) {

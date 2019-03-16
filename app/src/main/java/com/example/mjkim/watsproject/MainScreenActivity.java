@@ -415,8 +415,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
 //                            marker.setIcon(OverlayImage.fromResource(R.drawable.logo));
                             marker.setCaptionText(location_name);
                             marker.setCaptionTextSize(16);
-                            marker.setCaptionColor(Color.parseColor("#1502F8"));
-//                            marker.setCaptionColor(Color.parseColor("#FF921A"));
+//                            marker.setCaptionColor(Color.parseColor("#1502F8"));
                             markers.add(markerCount++, marker);
                             System.out.println("working0 : " + marker.getCaptionText() + marker.getPosition().toString());
 
@@ -535,7 +534,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                                 marker.setCaptionText(location_name);
                                 System.out.println("zico1 : " + location_name);
                                 marker.setCaptionTextSize(16);
-                                marker.setCaptionColor(Color.parseColor("#1502F8"));
+//                                marker.setCaptionColor(Color.parseColor("#1502F8"));
                                 markers.add(markerCount++, marker);
 
 

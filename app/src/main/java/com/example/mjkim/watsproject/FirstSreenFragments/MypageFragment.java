@@ -157,44 +157,44 @@ public class MypageFragment extends Fragment {
             }
         }
 
-        //프로필을 클릭했을때
-        profile.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-
-
-
-                myDialog = new Dialog(getActivity()); //팝업 변수 선언
-                myDialog.setContentView(R.layout.profile_popup);
-                myDialog.setCancelable(false);
-
-                Button galleryButton = (Button) myDialog.findViewById(R.id.gallery_button);
-                Button cancelButton = (Button) myDialog.findViewById(R.id.cancel_button);
-                //갤러리 버튼을 눌렀을때
-                galleryButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        Toast.makeText(getActivity(),"준비중입니다.",Toast.LENGTH_LONG).show();
-                        // doTakeAlbumAction();
-                        myDialog.dismiss();//앨범에서 사진 가져오기 메소드
-                    }
-                });
-
-
-                //닫기 버튼을 눌렀을때
-                cancelButton.setOnClickListener(new View.OnClickListener() {
-                    @Override
-                    public void onClick(View view) {
-                        // 취소버튼을 누르면 사진삭제
-                        myDialog.dismiss();
-                    }
-                });
-                myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
-                myDialog.show(); //팝업창.
-
-            }
-
-        });
+//        //프로필을 클릭했을때, 우선 막아놓음 지우지마셈 준영이가 구현할 예정
+//        profile.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//
+//
+//                myDialog = new Dialog(getActivity()); //팝업 변수 선언
+//                myDialog.setContentView(R.layout.profile_popup);
+//                myDialog.setCancelable(false);
+//
+//                Button galleryButton = (Button) myDialog.findViewById(R.id.gallery_button);
+//                Button cancelButton = (Button) myDialog.findViewById(R.id.cancel_button);
+//                //갤러리 버튼을 눌렀을때
+//                galleryButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        Toast.makeText(getActivity(),"준비중입니다.",Toast.LENGTH_LONG).show();
+//                        // doTakeAlbumAction();
+//                        myDialog.dismiss();//앨범에서 사진 가져오기 메소드
+//                    }
+//                });
+//
+//
+//                //닫기 버튼을 눌렀을때
+//                cancelButton.setOnClickListener(new View.OnClickListener() {
+//                    @Override
+//                    public void onClick(View view) {
+//                        // 취소버튼을 누르면 사진삭제
+//                        myDialog.dismiss();
+//                    }
+//                });
+//                myDialog.getWindow().setBackgroundDrawable(new ColorDrawable((Color.TRANSPARENT)));
+//                myDialog.show(); //팝업창.
+//
+//            }
+//
+//        });
 
         final TextView textId=(TextView)v.findViewById(R.id.textView_id);
 

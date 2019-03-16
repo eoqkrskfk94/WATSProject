@@ -13,11 +13,15 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.InputType;
+import android.text.method.PasswordTransformationMethod;
 import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.example.mjkim.watsproject.User.UserInformation;
@@ -158,7 +162,7 @@ public class LoginScreenActivity extends AppCompatActivity {
                         dayString=day.getText().toString();
 
                         if (nameString.equals("") || yearString.equals("") || monthString.equals("") || dayString.equals("")) {
-                            Toast.makeText(LoginScreenActivity.this, "모든 항목을 입력해주세요.....", Toast.LENGTH_LONG).show(); }
+                            Toast.makeText(LoginScreenActivity.this, "이름과 생년월일을 모두 입력해주세요.", Toast.LENGTH_LONG).show(); }
 
                         //모든 항목에 입력 되었을경우
                         else {
@@ -243,17 +247,29 @@ public class LoginScreenActivity extends AppCompatActivity {
 
     //비밀번호 재설정 메소드
     public void FindPass(){
-        final EditText edittext = new EditText(this);
+        final EditText findPasswordEditText = new EditText(this);
 
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setTitle("비밀번호 재설정합니다.");
+        builder.setTitle("비밀번호 재설정 ");
         builder.setMessage("가입했던 이메일을 입력하면 재설정 메일이 전송됩니다.");
-        builder.setView(edittext);
+
+        findPasswordEditText.setSingleLine();
+        FrameLayout container = new FrameLayout(this);
+        FrameLayout.LayoutParams params = new  FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        params.leftMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        params.rightMargin = getResources().getDimensionPixelSize(R.dimen.dialog_margin);
+        findPasswordEditText.setLayoutParams(params);
+//        // 비밀번호처럼 * 로 나오게 하기
+//        findPasswordEditText.setInputType( InputType.TYPE_CLASS_TEXT | InputType.TYPE_TEXT_VARIATION_PASSWORD );
+//        findPasswordEditText.setTransformationMethod(PasswordTransformationMethod.getInstance());
+        container.addView(findPasswordEditText);
+        builder.setView(container);
+
         builder.setPositiveButton("입력",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
-                        if (!edittext.getText().toString().equals("")) {
-                            mAuth.sendPasswordResetEmail(edittext.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
+                        if (!findPasswordEditText.getText().toString().equals("")) {
+                            mAuth.sendPasswordResetEmail(findPasswordEditText.getText().toString()).addOnCompleteListener(new OnCompleteListener<Void>() {
                                 @Override
                                 public void onComplete(@NonNull Task<Void> task) {
                                     if (task.isSuccessful()) {

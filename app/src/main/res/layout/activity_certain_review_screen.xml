@@ -266,7 +266,7 @@
             <ImageView
                 android:id="@+id/imageView101"
                 android:layout_width="match_parent"
-                android:layout_height="10dp"
+                android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
                 android:layout_marginLeft="40dp"
                 android:layout_marginRight="40dp"
@@ -276,7 +276,7 @@
             <android.support.v4.view.ViewPager
                 android:id="@+id/photos_viewpager"
                 android:layout_width="300dp"
-                android:layout_height="0dp"
+                android:layout_height="300dp"
                 android:layout_gravity="center"
                 android:layout_weight="1"
                 android:background="@drawable/no_image"
@@ -296,8 +296,8 @@
             <TextView
                 android:id="@+id/vi_description"
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:layout_marginBottom="15dp"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="60dp"
                 android:layout_marginLeft="30dp"
                 android:layout_marginRight="30dp"
                 android:layout_marginTop="15dp"

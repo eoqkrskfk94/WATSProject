@@ -141,9 +141,16 @@ public class MyReviewScreenActivity extends AppCompatActivity {
                         review_count.setText(Integer.toString(totalLocationCount));
 
                         ImageView medal = (ImageView)findViewById(R.id.medal);
-                        if(totalLocationCount >= 30) medal.setImageResource(R.drawable.medal2);
-                        if(totalLocationCount >= 60) medal.setImageResource(R.drawable.medal3);
-                        if(totalLocationCount >= 120) medal.setImageResource(R.drawable.medal4);
+                        if(totalLocationCount >= 10) medal.setImageResource(R.drawable.medal2);
+                        if(totalLocationCount >= 20) medal.setImageResource(R.drawable.medal3);
+                        if(totalLocationCount >= 30) medal.setImageResource(R.drawable.medal4);
+                        if(totalLocationCount >= 40) medal.setImageResource(R.drawable.medal5);
+                        if(totalLocationCount >= 50) medal.setImageResource(R.drawable.medal6);
+                        if(totalLocationCount >= 60) medal.setImageResource(R.drawable.medal7);
+                        if(totalLocationCount >= 70) medal.setImageResource(R.drawable.medal8);
+                        if(totalLocationCount >= 80) medal.setImageResource(R.drawable.medal9);
+                        if(totalLocationCount >= 90) medal.setImageResource(R.drawable.medal10);
+
 
 
 

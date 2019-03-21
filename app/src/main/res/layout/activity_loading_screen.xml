@@ -19,7 +19,7 @@
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
             android:layout_weight="1"
-            app:srcCompat="@drawable/wheel_logo" />
+            app:srcCompat="@drawable/korean_logo" />
 
         <ImageView
             android:id="@+id/imageView15"

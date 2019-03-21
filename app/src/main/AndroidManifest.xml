@@ -13,7 +13,7 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@drawable/outer_logo"
+        android:icon="@drawable/outer_logo_korean"
         android:label="휘리릭"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"

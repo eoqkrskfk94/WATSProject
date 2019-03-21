@@ -95,7 +95,7 @@
                 android:layout_weight="1"
                 android:layout_marginLeft="10dp"
                 android:background="@android:color/transparent"
-                android:text="아이디 찾기"
+                android:text="  아이디 찾기"
                 android:textColor="@color/colorPrimary" />
 
             <ImageView

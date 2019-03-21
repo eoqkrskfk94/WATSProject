@@ -102,24 +102,28 @@ public class MapReviewAdapter extends BaseAdapter {
                     .load(ref1)
                     .apply(new RequestOptions().centerCrop())
                     .into(picture1);
+        if(image1.equals("")) picture1.setVisibility(View.GONE);
 
         if(image2!="")
             Glide.with(m_activity /* context */)
                     .load(ref2)
                     .apply(new RequestOptions().centerCrop())
                     .into(picture2);
+        if(image2.equals("")) picture2.setVisibility(View.GONE);
 
         if(image3!="")
             Glide.with(m_activity /* context */)
                     .load(ref3)
                     .apply(new RequestOptions().centerCrop())
                     .into(picture3);
+        if(image3.equals("")) picture3.setVisibility(View.GONE);
 
         if(image4!="")
             Glide.with(m_activity /* context */)
                     .load(ref4)
                     .apply(new RequestOptions().centerCrop())
                     .into(picture4);
+        if(image4.equals("")) picture4.setVisibility(View.GONE);
 
 
 

@@ -297,7 +297,7 @@ public class MypageFragment extends Fragment {
                 builder.setView(container);
 
                 builder.setCancelable(false);
-                builder.setNegativeButton("확인", new DialogInterface.OnClickListener() {
+                builder.setPositiveButton("확인", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         String password = checkPasswordEditText.getText().toString();
                         // 널 방지
@@ -317,7 +317,7 @@ public class MypageFragment extends Fragment {
                         });
                     }
                 });
-                builder.setPositiveButton("취소", new DialogInterface.OnClickListener() {
+                builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
 

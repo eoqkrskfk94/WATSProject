@@ -282,37 +282,37 @@
 
                 <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="100dp"
                     android:layout_marginLeft="10dp"
                     android:layout_marginRight="10dp"
                     android:orientation="horizontal">
 
                     <!--<LinearLayout-->
-                        <!--android:layout_width="100dp"-->
-                        <!--android:layout_height="match_parent"-->
-                        <!--android:layout_marginBottom="5dp"-->
-                        <!--android:orientation="vertical">-->
+                    <!--android:layout_width="100dp"-->
+                    <!--android:layout_height="match_parent"-->
+                    <!--android:layout_marginBottom="5dp"-->
+                    <!--android:orientation="vertical">-->
 
-                        <!--<Button-->
-                            <!--android:id="@+id/Multi_Album_Button"-->
-                            <!--android:layout_width="100dp"-->
-                            <!--android:layout_height="100dp"-->
-                            <!--android:layout_gravity="center"-->
-                            <!--android:onClick="onClick"-->
-                            <!--android:text="멀티앨범" />-->
+                    <!--<Button-->
+                    <!--android:id="@+id/Multi_Album_Button"-->
+                    <!--android:layout_width="100dp"-->
+                    <!--android:layout_height="100dp"-->
+                    <!--android:layout_gravity="center"-->
+                    <!--android:onClick="onClick"-->
+                    <!--android:text="멀티앨범" />-->
 
                     <!--</LinearLayout>-->
 
                     <LinearLayout
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
-                        android:layout_marginBottom="5dp"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/Imagebutton1"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
                             android:onClick="onClick"
                             app:srcCompat="@drawable/plus_pic" />
@@ -322,12 +322,13 @@
                     <LinearLayout
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/Imagebutton2"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
                             android:onClick="onClick"
                             app:srcCompat="@drawable/plus_pic" />
@@ -338,12 +339,13 @@
                     <LinearLayout
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/Imagebutton3"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
                             android:onClick="onClick"
                             app:srcCompat="@drawable/plus_pic" />
@@ -354,12 +356,13 @@
                     <LinearLayout
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/Imagebutton4"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
                             android:onClick="onClick"
                             app:srcCompat="@drawable/plus_pic" />
@@ -370,12 +373,13 @@
                     <LinearLayout
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/Imagebutton5"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
                             android:onClick="onClick"
                             app:srcCompat="@drawable/plus_pic" />
@@ -386,12 +390,13 @@
                     <LinearLayout
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/Imagebutton6"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
                             android:onClick="onClick"
                             app:srcCompat="@drawable/plus_pic" />
@@ -401,12 +406,13 @@
                     <LinearLayout
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/Imagebutton7"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
                             android:onClick="onClick"
                             app:srcCompat="@drawable/plus_pic" />
@@ -417,12 +423,13 @@
                     <LinearLayout
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/Imagebutton8"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
                             android:onClick="onClick"
                             app:srcCompat="@drawable/plus_pic" />
@@ -433,12 +440,13 @@
                     <LinearLayout
                         android:layout_width="100dp"
                         android:layout_height="match_parent"
+                        android:gravity="center"
                         android:orientation="vertical">
 
                         <ImageView
                             android:id="@+id/Imagebutton9"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
                             android:onClick="onClick"
                             app:srcCompat="@drawable/plus_pic" />

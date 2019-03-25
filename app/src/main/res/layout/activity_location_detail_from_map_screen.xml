@@ -242,6 +242,7 @@
                         android:layout_gravity="center"
                         android:layout_marginLeft="30dp"
                         android:layout_weight="1"
+                        android:visibility="gone"
                         android:background="@drawable/share_icon_green" />
                 </LinearLayout>
 

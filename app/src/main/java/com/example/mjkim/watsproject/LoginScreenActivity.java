@@ -153,7 +153,7 @@ public class LoginScreenActivity extends AppCompatActivity {
 
 
 
-        aDialog.setPositiveButton("입력",
+        aDialog.setPositiveButton("확인",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         //항목중에 빈칸이 있을 경우 실행x
@@ -270,7 +270,7 @@ public class LoginScreenActivity extends AppCompatActivity {
         container.addView(findPasswordEditText);
         builder.setView(container);
 
-        builder.setPositiveButton("입력",
+        builder.setPositiveButton("확인",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         if (!findPasswordEditText.getText().toString().equals("")) {

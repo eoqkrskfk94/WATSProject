@@ -44,6 +44,7 @@ import java.util.TimerTask;
 
 public class LoginScreenActivity extends AppCompatActivity {
     public static int save = 0; // 로그인 되어있음을 확인하는 변수
+    public int successCheck=0;
     private FirebaseUser currentUser;
     private FirebaseAuth mAuth;
     final FirebaseDatabase database = FirebaseDatabase.getInstance();
@@ -166,6 +167,7 @@ public class LoginScreenActivity extends AppCompatActivity {
 
                         //모든 항목에 입력 되었을경우
                         else {
+
                             mDatabase.child("user lists").addChildEventListener(new ChildEventListener() {
                                 @Override
                                 public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
@@ -183,7 +185,7 @@ public class LoginScreenActivity extends AppCompatActivity {
                                                         public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
                                                             // 이름, 년도, 월이 같을때 아래구문 실행.
                                                             UserInformation myreview = dataSnapshot.getValue(UserInformation.class);
-
+                                                            successCheck=1;
                                                             AlertDialog.Builder builder = new AlertDialog.Builder(LoginScreenActivity.this);
                                                             builder.setTitle("가입했던 이메일");
                                                             builder.setMessage(myreview.getUserEmail());
@@ -235,8 +237,11 @@ public class LoginScreenActivity extends AppCompatActivity {
                                 public void onCancelled(@NonNull DatabaseError databaseError) { }
                             });
                         }
+
                     }
+
                 });
+
         aDialog.setNegativeButton("취소",
                 new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {

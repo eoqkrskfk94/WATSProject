@@ -64,6 +64,8 @@ public class PagerInBigAdapter extends PagerAdapter {
         imageView.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
 
         mAttacher=new PhotoViewAttacher(imageView);
+        mAttacher.setScaleType(ImageView.ScaleType.FIT_XY);
+
         // 사진 띄우기
         Glide.with(context)
                 .load(obref.get(position))

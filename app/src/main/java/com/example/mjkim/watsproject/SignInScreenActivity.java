@@ -161,19 +161,19 @@ public class SignInScreenActivity extends AppCompatActivity {
                                 currentUser = mAuth.getCurrentUser(); // 정보를 currentUser에 저장.
                                 mAuth.setLanguageCode("ko"); //한국어
                                 userRef.child(str_name).push().setValue(userInformation);
-                                //이메일 인증메일 보내기.
-                                mAuth.getCurrentUser().sendEmailVerification()
-                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
-                                            @Override
-                                            public void onComplete(@NonNull Task<Void> task) {
-                                                if(task.isSuccessful()){
-                                                //    Toast.makeText(SignInScreenActivity.this,"이메일에 인증메일을 보냈습니다.",Toast.LENGTH_SHORT).show();
-                                                }
-                                                else {
-                                                    //메일 전송 실패
-                                                }
-                                            }
-                                        });
+//                                //이메일 인증메일 보내기.
+//                                mAuth.getCurrentUser().sendEmailVerification()
+//                                        .addOnCompleteListener(new OnCompleteListener<Void>() {
+//                                            @Override
+//                                            public void onComplete(@NonNull Task<Void> task) {
+//                                                if(task.isSuccessful()){
+//                                                //    Toast.makeText(SignInScreenActivity.this,"이메일에 인증메일을 보냈습니다.",Toast.LENGTH_SHORT).show();
+//                                                }
+//                                                else {
+//                                                    //메일 전송 실패
+//                                                }
+//                                            }
+//                                        });
                                 myDialog.show(); //회원가입 팝업창.
                             }
                         }

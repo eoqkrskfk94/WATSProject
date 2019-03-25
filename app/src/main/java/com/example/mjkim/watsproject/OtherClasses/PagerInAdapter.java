@@ -36,7 +36,6 @@ public class PagerInAdapter extends PagerAdapter {
     BitmapFactory.Options options;
     List<StorageReference> obref;
     List<String> imageString;
-    PhotoViewAttacher mAttacher;
 
     public PagerInAdapter(Context context) {
         this.context = context;

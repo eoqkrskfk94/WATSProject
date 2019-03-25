@@ -30,6 +30,8 @@ public class MapReviewAdapter extends BaseAdapter {
     String image1, image2, image3, image4;
     StorageReference ref1,ref2,ref3,ref4;
 
+    
+
     public MapReviewAdapter(Activity act, ArrayList<ReviewList> arr_item) {
         this.m_activity = act;
         arr = arr_item;

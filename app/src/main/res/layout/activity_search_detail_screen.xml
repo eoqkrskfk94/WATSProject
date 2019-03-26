@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="#fef5e9"
     android:orientation="vertical"
-    tools:context=".SearchDetailScreenActivity">
+    tools:context="com.handong.wats.wheeliric.SearchDetailScreenActivity">
 
     <Button
         android:id="@+id/cancel_button"

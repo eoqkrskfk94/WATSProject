@@ -30,7 +30,7 @@
 
             <fragment
                 android:id="@+id/stats_fragment"
-                android:name="com.example.mjkim.watsproject.StatsFragment"
+                android:name="com.handong.wats.wheeliric.StatsFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="visible"

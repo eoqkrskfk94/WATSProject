@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".LoadingScreenActivity">
+    tools:context="com.handong.wats.wheeliric.LoadingScreenActivity">
 
     <LinearLayout
         android:layout_width="match_parent"

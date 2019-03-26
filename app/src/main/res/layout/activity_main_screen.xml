@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    tools:context=".MainScreenActivity">
+    tools:context="com.handong.wats.wheeliric.MainScreenActivity">
 
     <LinearLayout
         android:id="@+id/menu"
@@ -77,7 +77,7 @@
             <fragment
                 android:id="@+id/stats_fragment"
                 android:layout_marginTop="100dp"
-                android:name="com.example.mjkim.watsproject.StatsFragment"
+                android:name="com.handong.wats.wheeliric.StatsFragment"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="visible"

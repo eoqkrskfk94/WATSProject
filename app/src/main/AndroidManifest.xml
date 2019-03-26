@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.mjkim.watsproject">
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.handong.wats.wheeliric">
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
@@ -17,28 +18,29 @@
         android:label="휘리릭"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".LoadingScreenActivity">
+        android:theme="@style/AppTheme"
+        tools:ignore="HardcodedDebugMode">
+        <activity android:name="com.handong.wats.wheeliric.LoadingScreenActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".LoginScreenActivity" />
-        <activity android:name=".SignInScreenActivity" />
-        <activity android:name=".MainScreenActivity" />
-        <activity android:name=".SearchDetailScreenActivity" />
-        <activity android:name=".LocationDetailScreenActivity" />
-        <activity android:name=".CreateReviewScreenActivity" />
-        <activity android:name=".BlogScreenActivity" />
-        <activity android:name=".ChangeInfoScreenActivity" />
-        <activity android:name=".WatchLocationActivity" />
-        <activity android:name=".LocationDetailFromMapScreenActivity" />
+        <activity android:name="com.handong.wats.wheeliric.LoginScreenActivity" />
+        <activity android:name="com.handong.wats.wheeliric.SignInScreenActivity" />
+        <activity android:name="com.handong.wats.wheeliric.MainScreenActivity" />
+        <activity android:name="com.handong.wats.wheeliric.SearchDetailScreenActivity" />
+        <activity android:name="com.handong.wats.wheeliric.LocationDetailScreenActivity" />
+        <activity android:name="com.handong.wats.wheeliric.CreateReviewScreenActivity" />
+        <activity android:name="com.handong.wats.wheeliric.BlogScreenActivity" />
+        <activity android:name="com.handong.wats.wheeliric.ChangeInfoScreenActivity" />
+        <activity android:name="com.handong.wats.wheeliric.WatchLocationActivity" />
+        <activity android:name="com.handong.wats.wheeliric.LocationDetailFromMapScreenActivity" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"
-            android:authorities="com.example.mjkim.watsproject"
+            android:authorities="com.handong.wats.wheeliric"
             android:exported="false"
             android:grantUriPermissions="true">
             <meta-data
@@ -50,12 +52,12 @@
             android:name="com.naver.maps.map.CLIENT_ID"
             android:value="9sx658cqs0" />
 
-        <activity android:name=".MoreBlogScreenActivity" />
-        <activity android:name=".CertainReviewScreenActivity" />
-        <activity android:name=".MoreReviewScreenActivity" />
-        <activity android:name=".MyReviewScreenActivity" />
-        <activity android:name=".ReviseReviewScreenActivity" />
-        <activity android:name=".OtherClasses.ImageBigShowActivity"></activity>
+        <activity android:name="com.handong.wats.wheeliric.MoreBlogScreenActivity" />
+        <activity android:name="com.handong.wats.wheeliric.CertainReviewScreenActivity" />
+        <activity android:name="com.handong.wats.wheeliric.MoreReviewScreenActivity" />
+        <activity android:name="com.handong.wats.wheeliric.MyReviewScreenActivity" />
+        <activity android:name="com.handong.wats.wheeliric.ReviseReviewScreenActivity" />
+        <activity android:name="com.handong.wats.wheeliric.OtherClasses.ImageBigShowActivity"></activity>
     </application>
 
 </manifest>

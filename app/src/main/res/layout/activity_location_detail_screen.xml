@@ -9,7 +9,7 @@
     android:layout_height="match_parent"
     android:background="#fef5e9"
     android:orientation="vertical"
-    tools:context=".LocationDetailScreenActivity"
+    tools:context="com.handong.wats.wheeliric.LocationDetailScreenActivity"
     >
 
     <LinearLayout

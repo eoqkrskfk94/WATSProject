@@ -38,7 +38,6 @@ import com.handong.wats.wheeliric.Convert.GeoTransPoint;
 import com.handong.wats.wheeliric.FirstSreenFragments.ListFragment;
 import com.handong.wats.wheeliric.FirstSreenFragments.MypageFragment;
 import com.handong.wats.wheeliric.OtherClasses.BackPressCloseHandler;
-import com.handong.wats.wheeliric.R;
 import com.handong.wats.wheeliric.Review.ReviewAdapter;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
@@ -82,7 +81,6 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     static int count = 0, markerCount = 0;
 
     private BottomNavigationView mMainNav; //하단 메뉴 아이콘
-    private FrameLayout mMainFrame, statsFrame;
     private Dialog reviewDialog;
     private TextView location_categoryTextView, location_nameTextView, location_phoneTextView, location_addressTextView;
     private ImageView tagShow1,tagShow2,tagShow3,tagShow4,tagShow5,tagShow6;
@@ -92,7 +90,6 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     static private MapFragment mapFragment; //NaverMapFragment안쓰고 따로 네이버에서 제공하는 클래스 사용하는 것임
     private ListFragment listFragment;
     private MypageFragment mypageFragment;
-    private StatsFragment statsFragment;
 
     private Marker marker;
     private ArrayList<Marker> markers;
@@ -130,7 +127,17 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
 
         EditText editText = (EditText) findViewById(R.id.editSearch);
         Button searchButton = (Button)findViewById(R.id.search_button);
+        Button goUpButton = (Button) findViewById(R.id.go_up_button);
         menuLinearLayout = (LinearLayout)findViewById(R.id.menu);
+
+        // 위로가기 버튼
+        goUpButton.setVisibility(View.GONE);
+        goUpButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
 
         // 메인텍스트 기본 세팅
         this.menuName = "지도";
@@ -201,13 +208,10 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
 
         reviewDialog = new Dialog(this); //회원가입 팝업 변수 선언
 
-        mMainFrame = (FrameLayout) findViewById(R.id.main_frame);
         mMainNav = (BottomNavigationView) findViewById(R.id.main_nav);
-        statsFrame = (FrameLayout)findViewById(R.id.stats_frame_layout);
 
         listFragment = new ListFragment();
         mypageFragment = new MypageFragment();
-        statsFragment = new StatsFragment();
         locationSource = new FusedLocationSource(this, LOCATION_PERMISSION_REQUEST_CODE);
 
 
@@ -233,10 +237,6 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         setMapFragment();
 
 
-        // 해당 프래그먼트로 돌아감
-//        if()
-
-
         mMainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
@@ -248,7 +248,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                         categoryButton.setText(categoryName);
                         categoryButton.setVisibility(View.VISIBLE);
                         menuLinearLayout.setVisibility(View.VISIBLE);
-//                        mainMenu.setText("지도");
+                        goUpButton.setVisibility(View.GONE);
                         MainScreenActivity.this.menuName = "지도";
                         check = 0;
                         setMapFragment();
@@ -259,17 +259,13 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                         categoryButton.setText(categoryName);
                         categoryButton.setVisibility(View.VISIBLE);
                         menuLinearLayout.setVisibility(View.VISIBLE);
-//                        mainMenu.setText("장소 리스트");
+//                        goUpButton.setVisibility(View.VISIBLE);
                         MainScreenActivity.this.menuName = "장소 리스트";
-//                        System.out.println("themap3 : " + mainMenu.getText());
                         setFragment(listFragment);
                         return true;
 
                     case R.id.nav_mypage:
                         MainScreenActivity.this.menuName = "마이 페이지";
-                       // 카테고리 숨기기
-                        categoryButton.setVisibility(View.GONE);
-                        menuLinearLayout.setVisibility(View.GONE);
 
                         if(currentUser == null){
                             myDialog.setContentView(R.layout.login_popup);
@@ -301,7 +297,12 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
 
                         }
                         else {
+                            // 카테고리 숨기기
+                            categoryButton.setVisibility(View.GONE);
+                            goUpButton.setVisibility(View.GONE);
+                            menuLinearLayout.setVisibility(View.GONE);
                             setFragment(mypageFragment);
+
                             //mainMenu.setText("마이 페이지");
                         }
                         return true;
@@ -326,14 +327,12 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
     // fragment 화면을 출력해주는 함수
     private void setFragment(Fragment fragment) {
         if (mapFragment == null) {
-            System.out.println("yerim");
             mapFragment = MapFragment.newInstance();
         }
 
         FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
         fragmentTransaction.replace(R.id.main_frame, fragment);
         fragmentTransaction.commit();
-        statsFrame.setVisibility(View.INVISIBLE);
     }
 
     // 지도 띄우는 프래그먼트 설정
@@ -414,9 +413,9 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                             marker.setWidth(80);
                             marker.setHideCollidedSymbols(true);
 //                            marker.setIcon(OverlayImage.fromResource(R.drawable.logo));
-                            marker.setCaptionText(location_name);
-                            marker.setCaptionTextSize(16);
 //                            marker.setCaptionColor(Color.parseColor("#1502F8"));
+                            marker.setCaptionText(location_name);
+                            marker.setCaptionTextSize(15);
                             markers.add(markerCount++, marker);
                             System.out.println("working0 : " + marker.getCaptionText() + marker.getPosition().toString());
 
@@ -449,7 +448,6 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
 //                            String shortCategory = myreview.getLocation_category().substring(myreview.getLocation_category().lastIndexOf(">")+1);
                                 location_categoryTextView.setText(myreview.getLocation_category());
                                 location_nameTextView.setText(location_name);
-                                System.out.println("zico2 : " + location_name);
                                 location_phoneTextView.setText(myreview.getPhone_number());
                                 location_addressTextView.setText(myreview.getLocation_address());
 
@@ -533,8 +531,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                                 marker.setHideCollidedSymbols(true);
 //                                marker.setIcon(OverlayImage.fromResource(R.drawable.logo));
                                 marker.setCaptionText(location_name);
-                                System.out.println("zico1 : " + location_name);
-                                marker.setCaptionTextSize(16);
+                                marker.setCaptionTextSize(15);
 //                                marker.setCaptionColor(Color.parseColor("#1502F8"));
                                 markers.add(markerCount++, marker);
 
@@ -550,7 +547,6 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                                     reviewDialog.getWindow().setGravity(Gravity.BOTTOM);
 
                                     reviewDialog.show();
-                                    System.out.println("zico4 : " + location_name);
                                     location_categoryTextView = (TextView)reviewDialog.findViewById(R.id.vi_category);
                                     location_addressTextView = (TextView)reviewDialog.findViewById(R.id.vi_address);
                                     location_nameTextView = (TextView)reviewDialog.findViewById(R.id.vi_name);
@@ -622,13 +618,11 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                                             reviewDialog.dismiss();
                                         }
                                     });
-
-
                                     return false;
                                 });
                             }
                         }
-
+                        System.out.println("jhs : " + naverMap.getCameraPosition().zoom);
                         // 마커 띄우기
                         for(Marker marker : markers) {
                             marker.setMap(naverMap);
@@ -680,19 +674,15 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         });
 
 
-        System.out.println("세번째 : " + mapFragment.toString());
-
 
         // gps로 내 위치 잡음
         naverMap.setLocationSource(locationSource);
-//        System.out.println("위치테스트 : " + naverMap.getCameraPosition().toString());
         naverMap.setLocationTrackingMode(LocationTrackingMode.NoFollow);
 
         // 위치 오버레이 생성, 보이기 설정
         LocationOverlay locationOverlay = naverMap.getLocationOverlay();
         locationOverlay.setVisible(false);
         locationOverlay.setOnClickListener(overlay -> {
-            statsFrame.setVisibility(View.INVISIBLE);
             return false;
         });
 

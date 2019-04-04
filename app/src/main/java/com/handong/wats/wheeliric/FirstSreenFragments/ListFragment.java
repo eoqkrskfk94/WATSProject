@@ -284,7 +284,7 @@ public class ListFragment extends Fragment {
                 myDialog.dismiss();
                 timer2.cancel(); //this will cancel the timer of the system
             }
-        }, 1500); // the timer will count 2.4 seconds....
+        }, 1500);
 
 
 

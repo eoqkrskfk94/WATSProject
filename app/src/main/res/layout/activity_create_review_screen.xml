@@ -176,12 +176,6 @@
                             android:layout_height="wrap_content"
                             android:gravity="center"
                             android:text="장애인 주차장" />
-
-                        <ImageView
-                            android:id="@+id/imageView17"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            app:srcCompat="@drawable/boundary" />
                     </LinearLayout>
 
                     <LinearLayout
@@ -265,6 +259,12 @@
 
                 </LinearLayout>
             </HorizontalScrollView>
+
+            <ImageView
+                android:id="@+id/imageView17"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:srcCompat="@drawable/boundary" />
 
             <TextView
                 android:id="@+id/textView4"

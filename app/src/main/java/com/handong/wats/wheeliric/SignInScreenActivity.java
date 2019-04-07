@@ -145,7 +145,7 @@ public class SignInScreenActivity extends AppCompatActivity {
         else if(str_day.equals("")){
             Toast.makeText(SignInScreenActivity.this, "날짜를 모두 입력해주세요.", Toast.LENGTH_SHORT).show();
         }
-        else if(Integer.parseInt(str_day)<1 || Integer.parseInt(str_year)>31){
+        else if(Integer.parseInt(str_day)<1 || Integer.parseInt(str_day)>31){
             Toast.makeText(SignInScreenActivity.this, "생년월일 중 일이 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
         }
         else

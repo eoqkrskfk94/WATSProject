@@ -1,6 +1,7 @@
 package com.handong.wats.wheeliric;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.Intent;
@@ -17,6 +18,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.SparseArray;
 import android.view.Gravity;
 import android.view.Menu;
 import android.view.KeyEvent;
@@ -59,7 +61,7 @@ import com.naver.maps.map.overlay.LocationOverlay;
 import com.naver.maps.map.overlay.Marker;
 import com.naver.maps.map.util.FusedLocationSource;
 
-import java.util.ArrayList;
+import java.util.*;
 
 
 public class MainScreenActivity extends AppCompatActivity implements OnMapReadyCallback, NaverMap.OnLocationChangeListener {
@@ -121,6 +123,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         mAuth = FirebaseAuth.getInstance(); // 로그인 작업의 onCreate 메소드에서 FirebaseAuth 개체의 공유 인스턴스를 가져옵니다
         currentUser = mAuth.getCurrentUser();
         myDialog = new Dialog(this); //팝업 변수 선언
+
 
         totalLocationCount = 0;
         backPressCloseHandler = new BackPressCloseHandler(this);

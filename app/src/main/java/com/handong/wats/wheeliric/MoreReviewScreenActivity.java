@@ -6,7 +6,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.handong.wats.wheeliric.R;
 import com.handong.wats.wheeliric.Review.MapReviewAdapter;
 import com.handong.wats.wheeliric.Review.ReviewAdapter;
 

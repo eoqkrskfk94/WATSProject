@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,7 +13,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.handong.wats.wheeliric.R;
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.handong.wats.wheeliric.User.UserInformation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
@@ -25,10 +28,13 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import java.util.ArrayList;
+
 //이메일 회원가입하는 액티비티.(로그인화면에서 회원가입 눌렀을때 나오는 화면)
 public class SignInScreenActivity extends AppCompatActivity {
 
     Dialog myDialog;
+    static int totalNickNameCount;
     private EditText email;
     private EditText password;
     private EditText password_check;
@@ -37,6 +43,7 @@ public class SignInScreenActivity extends AppCompatActivity {
     private EditText month;
     private EditText day;
     private EditText nickname;
+    private static ArrayList<String> nickNameList;
     public UserInformation userInformation=new UserInformation();
     private FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
     private DatabaseReference databaseReference = firebaseDatabase.getReference();
@@ -57,6 +64,7 @@ public class SignInScreenActivity extends AppCompatActivity {
         month=(EditText)findViewById(R.id.edit_month); // 월 선언
         day=(EditText)findViewById(R.id.edit_day); // 일 선언
         nickname=(EditText)findViewById(R.id.edit_nickname); // 별명 선언
+        nickNameList = new ArrayList<String>();
 
         Button backButton = (Button)findViewById(R.id.back_button); //돌아가기 버튼 선언
 
@@ -67,7 +75,6 @@ public class SignInScreenActivity extends AppCompatActivity {
                 finish();
             }
         });
-
     }
 
     //회원가입 버튼 눌렀을때
@@ -119,13 +126,17 @@ public class SignInScreenActivity extends AppCompatActivity {
         final DatabaseReference userRef=databaseReference.child("user lists");
          // email 에는 @가 들어가서 파이어베이스에 저장이 안됨.
 
+
         //비밀번호와 비밀번호 확인이 다를경우 재시작.
         if (!str_password.equals(str_password_check)) {
             Toast.makeText(SignInScreenActivity.this, "비밀번호가 서로 다릅니다. 다시 입력해주세요.", Toast.LENGTH_SHORT).show();
-            startActivity(new Intent(SignInScreenActivity.this, SignInScreenActivity.class));
+//            startActivity(new Intent(SignInScreenActivity.this, SignInScreenActivity.class));
         }
         else if(str_name.equals("")){
             Toast.makeText(SignInScreenActivity.this, "이름을 입력해주세요.", Toast.LENGTH_SHORT).show();
+        }
+        else if(checkDuplicateNickName(str_nickname)){
+            Toast.makeText(SignInScreenActivity.this, "중복된 별명입니다.", Toast.LENGTH_SHORT).show();
         }
         else if(str_nickname.equals("")){
             Toast.makeText(SignInScreenActivity.this, "별명을 입력해주세요.", Toast.LENGTH_SHORT).show();
@@ -189,5 +200,90 @@ public class SignInScreenActivity extends AppCompatActivity {
                         }
                     });
         }
+    }
+
+    private boolean checkDuplicateNickName(String str_nickname) {
+
+
+        final FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference mDatabase = database.getReference();
+        final DatabaseReference mymyreview = database.getReference();
+        totalNickNameCount = 0;
+
+
+        mDatabase.child("user lists").addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+                long length = dataSnapshot.getChildrenCount();
+                int[] tag_array = {0,0,0,0,0,0};
+                int[] count = {0};
+
+                mymyreview.child("user lists").child(dataSnapshot.getKey()).addChildEventListener(new ChildEventListener() {
+                    @Override
+                    public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+                        System.out.println("nickName1 : " + str_nickname);
+                        UserInformation userInformation = dataSnapshot.getValue(UserInformation.class);
+                        nickNameList.add(totalNickNameCount, userInformation.getUserNickname()) ;
+//                        System.out.println("nickName5 : " + totalNickNameCount);
+//                        System.out.println("nickName7 : " + nickNameList.toString());
+                        totalNickNameCount++;
+
+                    }
+
+
+                    @Override
+                    public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
+//                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
+                    }
+
+                    @Override
+                    public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+//                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
+//                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
+                    }
+
+                    @Override
+                    public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+//                        ReviewList myreview = dataSnapshot.getValue(ReviewList.class);
+//                        System.out.println(dataSnapshot.getKey() + " was " + myreview.getEmail() +myreview.getDate()+ " meters tall.");
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
+                    }
+                    });
+                }
+
+            @Override
+            public void onChildChanged(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
+
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+
+        });
+
+        // 여기로 오면 nickNameList가 없어짐;;
+        for(String nickName : nickNameList) {
+            if(nickName.equals(str_nickname)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

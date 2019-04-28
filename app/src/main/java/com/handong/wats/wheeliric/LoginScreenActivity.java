@@ -328,7 +328,7 @@ public class LoginScreenActivity extends AppCompatActivity {
                         } catch (FirebaseAuthInvalidUserException e) {
                             Toast.makeText(LoginScreenActivity.this, "존재하지 않는 계정입니다 ", Toast.LENGTH_SHORT).show();
                         } catch (FirebaseAuthInvalidCredentialsException e) {
-                            Toast.makeText(LoginScreenActivity.this, "이메일 형식이 맞지 않습니다", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(LoginScreenActivity.this, "비밀번호가 맞지 않습니다", Toast.LENGTH_SHORT).show();
                         } catch (FirebaseNetworkException e) {
                             Toast.makeText(LoginScreenActivity.this, "네트워크 문제가 발생했습니다", Toast.LENGTH_SHORT).show();
                         } catch (Exception e) {

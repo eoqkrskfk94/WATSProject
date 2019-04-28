@@ -221,16 +221,6 @@ public class CertainReviewScreenActivity extends AppCompatActivity {
         {    refList.add(ref8);   stringList.add(image8);}
         if(!image9.equals(""))
         {    refList.add(ref9);   stringList.add(image9);}
-//
-//        stringList.add(image1);
-//        stringList.add(image2);
-//        stringList.add(image3);
-//        stringList.add(image4);
-//        stringList.add(image5);
-//        stringList.add(image6);
-//        stringList.add(image7);
-//        stringList.add(image8);
-//        stringList.add(image9);
 
 
 

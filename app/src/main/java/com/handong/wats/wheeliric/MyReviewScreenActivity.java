@@ -91,9 +91,6 @@ public class MyReviewScreenActivity extends AppCompatActivity {
         mDatabase.child("review lists").addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {
-
-
-
                 mymyreview.child("review lists").child(dataSnapshot.getKey()).orderByChild("userEmail").equalTo(user_email).addChildEventListener(new ChildEventListener() {
                     @Override
                     public void onChildAdded(@NonNull DataSnapshot dataSnapshot, @Nullable String s) {

@@ -25,8 +25,7 @@
         android:layout_gravity="center"
         android:layout_weight="1"
         android:gravity="center"
-        android:text="성공적인 회원가입을 축하합니다.
-이메일을 확인하여 인증해주세요."
+        android:text="성공적인 회원가입을 축하합니다."
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         tools:layout_editor_absoluteY="161dp" />

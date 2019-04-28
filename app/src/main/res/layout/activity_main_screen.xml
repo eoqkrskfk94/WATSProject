@@ -15,11 +15,20 @@
         android:gravity="center"
         android:orientation="horizontal">
 
+        <Button
+            android:id="@+id/category_button"
+            android:layout_width="33dp"
+            android:layout_height="33dp"
+            android:layout_margin="10dp"
+            android:background="@drawable/category_icon_white"
+            android:text="전체"
+            android:textColor="@android:color/transparent"
+            tools:text="전체" />
+
         <EditText
             android:id="@+id/editSearch"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
             android:layout_weight="1"
             android:background="@drawable/gray_search_box"
             android:ems="10"
@@ -30,12 +39,11 @@
 
         <Button
             android:id="@+id/search_button"
-            android:layout_width="wrap_content"
+            android:layout_width="35dp"
             android:layout_height="35dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="10dp"
             android:layout_marginTop="1dp"
-            android:layout_weight="1"
             android:background="@drawable/search_icon" />
 
     </LinearLayout>
@@ -48,50 +56,22 @@
         android:layout_below="@id/menu">
 
         <Button
-            android:id="@+id/category_button"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_margin="10dp"
-            android:background="@drawable/category_icon"
-            android:text="전체"
-            android:textColor="@android:color/transparent"
-            tools:text="전체" />
+            android:id="@+id/go_up_button"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="450dp"
+            android:layout_gravity="right"
+            android:visibility="gone"
+            android:background="@drawable/up_button" />
 
     </FrameLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginLeft="25dp"
-        android:layout_marginRight="25dp"
-        android:layout_marginTop="300dp"
-        android:layout_marginBottom="25dp">
-        <FrameLayout
-            android:id="@+id/stats_frame_layout"
-            android:layout_width="match_parent"
-            android:layout_height="265dp"
-            android:layout_gravity="bottom"
-            android:visibility="invisible"
-            android:background="@android:color/background_light">
-
-            <fragment
-                android:id="@+id/stats_fragment"
-                android:layout_marginTop="100dp"
-                android:name="com.handong.wats.wheeliric.StatsFragment"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:visibility="visible"
-                android:background="@android:color/background_light" />
-        </FrameLayout>
-    </LinearLayout>
 
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/main_nav"
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:layout_alignParentBottom="true"
-
-
         android:layout_alignParentStart="true"
         app:menu="@menu/nav_items">
 

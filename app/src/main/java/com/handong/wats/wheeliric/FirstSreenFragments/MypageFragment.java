@@ -332,7 +332,7 @@ public class MypageFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("1.01버전");
+                builder.setTitle("Beta 1.02버전");
                 builder.setMessage("개발자 : 김명진 남준영 정희석\n디자인 : 김진이 신영지 이현진 한준모 ");
                 builder.setPositiveButton("확인",
                         new DialogInterface.OnClickListener() {
@@ -409,7 +409,6 @@ public class MypageFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (resultCode == RESULT_OK) {
-        System.out.println("들어왔어??");
             if (requestCode == pick_from_album) {
                     if (data != null) {
                         imagePath1 = getPath(data.getData());

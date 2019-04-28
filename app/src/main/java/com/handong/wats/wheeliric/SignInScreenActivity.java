@@ -133,11 +133,20 @@ public class SignInScreenActivity extends AppCompatActivity {
         else if(str_year.equals("")){
             Toast.makeText(SignInScreenActivity.this, "날짜를 모두 입력해주세요.", Toast.LENGTH_SHORT).show();
         }
+        else if(Integer.parseInt(str_year)<1900 || Integer.parseInt(str_year)>2020){
+            Toast.makeText(SignInScreenActivity.this, "생년월일 중 년도가 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
+        }
         else if(str_month.equals("")){
             Toast.makeText(SignInScreenActivity.this, "날짜를 모두 입력해주세요.", Toast.LENGTH_SHORT).show();
         }
+        else if(Integer.parseInt(str_month)<1 || Integer.parseInt(str_month)>12){
+            Toast.makeText(SignInScreenActivity.this, "생년월일 중 월이 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
+        }
         else if(str_day.equals("")){
             Toast.makeText(SignInScreenActivity.this, "날짜를 모두 입력해주세요.", Toast.LENGTH_SHORT).show();
+        }
+        else if(Integer.parseInt(str_day)<1 || Integer.parseInt(str_day)>31){
+            Toast.makeText(SignInScreenActivity.this, "생년월일 중 일이 올바르지 않습니다.", Toast.LENGTH_SHORT).show();
         }
         else
          {

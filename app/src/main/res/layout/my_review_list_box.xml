@@ -32,22 +32,18 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_marginRight="10dp"
-                android:layout_marginTop="10dp"
-                android:orientation="horizontal"
-                android:paddingLeft="10dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:layout_weight="4"
+                android:orientation="vertical"
+                android:paddingLeft="5dp"
                 android:paddingTop="10dp">
 
                 <TextView
                     android:id="@+id/vi_location_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginBottom="5dp"
-                    android:layout_marginEnd="5dp"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginRight="5dp"
-                    android:layout_marginStart="5dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginTop="5dp"
                     android:layout_weight="1"
                     android:ellipsize="end"
@@ -62,11 +58,13 @@
                     android:id="@+id/vi_category"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_marginBottom="3dp"
+                    android:layout_marginLeft="5dp"
                     android:layout_marginRight="13dp"
                     android:layout_weight="1"
                     android:gravity="right"
                     android:text="시설정보"
-                    android:textColor="#00C5AA"
+                    android:textColor="@color/green"
                     android:textColorLink="@color/colorAccent"
                     android:textSize="15sp" />
             </LinearLayout>

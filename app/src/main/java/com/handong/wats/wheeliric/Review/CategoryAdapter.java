@@ -104,7 +104,6 @@ public class CategoryAdapter extends BaseAdapter {
         //주소 빼고 이름만 사용
         int index = locationName.indexOf(" , ");
         String correctionLocationName = locationName.toString().substring(0, index);
-//        String correctionLocationName = "< " + newLocationName + " >";
 
 
         locationNameTextView.setText(correctionLocationName);
@@ -137,7 +136,6 @@ public class CategoryAdapter extends BaseAdapter {
     private void delete(int a) {
         mDatabase = database.getReference();
         mDatabase.child("review lists").child(arr.get(a).getLocation_name()).child(arr.get(a).getKey()).setValue(null);
-        System.out.println("\n 삭제테스트 1: "+ arr.get(a).getKey()+"  ");
         my_review_index--;
         Intent intent = new Intent(activity, MyReviewScreenActivity.class);
         m_activity.finish();

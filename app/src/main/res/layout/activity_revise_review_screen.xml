@@ -311,11 +311,11 @@
 
                         <ImageView
                             android:id="@+id/Imagebutton1"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
                             android:onClick="onClick"
-                            app:srcCompat="@drawable/sample_picture" />
+                            app:srcCompat="@drawable/plus_pic" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -331,11 +331,11 @@
 
                         <ImageView
                             android:id="@+id/Imagebutton2"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
                             android:onClick="onClick"
-                            app:srcCompat="@drawable/sample_picture" />
+                            app:srcCompat="@drawable/plus_pic" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -351,11 +351,11 @@
 
                         <ImageView
                             android:id="@+id/Imagebutton3"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
                             android:onClick="onClick"
-                            app:srcCompat="@drawable/sample_picture" />
+                            app:srcCompat="@drawable/plus_pic" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -371,11 +371,11 @@
 
                         <ImageView
                             android:id="@+id/Imagebutton4"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
                             android:onClick="onClick"
-                            app:srcCompat="@drawable/sample_picture" />
+                            app:srcCompat="@drawable/plus_pic" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -392,11 +392,11 @@
 
                         <ImageView
                             android:id="@+id/Imagebutton5"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:onClick="onClick"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
-                            app:srcCompat="@drawable/sample_picture" />
+                            android:onClick="onClick"
+                            app:srcCompat="@drawable/plus_pic" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -413,11 +413,11 @@
 
                         <ImageView
                             android:id="@+id/Imagebutton6"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
-                            android:onClick="onClick"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
-                            app:srcCompat="@drawable/sample_picture" />
+                            android:onClick="onClick"
+                            app:srcCompat="@drawable/plus_pic" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -433,11 +433,11 @@
 
                         <ImageView
                             android:id="@+id/Imagebutton7"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
                             android:onClick="onClick"
-                            app:srcCompat="@drawable/sample_picture" />
+                            app:srcCompat="@drawable/plus_pic" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -453,11 +453,11 @@
 
                         <ImageView
                             android:id="@+id/Imagebutton8"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
                             android:onClick="onClick"
-                            app:srcCompat="@drawable/sample_picture" />
+                            app:srcCompat="@drawable/plus_pic" />
 
                         <TextView
                             android:layout_width="match_parent"
@@ -473,11 +473,11 @@
 
                         <ImageView
                             android:id="@+id/Imagebutton9"
-                            android:layout_width="100dp"
-                            android:layout_height="100dp"
+                            android:layout_width="50dp"
+                            android:layout_height="50dp"
                             android:layout_gravity="center"
                             android:onClick="onClick"
-                            app:srcCompat="@drawable/sample_picture" />
+                            app:srcCompat="@drawable/plus_pic" />
 
                         <TextView
                             android:layout_width="match_parent"

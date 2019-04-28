@@ -63,7 +63,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="370dp"
-                android:background="@drawable/location_box"
+                android:background="@color/collorWhite"
                 android:orientation="vertical">
 
                 <TextView

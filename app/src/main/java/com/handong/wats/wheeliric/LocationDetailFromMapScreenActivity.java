@@ -327,7 +327,6 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
             }
         });
 
-
         //블로그 리스트 출력
         try {
             blogList = naverBlogSearch.execute(intent.getExtras().getString("NAME")).get();
@@ -543,5 +542,6 @@ public class LocationDetailFromMapScreenActivity extends AppCompatActivity {
         startActivity(intent);
     }
 }
+
 
 

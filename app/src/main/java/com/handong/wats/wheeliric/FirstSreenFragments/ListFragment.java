@@ -97,7 +97,12 @@ public class ListFragment extends Fragment {
                         System.out.println("모든 이름: "+locationName);
                         locationCategory = myreview.getLocation_category();
                         // 카테고리 분류용 변수
-                        leftCategory = locationCategory.substring(0, locationCategory.indexOf(">"));
+                        if(locationCategory.contains(">")) {
+                            int categoryIndex = locationCategory.indexOf(">");
+                            leftCategory = locationCategory.substring(0, locationCategory.indexOf(">"));
+                        } else {
+                            leftCategory = locationCategory;
+                        }
                         System.out.println("leftcategory : " + leftCategory);
                         reviewDate = myreview.getDate();
                         tag1 = myreview.getTag1();

@@ -20,7 +20,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         tools:ignore="HardcodedDebugMode">
-        <activity android:name="com.handong.wats.wheeliric.LoadingScreenActivity">
+        <activity android:name="com.handong.wats.wheeliric.MainScreenActivity">
+        <!--<activity android:name="com.handong.wats.wheeliric.LoadingScreenActivity">-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -28,8 +29,11 @@
             </intent-filter>
         </activity>
         <activity android:name="com.handong.wats.wheeliric.LoginScreenActivity" />
+        <activity android:name="com.handong.wats.wheeliric.LoadingScreenActivity" />
+        <!--<activity android:name="com.handong.wats.wheeliric.MainScreenActivity" />-->
         <activity android:name="com.handong.wats.wheeliric.SignInScreenActivity" />
-        <activity android:name="com.handong.wats.wheeliric.MainScreenActivity" />
+        <activity android:name="com.handong.wats.wheeliric.Tutorial.TutorialScreenActivity" />
+        <activity android:name="com.handong.wats.wheeliric.Tutorial.TutorialScreenActivityFromMyPage" />
         <activity android:name="com.handong.wats.wheeliric.SearchDetailScreenActivity" />
         <activity android:name="com.handong.wats.wheeliric.LocationDetailScreenActivity" />
         <activity android:name="com.handong.wats.wheeliric.CreateReviewScreenActivity" />

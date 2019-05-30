@@ -54,6 +54,23 @@
             android:orientation="vertical" >
 
             <Button
+                android:id="@+id/see_tutorial_button"
+                android:layout_width="match_parent"
+                android:layout_height="30dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="35dp"
+                android:background="@android:color/transparent"
+                android:gravity="left|center"
+                android:text="사용법 보기" />
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="10dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:src="@drawable/new_horz_line" />
+
+            <Button
                 android:id="@+id/change_info_button"
                 android:layout_width="match_parent"
                 android:layout_height="30dp"

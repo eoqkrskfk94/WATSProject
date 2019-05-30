@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.location.Location;
+import android.os.Handler;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.BottomNavigationView;
@@ -31,6 +32,7 @@ import android.widget.EditText;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -49,6 +51,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.handong.wats.wheeliric.Tutorial.TutorialScreenActivity;
 import com.naver.maps.geometry.LatLng;
 import com.naver.maps.map.CameraPosition;
 import com.naver.maps.map.CameraUpdate;
@@ -145,6 +148,7 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         // 메인텍스트 기본 세팅
         this.menuName = "지도";
 
+
         searchButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view){
@@ -239,6 +243,25 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
         // 기본 화면 지도 뜨게 함
         setMapFragment();
 
+//        // 메인화면 띄우고 튜토리얼 동시 띄우기
+//        Handler handler =new Handler();
+//        handler.postDelayed(new Runnable() {
+//            @Override
+//            public void run() {
+//                Intent intent=new Intent(MainScreenActivity.this,TutorialScreenActivity.class);
+//                startActivity(intent);
+//            }
+//        },200);
+
+                // 메인화면 띄우고 튜토리얼 동시 띄우기
+        Handler handler =new Handler();
+        handler.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Intent intent=new Intent(MainScreenActivity.this, LoadingScreenActivity.class);
+                startActivity(intent);
+            }
+        },200);
 
         mMainNav.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -400,8 +423,14 @@ public class MainScreenActivity extends AppCompatActivity implements OnMapReadyC
                         int nameIndex = myreview.getLocation_name().indexOf(" , ");
                         String location_name = myreview.getLocation_name().substring(0, nameIndex+1);
                         locationCategory = myreview.getLocation_category();
-                        int categoryIndex = locationCategory.indexOf(">");
-                        shortCategory = locationCategory.substring(0, categoryIndex);
+                        if(locationCategory.contains(">")) {
+                            int categoryIndex = locationCategory.indexOf(">");
+                            shortCategory = locationCategory.substring(0, categoryIndex);
+                        } else {
+                            shortCategory = locationCategory;
+                        }
+                        System.out.println("shortCategory : " + shortCategory);
+
 
 
                         // 좌표 계산해서 좌표 만듬

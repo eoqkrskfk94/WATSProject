@@ -9,6 +9,7 @@ import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Handler;
 import android.provider.MediaStore;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -34,6 +35,8 @@ import com.handong.wats.wheeliric.LoginScreenActivity;
 import com.handong.wats.wheeliric.MainScreenActivity;
 import com.handong.wats.wheeliric.MyReviewScreenActivity;
 import com.handong.wats.wheeliric.R;
+import com.handong.wats.wheeliric.Tutorial.TutorialScreenActivity;
+import com.handong.wats.wheeliric.Tutorial.TutorialScreenActivityFromMyPage;
 import com.handong.wats.wheeliric.User.UserInformation;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.OnFailureListener;
@@ -92,6 +95,7 @@ public class MypageFragment extends Fragment {
         Button logout=(Button) v.findViewById(R.id.log_out_button);
         Button informationButton=(Button)v.findViewById(R.id.see_information_button);
         Button myreviewButton=(Button)v.findViewById(R.id.see_review_button);
+        Button tutorialButton=(Button)v.findViewById(R.id.see_tutorial_button);
         Button changeButton=(Button)v.findViewById(R.id.change_info_button);
         profile=(ImageView)v.findViewById(R.id.profile_imageview);
 
@@ -326,13 +330,21 @@ public class MypageFragment extends Fragment {
             }
         });
 
+        // 튜토리얼 보기를 눌렀을 때
+        tutorialButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(),TutorialScreenActivityFromMyPage.class);
+                startActivity(intent);
+            }
+        });
 
         // 개발 정보를 눌렀을때
         informationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
-                builder.setTitle("Beta 1.02버전");
+                builder.setTitle("Beta 1.03버전");
                 builder.setMessage("개발자 : 김명진 남준영 정희석\n디자인 : 김진이 신영지 이현진 한준모 ");
                 builder.setPositiveButton("확인",
                         new DialogInterface.OnClickListener() {

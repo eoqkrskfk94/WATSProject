@@ -36,6 +36,13 @@
 
 <p align="center"> <img width="628" alt="기대효과" src="https://user-images.githubusercontent.com/37679062/77613183-608a0d80-6f6d-11ea-924c-a60c87fbc484.png"> </p>
 
+### 사용 화면 및 이용 방법
+
+<p align="center"> <img width="324" alt="screenshoot" src="https://user-images.githubusercontent.com/37679062/77613268-a3e47c00-6f6d-11ea-82f7-267f816f1ad1.png"> </p>
+
+현재 이 어플리케이션은 안드로이드에서만 구동이 되며 구글 플레이스토에어 휘리릭 을 검색하면 다운받을 수 있다. 
+구글 플레이 스토어: https://play.google.com/store/apps/details?id=com.handong.wats.wheeliric
+
 
 
 

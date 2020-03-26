@@ -26,7 +26,7 @@
 
 ### 어플리켕션 구성도 및 사용된 기술
 
-<p align="center"> <img width="471" alt="system" src="https://user-images.githubusercontent.com/37679062/77611931-03d92380-6f6a-11ea-96f9-b45c57284b78.png"> <img width="639" alt="사용된 기술" src="https://user-images.githubusercontent.com/37679062/77613011-fcffe000-6f6c-11ea-8944-6607b650ac8c.png"> </p>
+<p align="center"> <img width="825" alt="스크린샷 2020-03-26 오후 2 34 52" src="https://user-images.githubusercontent.com/37679062/77613811-fd997600-6f6e-11ea-8dff-9488d7a9575a.png"> <img width="639" alt="사용된 기술" src="https://user-images.githubusercontent.com/37679062/77613011-fcffe000-6f6c-11ea-8944-6607b650ac8c.png"> </p>
 
 ### 기대효과
 

@@ -24,13 +24,9 @@
 
 정보 제공자들을 휠체어 이용자들을 포함한 이 어플리케이션을 이용한 모든 사람이 된다. 정보 제공자들은 직접 여러 장소들을 이용하거나 들리면서 해당 장소에 대한 정보를 등록할 수 있다. 이렇게 등록된 장소들은 정보 이용자들이 해당 장소를 가기전에 미리 이 어플리케이션을 통해 장소에 관한 정보를 볼 수 있다. 
 
-### 어플리켕션 구성도
+### 어플리켕션 구성도 및 사용된 기술
 
 <p align="center"> <img width="471" alt="system" src="https://user-images.githubusercontent.com/37679062/77611931-03d92380-6f6a-11ea-96f9-b45c57284b78.png"> <img width="639" alt="사용된 기술" src="https://user-images.githubusercontent.com/37679062/77613011-fcffe000-6f6c-11ea-8944-6607b650ac8c.png"> </p>
-
-### 사용된 기술
-
-<p align="center"> <img width="639" alt="사용된 기술" src="https://user-images.githubusercontent.com/37679062/77613011-fcffe000-6f6c-11ea-8944-6607b650ac8c.png"> </p>
 
 ### 기대효과
 

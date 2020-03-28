@@ -48,3 +48,7 @@ https://www.youtube.com/watch?v=4eJ_st63ojs
 
 http://www.zdnet.co.kr/view/?no=20190405152644 
 
+논문:
+
+http://www.dbpia.co.kr/journal/articleDetail?nodeId=NODE08763621
+
